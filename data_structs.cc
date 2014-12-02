@@ -52,11 +52,11 @@ vector<int> bigarray;
 bigarray.reserve(N);
 bigarray[k] = k;
 
-V.swap(W);		// O(1)!
-V.push_back(5);	// O(1): amortized
-V.emplace_back(5);	// O(1): no new copy
-V.at(0);		// O(1)
-V[0];			// O(1)
+V.swap(W);      // O(1)!
+V.push_back(5); // O(1): amortized
+V.emplace_back(5);  // O(1): no new copy
+V.at(0);        // O(1)
+V[0];           // O(1)
 V.size();
 V.begin();
 V.end();
@@ -67,7 +67,7 @@ V.resize(len+10);
 bitset<len> bit_vec;
 
 bit_vec.test(5) == 0;
-bit_vec.set(((1 << 16) - 1) & x);	// get the lower 16 bits of x
+bit_vec.set(((1 << 16) - 1) & x);   // get the lower 16 bits of x
 
 // string
 string s;
@@ -87,10 +87,10 @@ list<int> L;
 
 // user-defined
 typedef struct Node {
-	int data;
-	struct Node *next;
-	// if double linked list
-	struct Node *prev;
+    int data;
+    struct Node *next;
+    // if double linked list
+    struct Node *prev;
 } Node;
 
 L.push_front();
@@ -111,21 +111,21 @@ stack<int> S;
 
 // user-defined: as linked-list
 typedef struct Stack {
-	int data;
-	struct Struct *next;
+    int data;
+    struct Struct *next;
 } Stack;
 
-S.top();	// O(1)
-S.push(5);	// O(1): amortized if implemented as array
-S.emplace(5);	// O(1): no new copy
-S.pop();	// O(1): amortized if implemented as array
+S.top();    // O(1)
+S.push(5);  // O(1): amortized if implemented as array
+S.emplace(5);   // O(1): no new copy
+S.pop();    // O(1): amortized if implemented as array
 
 // QUEUE
 queue<int> Q;
 
-Q.emplace();	// enqueue
-Q.push();	// enqueue
-Q.pop();	// dequeue
+Q.emplace();    // enqueue
+Q.push();   // enqueue
+Q.pop();    // dequeue
 
 Q.front();
 Q.back();
@@ -137,11 +137,11 @@ deque<int> DQ;
 // TREE: binary
 // user-defined
 typedef struct BinaryTree {
-	int data;
-	struct BinaryTree *left;
-	struct BinaryTree *right;
-	// not always available
-	struct BinaryTree *parent;
+    int data;
+    struct BinaryTree *left;
+    struct BinaryTree *right;
+    // not always available
+    struct BinaryTree *parent;
 } BinaryTree;
 
 // nodes: 2^(h+1) -1
@@ -159,10 +159,10 @@ set<int> MS;
 // priority queue
 // min-heap: smallest is last in array?
 struct Compare {
-	bool operator() (const pair<int, int>& lhs, const pair<int, int>& rhs) const
-	{
-		return lhs.first > rhs.first;
-	}
+    bool operator() (const pair<int, int>& lhs, const pair<int, int>& rhs) const
+    {
+        return lhs.first > rhs.first;
+    }
 };
 // simple data types
 priority_queue<int, vector<int>, greater<int> > min_heap;
@@ -170,10 +170,10 @@ priority_queue<int, vector<int>, greater<int> > min_heap;
 // max-heap: largest is last in array?
 // priority_queue is max-heap by default (but overload Compare for pairs!)
 struct Compare {
-	bool operator() (const pair<int, int> &lsh, const pair<int, int> &rhs) const
-	{
-		lhs.first < rhs.first;
-	}
+    bool operator() (const pair<int, int> &lsh, const pair<int, int> &rhs) const
+    {
+        lhs.first < rhs.first;
+    }
 };
 
 // simple data types (no need for Compare)
@@ -181,11 +181,11 @@ priority_queue<int, vector<int> > max_heap;
 // equivalent to
 priority_queue<int , vector<int>, less<int> > max_heap2;
 
-max_heap.emplace();		// O(log n): no new copy
-max_heap.push();		// O(log n)
-max_heap.pop();		// O(log n)
+max_heap.emplace();     // O(log n): no new copy
+max_heap.push();        // O(log n)
+max_heap.pop();     // O(log n)
 
-max_heap.top();		// O(1)
+max_heap.top();     // O(1)
 
 // HASH TABLE
 unordered_map<string, int> HM;
