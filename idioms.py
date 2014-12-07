@@ -6,7 +6,8 @@
 - function arguments
   - easy to read
   - easy to change
-- avoid the magical wand (e.g. don't change the way the interpreter works, etc.)
+- avoid the magical wand
+  (e.g. don't change the way the interpreter works, etc.)
 - we are all consenting adults: rely on a set of conventions
 - returning values
   - success
@@ -169,6 +170,62 @@ foobar = '{foo}{bar}'.format(foo=foo, bar=bar)
 # Best: adding to an existing string, use str.join()
 foo = ''.join([foo, 'ooo'])
 
+# chain string functions (no more than 3)
+formatted_book_info = book_info.strip().upper().replace(':', ' by')
+
+# mark private data with underscores
+# protected (not used by clients): one _
+# effect: won't be imported if 'all' is used
+_ssid = ssid
+# private (not used by subclasses): two _
+# effect: name mangling will be applied to make it less useful
+__id = id
+
+# define __str__ in a class so print() works on those objects
+def __str__(self):
+    return '{0}, {1}'.format(self.x, self.y)
+
+# set comprehension
+# (sets use {} just like dicts!)
+users_first_names = {user.first_name for user in users}
+
+# sets are dicts w/o keys
+# union: A | B
+# intersection: A & B
+# difference: A - B (order matters)
+# symmetric difference: A ^ B (the set of el. in either A or B but not both)
+
+# use a generator to lazily load infinite sequences
+
+# prefer generator expressions to list comprehensions for a simple iteration
+# bad: list comprehension
+for uppercase_name in [name.upper() for name in get_all_usernames()]:
+    process_normalized_username(uppercase_name)
+# best: generator expression
+for uppercase_name in (name.upper() for name in get_all_usernames()):
+    process_normalized_username(uppercase_name)
+
+# use a context manager ('with') to enforce RAII
+# (especially when raising exceptions)
+with open(path_to_file, 'r') as file_handle:
+    for line in file_handle:
+        if raise_exception(line):
+            print('exception')
+
+# deep copy of lists
+a = [1, 2, 3]
+b = a[:]
+c = list(a)
+# exception: collections of mutable objs (those objs remain as refs)
+d = [[1, 2], 3]
+e = deepcopy(d)
+
+# sorted, unique list
+# TODO: does it only work for hashables types (strings, numbers, tuples)?
+my_list = sorted(set(my_list))
+
+# generators (by David Beazley)
+
 # sum up last column in a large file
 
 # awk solution
@@ -189,11 +246,3 @@ wwwlog = open("access-log")
 bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
 bytes = (int(x) for x in bytecolumn if x != '-')
 print "Total", sum(bytes)
-
-# deep copy of lists
-a = [1, 2, 3]
-b = a[:]
-c = list(a)
-# exception: collections of mutable objs (those objs remain as refs)
-d = [[1, 2], 3]
-e = deepcopy(d)
