@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 '''
 - readability: avoid clutter, achieve brevity
 - but terseness & obscurity make brevity useless
@@ -16,9 +18,15 @@
     - prefer raising an exception
     - as early as possible
     - flatten structure (all following code assumes condition is met)
-- avoid assinging to a variable more than once
+- avoid assigning to a variable more than once
   - avoid reassigning
   - especially if the type changes
+
+Sources:
+- Writing Idiomatic Python (by Jeff Knupp)
+- The Hitchhiker's Guide to Python
+- Generator tutorials (by David Beazley)
+- stackoverflow.com
 '''
 
 
@@ -33,13 +41,16 @@ False
 
 # truth checking
 if foo:
+    pass
 # equality (==): same value
 # identity (is): same obj
 if my_list:
+    pass
 # exception: func. arg.
 def insert_val(val, pos=None):
     # allows pos == 0
     if pos is not None:
+        pass
 
 # compound if
 if name in ('Tom', 'Tim'):
@@ -65,6 +76,7 @@ def f(a, L=None):
 
 # use *args and **kwargs to maintain compatibility
 def make_api_call(foo, bar, baz):
+    pass
 # becomes
 def make_api_call(foo, bar, baz, *args, **kwargs):
     baz_coeff = kwargs['the_baz']
@@ -73,10 +85,19 @@ def make_api_call(foo, bar, baz, *args, **kwargs):
 for index, item in enumerate(some_list):
     print('{} {}'.format(index, item))
 
-# swapping
+# swapping w/o temp vars
 a, b = b, a
+# works for tuples too
+(a, b) = (b, a)
 
-# extended unpacking (Python 3)
+# unpacking using tuples
+list_from_csv = ['dog', 'Fido', 10]
+(animal, name, age) = list_from_csv
+
+# use _ as placeholder instead of temp vars
+(name, age, _, _) = get_user_info(user)
+
+# extended unpacking using tuples (Python 3)
 (a, *middle, rest) = [1, 2, 3, 4]
 # a = 1, middle = [2, 3], c = 4
 (a, middle, *rest) = [1, 2, 3, 4]
@@ -212,6 +233,92 @@ with open(path_to_file, 'r') as file_handle:
         if raise_exception(line):
             print('exception')
 
+# use 'modules' for encapsulation where other languages would use Objects
+# store most data in the following types:
+list
+dict
+set
+# use classes only when necessary and never at API boundaries
+# example: MVC web framework to build 'Chirp'
+# a *package* 'chirp' with 'model', 'view', and 'controller' *modules*
+# if big project, the modules can be packages too
+# the 'controller' package may have a 'persistence' and a 'processing' module
+# this way interoperability is preserved
+# code sharing and encapsulation using:
+import
+# passing state by passing args to functions (loose coupling)
+# Object Oriented Programming is not the *only* paradigm
+
+# global constants are in ALL CAPS
+SECONDS_IN_A_DAY = 60 * 60 * 24
+
+# one statement per line
+if bad_code:
+    rewrite_code()
+
+# format code according to PEP8
+# class: Camel case
+class StringManipulator():
+# variable: words joined by _
+join_by_underscore = True
+# function: words joined by _
+def multi_word_name(words):
+# constant: all uppercase
+SECRET_KEY = 42
+# everything else: words joined by _
+
+# use sys.exit in scripts to return proper error codes
+# (allows running script in UNIX pipes)
+def main():
+    import sys
+    if len(sys.argv) < 2:
+        # prints string to stderr
+        # exits with a value of '1' (error)
+        sys.exit('not enough args')
+
+    arg = sys.argv[1]
+    result = do_stuff(arg)
+    if not result:
+        sys.exit(1)
+
+    # optional, defaults to None (same as 'exit with 0')
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
+
+# to be able to both import and run directly a script, use:
+if __name__ == '__main__':
+# 'libs' which are imported will not exececute code under if
+# when run directly, only code under if will be executed
+
+# prefer absolute imports to relative imports to prevent clutter
+import package.other_module
+# or use as for brevity
+import package.other_module as other
+
+# do not use 'from foo import *' to import a module
+from foo import (bar, baz, qux, quux)
+import foo
+
+# arrange import statements:
+# 1. standard  lib modules
+# 2. 3rd party lib modules installed in site-packages
+# 3. modules local to current project
+# within those, order in alpha order (or whatever else makes sense)
+
+# learn the contents of the Python Standard Library
+# (to avoid reinventing the wheel)
+
+# get to know PyPI (the Python Package Index)
+
+# modules of note
+import itertools
+# when working with dir paths
+import os.path
+
+##
+
 # deep copy of lists
 a = [1, 2, 3]
 b = a[:]
@@ -224,7 +331,7 @@ e = deepcopy(d)
 # TODO: does it only work for hashables types (strings, numbers, tuples)?
 my_list = sorted(set(my_list))
 
-# generators (by David Beazley)
+## generators (by David Beazley)
 
 # sum up last column in a large file
 
@@ -246,3 +353,4 @@ wwwlog = open("access-log")
 bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
 bytes = (int(x) for x in bytecolumn if x != '-')
 print "Total", sum(bytes)
+
