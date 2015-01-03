@@ -139,7 +139,7 @@ log_severity = config.get('severity', 'Info')
 
 # or
 if 'spo_order' in d:
-    print d['spo_order']
+    print(d['spo_order'])
 
 a = [3, 4, 5]
 # list comprehension
@@ -153,7 +153,7 @@ a = [i + 3 for i in a]
 a = map(lambda i: i + 3, a)
 # don't use a manual counter
 for i, item in enumerate(a, start=1):
-    print i, item
+    print('{0}, {1}'.format(i, item))
 
 # dict comprehension
 user_email = {user.name: user.email
@@ -162,7 +162,7 @@ user_email = {user.name: user.email
 # read from a file (closes cleanly even if exception)
 with open('file.txt') as f:
     for line in f:
-        print line
+        print(line)
 
 # line continuation
 long_string = (
@@ -245,7 +245,7 @@ set
 # the 'controller' package may have a 'persistence' and a 'processing' module
 # this way interoperability is preserved
 # code sharing and encapsulation using:
-import
+import me
 # passing state by passing args to functions (loose coupling)
 # Object Oriented Programming is not the *only* paradigm
 
@@ -259,10 +259,12 @@ if bad_code:
 # format code according to PEP8
 # class: Camel case
 class StringManipulator():
+    pass
 # variable: words joined by _
 join_by_underscore = True
 # function: words joined by _
 def multi_word_name(words):
+    pass
 # constant: all uppercase
 SECRET_KEY = 42
 # everything else: words joined by _
@@ -289,6 +291,7 @@ if __name__ == '__main__':
 
 # to be able to both import and run directly a script, use:
 if __name__ == '__main__':
+    pass
 # 'libs' which are imported will not exececute code under if
 # when run directly, only code under if will be executed
 
@@ -346,11 +349,11 @@ for line in wwwlog:
     bytestr = line.rsplit(None,1)[1]
     if bytestr != '-':
         total += int(bytestr)
-print "Total", total
+print("Total {0}".format(total))
 
 # generator solution
 wwwlog = open("access-log")
 bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
 bytes = (int(x) for x in bytecolumn if x != '-')
-print "Total", sum(bytes)
+print("Total {0}".format(sum(bytes)))
 
