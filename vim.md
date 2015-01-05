@@ -23,17 +23,18 @@
     * `p` or `}`: paragraph
     * `t`: tag (HTML/XML)
     * `b`: block
-* Order: VMN (verb, modifier, noun)
+* Order: *VMN* (verb, modifier, noun)
     * `d2w`: delete 2 words
     * `dt.`: delete everything until next period
-    * `cis`: change inside sentence [doesn't work]
+    * `cis`: change inside sentence (replace current full sentence)
     * `yip`: yank inside paragraph (copy paragraph you are in)
     * `yt;`: copy to next semicolon
     * `ct(`: change to open parenthesis
-* Save and exit
-    * `:wq` or `ZZ` (no colon)
-* Searching
-    * `/{string}`: search for string
+* Save & exit
+    * `:wq`
+    * `ZZ` (no colon)
+* Search
+    * `/{string}`: search for {string}
     * `t`: jump *up to* a char
     * `f`: jump *onto* a char
     * `*`: search for other instances of word under cursor
@@ -41,7 +42,9 @@
     * `N`: go to previous instance of search string
     * `;`: go to next instance of a char (use after `t` or `f`)
     * `,`: go to previous instance of a char (use after `t` or `f`)
-* Moving
+    * `K`: grep for files containing the word under cursor
+      (requires silver\_searcher)
+* Move
     * Basic
         * `j`: move down one line
         * `k`: move up one line
@@ -61,67 +64,99 @@
         * `)`: move forward one sentence
         * `}`: move forward one paragraph
     * Screen
+        * `H`: move to top (*high*)
+        * `M`: move to middle
+        * `L`: move to bottom (*low*)
+        * `gg`: go to top of file
+        * `G`: go to bottom of file
+        * `^U`: move *up* half a screen
+        * `^D`: move *down* half a screen
+        * `^F`: page down (*forward*)
+        * `^B`: page up (*backwards*)
+        * `^E`: scroll up one line
+        * `^I`: scroll down one line
+    * Jump
+        * `^i`: jump to previous navigation location
+        * `^o`: jump back to where you were
+        * `30G`: jump to line # 30
+        * `:30`: jump to line # 30
+* Change/insert (all enter Insert mode)
+    * `i`: *insert* before the cursor
+    * `a`: *append* after the cursor
+    * `I`: *insert* at the beginning of the line
+    * `A`: *append* at the end of the line
+    * `o`: *open* a new line below the current one
+    * `O`: *open* a new line above the current one
+    * `r`: *replace* only the char under the cursor
+    * `R`: *replace* the char under the cursor and following until `Esc`
+    * `c{m}`: *change* whatever you use as a *movement* `{m}` (e.g. `w`, `$`)
+    * `C`: *change* current line (from cursor to end of line)
+    * `s`: *substitute* from cursor to next command (noun) [doesn't work?]
+    * `S`: *substitute* current line
+    * `~`: change case (toggle)
+* Format
+    * `gq ap`: format *around paragraph* (`ap`) according to `textwidth` setting
+    * `!}fmt -w 72`: format paragraph (`}`) to be 72 chars wide
+      (can be line (`$`), sentence (`)`), etc.)
+* Delete
+    * `x`: *exterminate* char under cursor
+    * `X`: *exterminate* char before cursor
+    * `d{m}`: *delete* whatever you use as a *movement* `{m}` (e.g. `w`, `}`)
+    * `dd`: *delete* current line
+    * `D`: *delete* to end of line
+    * `J`: *join* current line with next one (delete what's b/w)
+* Undo/redo (can use repeatedly to go back or forward)
+    * `u`: *undo* last action
+    * `^r`: *redo* last action
+* Repeat
+    * `.`: repeat last action (edit command?)
+        * `dw`: *delete* a *word*
+        * `5.`: delete 5 more words
+    * `&`: repeat last `ex` command?
+* Copy/paste
+    * `y`: *yank* selected text
+    * `yy`: *yank* current line
+    * cutting is the same as deleting (deleted text is stored into a buffer)
+    * `p`: *paste* copied (or deleted) text after the cursor position
+    * `P`: *paste* copied (or deleted) text before the cursor position
+        * `ddp`: swap current line with next
+    * `"*yy`: copy to sys register/clipboard
+    * `"*p`: paste from sys register/clipboard
+      (need `+clipboard` and maybe `+xterm_clipboard`)
+    * `vim --version`: check options `vim` is compiled with
+* Spell check
+    * `:set {no}spell`: enable/disable spell check
+    * `:setlocal spell`: enable spell check?
+    * `]s`: go to next misspelled word
+    * `[s`: go to last misspelled word
+    * `z=`: get suggestions for a misspelled word (when over it)
+    * `zg`: mark a misspelled word as correct
+    * `zw`: mark a good word as misspelled
+    * `^N`: *next* auto-complete in insert mode only (`set complete+=kspell`)
+    * `^P`: *previous* auto-complete in insert mode only (`set complete+=kspell`)
+* Substitution
+    * `:%s /foo/bar/g`: *substitute* all foo with bar on every line
+    * `:s /foo/bar/g`: *substitute* all foo with bar only on current line
+    * `:%s/^/this/g`: insert 'this' at the beginning of every line
+    * `:%s/$/this/g`: insert 'this' at the end of every line
+    * `:1,^s/foo/bar/g`: replace all 'foo' with 'bar' from line 1 to
+      the start of the current line
+    * `g` is for all instances in a file (`:%s`) or a line (`:s`) (*global*)
+    * `c` is for *confirmation*
 
-* Repeat last
-    * `.`: edit command
-    * ?
-* Append text at end of line
-```
-A
-```
+## Plugins/bundles
 
-* Check syntastic status
-```
-:SyntasticInfo
-```
+* `:SyntasticInfo`: check *syntastic* status
+* `:BundleList`: list of bundles
+* `:BundleInstall!`: force update of bundles
 
-* List of bundles
-```
-:BundleList
-```
+## Tabs and spaces
 
-* Force update of bundles
-```
-:BundleInstall!
-```
-
-* If K is bound to silver\_searcher, press when over word to grep for files
-containing it
-```
-K
-```
-
-* Copy/paste from/to sys register/clipboard
-```
-"*p
-"*yy
-```
-
-* Auto-complete (when spell checking is ON and in INSERT mode only)
-```
-set complete+=kspell
-^N
-^P
-```
-
-* Add word to spellcheck file (go over it first)
-```
-zg
-```
-
-* Turn on spell checking
-
-```
-:setlocal spell
-```
-
-* Check what options vim is compiles with
-```
-vim --version
-```
-
-* Need `+clipboard` and maybe `+xterm_clipboard` for copy/paste with system
-
+* Replace spaces with tabs
+    * `:retab!`
+    * `:%s/^\([^I]*\)    /\1^I/g`: bad?
+* Replace tabs with spaces
+    * `:retab`
 * Change indentation from 2 to 4 spaces
     * First convert spaces to tabs
     ```
@@ -135,27 +170,9 @@ vim --version
     :retab
     ```
 
-* Replace spaces by tabs (^I)
-```
-:%s/^\([^I]*\)    /\1^I/g
-```
+## Comments
 
-* Replace tabs with spaces
-```
-:retab
-```
-
-* Format paragraphs to be 72 chars long
-```
-!}fmt -w 72
-```
-
-* Show line numbers
-```
-:set nu
-```
-
-* Comment N lines (visual block mode)
+* Comment N lines using visual block mode [Best]
 ```
 ^V      # enter visual block mode
 j       # scroll down N lines
@@ -171,41 +188,10 @@ x       # another delete
 Esc     # small delay after
 ```
 
-* Comment N lines
-(the pattern between the first two slashes is what you want to replace,
-in this case the beginning of the line, and the pattern between the
-last two slashes is what you want to replace it with)
-```
-:.,+N-1 s/^/#/g
-```
+* `:.,+N-1 s/^/#/g`: comment N lines
+* `:%s/^/#/g`: comment every line in a file
+* `:5,10s/^/#`: comment lines 5 through 10
 
-* Replace all instances of 'foo' with 'bar' on the current line
-```
-:^,$s/foo/bar/g
-```
+## Misc
 
-* Replace all instances of 'foo' with 'bar' from line 1 to the start of
-the current line
-```
-:1,^s/foo/bar/g
-```
-
-* Comment every line in a file
-```
-:%s/^/#/g
-```
-
-* Comment lines 5 through 10
-```
-:5,10s/^/#
-```
-
-* Insert "this" at the beginning of every line
-```
-:%s/^/this/g
-```
-
-* Insert "this" at the end of every line
-```
-:%s/$/this/g
-```
+* `:set nu`: show line numbers
