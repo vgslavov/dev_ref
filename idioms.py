@@ -103,6 +103,14 @@ list_from_csv = ['dog', 'Fido', 10]
 (a, middle, *rest) = [1, 2, 3, 4]
 # a = 1, middle = 2, rest = [3, 4]
 
+# unpack function args
+args = [1, True, "done"]
+# function call
+func(*args)
+# function def
+def func(num, bool, str):
+    pass
+
 # ignored var (use double _)
 filename = 'myfile.txt'
 basename, __, ext = filename.rpartition('.')
@@ -333,6 +341,34 @@ e = deepcopy(d)
 # sorted, unique list
 # TODO: does it only work for hashables types (strings, numbers, tuples)?
 my_list = sorted(set(my_list))
+
+# sort dictionary into tuples, by value in reverse
+sorted(d.items(), key=itemgetter(1), reverse=True)
+
+# skip first item in seq
+for w in words[1:]:
+    pass
+
+# skip first item in any container
+iter_words = iter(words)
+next(iter_words)
+for w in iter_words:
+    pass
+
+# capitalize words in a string
+title = 'the brown fox'
+# simple
+title.title()
+# better
+' '.join([w.capitalize() for w in title.split()])
+
+# reverse string
+title = "example"
+title[::-1]
+
+# go over two lists
+for f, b in zip(foo, bar):
+    pass
 
 ## generators (by David Beazley)
 

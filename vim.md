@@ -110,8 +110,16 @@
     * `^r`: *redo* last action
 * Repeat
     * `.`: repeat last action (edit command?)
-        * `dw`: *delete* a *word*
-        * `5.`: delete 5 more words
+        ```
+        dw      # *delete* a *word*
+        5.      # delete 5 more words
+        ```
+
+        ```
+        /delinquent             # search for a word
+        A[DO NOT PAY] [Esc]     # *append* text to end of line
+        n.                      # repeat on all other instances
+        ```
     * `&`: repeat last `ex` command?
 * Copy/paste
     * `y`: *yank* selected text
@@ -143,6 +151,32 @@
       the start of the current line
     * `g` is for all instances in a file (`:%s`) or a line (`:s`) (*global*)
     * `c` is for *confirmation*
+* Text objects (perform actions/verbs against complex targets/nouns)
+    * `iw`: *inside word* (doesn't get spaces)
+    * `aw`: *around word* (gets spaces around)
+        * `daw`: *delete around word*
+    * `is` & `as`: sentences
+        * `cis`: *change inside sentence* (delete entire sentence and get in
+          Insert Mode)
+    * `ip` & `ap`: paragraphs
+    * `i'` & `a'`: single quotes
+    * `i"` & `a"`: double quotes
+        * `ci"`: *change* everything *inside* double quotes
+          (change only thing in quotes)
+        * `ca"`: *change* everything *around* double quotes
+          (replace full quoted object)
+        * edit HTML URL link
+            * `ci"`: change link in quotes
+            * `cit`: change link tag?
+    * `` i` `` & `` a` ``: back ticks
+    * `i(` & `a(`: parenthesis
+    * `i[` & `a[`: brackets
+    * `i{` & `a{`: braces
+    * `it` & `at`: tags
+* Visual mode
+    * `v`: char-based
+    * `V`: line-based
+    * `^V`: paragraphs
 
 ## Plugins/bundles
 
