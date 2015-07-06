@@ -178,6 +178,16 @@
     * `V`: line-based
     * `^V`: paragraphs
 
+## Conversions
+
+* dos to unix
+```
+:update
+:e ++ff=dos
+:setlocal ff=unix
+:w
+```
+
 ## Plugins/bundles
 
 * `:SyntasticInfo`: check *syntastic* status

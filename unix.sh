@@ -1,3 +1,6 @@
+# delete all files except 0001100000000000
+ls | grep -v 0001100000000000 | xargs rm
+
 # get set (unique)
 # most common, useful if need counts (-c)
 sort FILE | uniq

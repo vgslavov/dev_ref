@@ -370,6 +370,14 @@ title[::-1]
 for f, b in zip(foo, bar):
     pass
 
+# division
+# Python 2: both int, result int
+10 / 3      # 3
+# Python 3: both int, result float
+10 / 3      # 3.3333333333333335
+10 // 3     # 3
+10 // 3.0   # 3.0
+
 ## generators (by David Beazley)
 
 # sum up last column in a large file
