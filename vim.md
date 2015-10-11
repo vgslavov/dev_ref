@@ -190,9 +190,14 @@
 
 ## Plugins/bundles
 
-* `:SyntasticInfo`: check *syntastic* status
-* `:BundleList`: list of bundles
-* `:BundleInstall!`: force update of bundles
+* Vundle
+    * `:SyntasticInfo`: check *syntastic* status
+    * `:BundleList`: list of bundles
+    * `:BundleInstall!`: force update of bundles
+* vim-plug
+    * `:PlugInstall`
+    * `:PlugClean`
+    * `:PlugUpdate`
 
 ## Tabs and spaces
 

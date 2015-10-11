@@ -140,7 +140,7 @@ using.
 
 ### Item 3: Use `const` whenever possible
 
-* read right to left (e.g. `p` is a constant pointer to constant chars).
+* read right to left (e.g. `p` is a constant pointer to constant chars)
     ```
     char greeting[] = "Hello";
     char *p = greeting;                    // non-const pointer,
@@ -275,3 +275,83 @@ using.
 * compilers enforce bitwise constness but program for logical constness
 * avoid code duplication of `const` and non-`const` member functions by having
   the non-`const` version call the `const` version
+
+### Item 4: Make sure that objects are initialized before they're used
+
+* *always* initialize your objects before you use them
+* for non-member objects of built-in types, do it manually
+* for everything else, use ctors
+* do not confuse assignment with initialization
+* data members of an object are initialized *before* a ctor is entered!
+* in ctors, use member initialization lists instead of assignment
+* for most types, a signle call to a copy ctor is *much* more efficient than a
+  call to the default ctor + a call to the copy assign. op.
+* use member init. list even when you want to default-construct a data member
+  (e.g. `phones()`)
+* *always* use the member initialization list
+* order in which an object's data is initialized
+    * base classes are initialized before derived classes
+    * within a class, data members are initialized in the order in which they
+      are declared (not order in member init. list)
+    * to avoid confusion, *always* list members in the init. list in the same
+      order as they're declared in the class
+* order of initialization of non-local static objects defined in the different
+  translation units
+    * a `static object` exists from the time it's constructed until the end of
+      the program
+        * included
+            * global objects
+            * objects defined at namespace scope
+            * objects declared `static` inside classes: *non-local static objects*
+            * objects declared `static` inside functions: *local static objects*
+              (they are local to a function)
+            * objects declared `static` at file scope: *non-local static objects*
+        * excluded
+            * stack objects
+            * heap objects
+        * destroyed when `main` finishes executing
+    * `translation unit`: the source code giving rise to a single object file
+      (a single source file + all its `#include` files)
+    * **problem**: if initialization of a *non-local static object* in one
+      *translation unit* uses a *non-local static object* in a different
+      *translation unit*, the object it uses could be uninitialized, because
+      *the relative order of initialization of non-local static objects defined
+      in different translation units is undefined*.
+    * **solution**: move each *non-local static object* into its own function,
+      where ti's declared *static*
+        * functions return references to the objects they contain
+        * clients call functions instead of referring to objects
+        * *non-local* static objects are replaced with *local* static objects
+          (Singleton pattern)
+        ```
+        class FileSystem { ... };           // as before
+        FileSystem& tfs()                   // this replaces the tfs object; it could be
+        {                                   // static in the FileSystem class
+            static FileSystem fs;           // define and initialize a local static object
+            return fs;                      // return a reference to it
+        }
+
+        class Directory { ... };            // as before
+        Directory::Directory( params )      // as before, except references to tfs are
+        {                                   // now to tfs()
+            std::size_t disks = tfs().numDisks();
+        }
+        Directory& tempDir()                // this replaces the tempDir object; it
+        {                                   // could be static in the Directory class
+            static Directory td;            // define/initialize local static object
+            return td;                      // return reference to it
+        }
+        ```
+    * these functions are good candidates for inlining
+    * problematic in multithreaded systems (manually invoke the
+      reference-returning functions during the single-threaded startup of the
+      program to eliminated initialization-related race conditions)
+* to avoid using uninitialized objects
+    * manually initialize non-member objects of built-in types
+      (C++ only sometimes init. them itself)
+    * use member initialization lists to initialize all part of the object
+    * design around init. order uncertainty which affects non-local static
+      objects defined in separate translation units by replacing non-local
+      static objects with local static objects
+
+## Chapter 2: Constructors, Destructors, and Assignment Operators
