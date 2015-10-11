@@ -137,3 +137,141 @@ using.
     * `#ifdef` and `#ifndef`
 * for simple constants, prefer const objects or enums to `#define`s
 * for function-like macros, prefer inline functions to `#define`s
+
+### Item 3: Use `const` whenever possible
+
+* read right to left (e.g. `p` is a constant pointer to constant chars).
+    ```
+    char greeting[] = "Hello";
+    char *p = greeting;                    // non-const pointer,
+                                           // non-const data
+    const char *p = greeting;              // non-const pointer,
+                                           // const data
+    char * const p = greeting;             // const pointer,
+                                           // non-const data
+    const char * const p = greeting;       // const pointer,
+                                           // const data
+    ```
+* equivalent syntax
+    ```
+    void f1(const Widget *pw);         // f1 takes a pointer to a
+                                       // constant Widget object
+    void f2(Widget const *pw);         // so does f2
+    ```
+* iterators
+    ```
+    std::vector<int> vec;
+    const std::vector<int>::iterator iter =     // iter acts like a T* const
+    vec.begin();
+    *iter = 10;                                 // OK, changes what iter points to
+    ++iter;                                     // error! iter is const
+    std::vector<int>::const_iterator cIter =    //cIter acts like a const T*
+    vec.begin();
+    *cIter = 10;                               // error! *cIter is const
+    ++cIter;                                   // fine, changes cIter
+    ```
+* const return values
+    ```
+    class Rational { ... };
+    const Rational operator*(const Rational& lhs, const Rational& rhs);
+    // previents doing the following
+    Rational a, b, c;
+    (a * b) = c;                           // invoke operator= on the
+    if (a * b = c) ...                     // oops, meant to do a comparison!
+                                           // result of a*b!
+    ```
+* const member functions: overload based on const-ness
+    ```
+    class TextBlock {
+    public:
+        const char&                                       // operator[] for
+        operator[](const std::size_t position) const      // const objects
+        { return text[position]; }
+        char&                                             // operator[] for
+        operator[](const std::size_t position) const      // non-const objects
+        { return text[position]; }
+    private:
+        std::string text;
+    };
+
+    TextBlock tb("Hello");
+    std::cout << tb[0];                   // calls non-const
+                                            // TextBlock::operator[]
+
+    void print(const TextBlock& ctb)      // in this function, ctb is const
+    {
+        std::cout << ctb[0];              // calls const TextBlock::operator[]
+    }
+    ```
+* it's never legal to modify the return value of a function that returns a
+  built-in type: `operator[]` has to return `char&`, not `char`
+* C++ returns objects by value
+* **bitwise constness**: don't modify the bits inside the object (which doesn't
+  include static members)
+* passes bitwise constness test (by compiler) but can be misused as `operator[]`
+  returns a reference to the object's internal data
+    ```
+    class CTextBlock {
+    public:
+        char& operator[](std::size_t position) const   // inappropriate (but bitwise
+        { return pText[position]; }                    // const) declaration of
+                                                       // operator[]
+    private:
+        char *pText;
+    };
+
+    const CTextBlock cctb("Hello");        // declare constant object
+    char *pc = &cctb[0];                   // call the const operator[] to get a
+                                           // pointer to cctb's data
+    *pc = 'J';                             // cctb now has the value "Jello"
+    ```
+* **logical constness**: may modify some of the object's bits but only in ways
+  the client cannot detect by using `mutable`
+    ```
+    class CTextBlock {
+    public:
+        std::size_t length() const;
+    private:
+        char *pText;
+        mutable std::size_t textLength;         // these data members may
+        mutable bool lengthIsValid;             // always be modified, even in
+    };                                          // const member functions
+
+    std::size_t CTextBlock::length() const {
+        if (!lengthIsValid) {
+            textLength = std::strlen(pText);      // now fine
+            lengthIsValid= true;                 // also fine
+        }
+        return textLength;
+    }
+    ```
+* avoiding code duplication in `const` and non-`const` member functions:
+  implement implement `operator[]` once and use it twice using `const_cast` and
+  `static_cast`
+    ```
+    class TextBlock {
+    public:
+        const char& operator[](std::size_t position) const     // same as before
+        {
+            return text[position];
+        }
+
+        char& operator[](std::size_t position)         // now just calls const op[]
+        {
+            return
+            const_cast<char&>(                         // cast away const on
+                                                       // op[]'s return type;
+                static_cast<const TextBlock&>(*this)   // add const to *this's type;
+                [position]                             // call const version of op[]
+            );
+        }
+    };
+    ```
+* never try the opposite: calling the non-`const` from the `const` member
+  function
+* declare `const` so the compiler can detect errors
+* apply `const` at any scope, to function parameters, return types, and member
+  functions
+* compilers enforce bitwise constness but program for logical constness
+* avoid code duplication of `const` and non-`const` member functions by having
+  the non-`const` version call the `const` version
