@@ -354,4 +354,68 @@ using.
       objects defined in separate translation units by replacing non-local
       static objects with local static objects
 
-## Chapter 2: Constructors, Destructors, and Assignment Operators
+## Chapter 3: Constructors, Destructors, and Assignment Operators
+
+### Item 5: Know what functions C++ silently writes and calls
+
+* if not declared (but needed/called), compiler generates
+    * default constructor
+      (only if no ctor (neither default nor arg) has been declared)
+    * copy constructor
+    * copy assignment operator
+    * destructor (non-virtual,
+      unless for a derived class with a base class with a virtual dtor)
+    ```
+    // declared
+    class Empty{};
+
+    // compiler-generated (if needed)
+    class Empty {
+    public:
+        Empty() { ... }                            // default constructor
+        Empty(const Empty& rhs) { ... }            // copy constructor
+
+        ~Empty() { ... }                           // destructor — see below
+                                                    // for whether it's virtual
+
+        Empty& operator=(const Empty& rhs) { ... } // copy assignment operator
+};
+    ```
+* exceptions: compiler refuses to compile the code (must define copy assign. op.)
+    * a class containing a reference member
+    * a class containing `const` members
+    * a derived class which inherit from base classes declaring the copy assign.
+      op. `private`
+
+### Item 6: Explicitly disallow the use of compiler-generated functions you do not want
+
+* to disallow functionality automatically provided by compilers
+    * declared the corresponding member functions `private`
+    * don't provide definitions
+    * will generate a link-time error if a call is made (e.g. to copy)
+* mostly used for preventing copying of objects (copy ctor and copy assing. op.)
+    ```
+    class HomeForSale {
+    private:
+        HomeForSale(const HomeForSale&);            // declarations only
+        HomeForSale& operator=(const HomeForSale&);
+    };
+    ```
+* to move the link-time error to compile-time
+    * declare copy ctor and copy assign. op. `private` in a base class
+    ```
+    class Uncopyable {
+    protected:                                   // allow construction
+        Uncopyable() {}                            // and destruction of
+        ~Uncopyable() {}                           // derived objects...
+    private:
+        Uncopyable(const Uncopyable&);             // ...but prevent copying
+        Uncopyable& operator=(const Uncopyable&);
+    };
+    ```
+    * make current class inherit (`private`) from this base class
+    ```
+    class HomeForSale: private Uncopyable {     // class no longer
+                                                // declares copy ctor or
+    ```
+    * or use Boost's `noncopyable`
