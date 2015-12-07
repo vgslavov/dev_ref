@@ -370,6 +370,11 @@ title[::-1]
 for f, b in zip(foo, bar):
     pass
 
+# create dict from keys and values
+keys = ['Modern', 'Old', 'New']
+values = ['Talking', 'Testament', 'Order']
+d = dict(zip(keys, value))
+
 # division
 # Python 2: both int, result int
 10 / 3      # 3

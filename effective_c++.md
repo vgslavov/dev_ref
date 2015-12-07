@@ -70,6 +70,9 @@ using.
   iterators and function objs. as they are modeled on ptrs in C)
 * `pass-by-ref-to-const` is preferred in `OO C++` and especially in `Template
   C++`
+* things to remember
+    * rules for effective C++ programming vary, depending on the part of C++ you
+      are using
 
 ### Item 2: Prefer consts, enums, and inlines to #defines
 
@@ -137,6 +140,9 @@ using.
     * `#ifdef` and `#ifndef`
 * for simple constants, prefer const objects or enums to `#define`s
 * for function-like macros, prefer inline functions to `#define`s
+* things to remember
+    * for simple constants, prefer `const` objects or `enum`s to `#define`s
+    * for function-like macros, prefer inline functions to `#define`s
 
 ### Item 3: Use `const` whenever possible
 
@@ -275,6 +281,15 @@ using.
 * compilers enforce bitwise constness but program for logical constness
 * avoid code duplication of `const` and non-`const` member functions by having
   the non-`const` version call the `const` version
+* things to remember
+    * declaring something `const` helps compilers detect usage errors. `const`
+      can be applied to objects at any scope, to function parameters and return
+      types, and to member functions as a whole
+    * compilers enforce bitwise constness, but you should program using
+      conceptual constness
+    * when `const` and non-`const` member functions have essentially identical
+      implementations, code duplication can be avoided by having the non-`const`
+       version call the `const` version.
 
 ### Item 4: Make sure that objects are initialized before they're used
 
@@ -353,8 +368,16 @@ using.
     * design around init. order uncertainty which affects non-local static
       objects defined in separate translation units by replacing non-local
       static objects with local static objects
+* things to remember
+    * manually initialize objects of built-in type, because C++ only sometimes
+      initializes them itself
+    * in a constructor, prefer use of the member initialization list to
+      assignment inside the body of the constructor; list data members in the
+      initialization list in the same order they're declared in the class.
+    * avoid initialization order problems across translation units by replacing
+      non-local static objects with local static objects
 
-## Chapter 3: Constructors, Destructors, and Assignment Operators
+## Chapter 2: Constructors, Destructors, and Assignment Operators
 
 ### Item 5: Know what functions C++ silently writes and calls
 
@@ -386,6 +409,9 @@ using.
     * a class containing `const` members
     * a derived class which inherit from base classes declaring the copy assign.
       op. `private`
+* things to remember
+    * compilers may implicitly generate a class's default constructor,
+      copy constructor, copy assignment operator, and destructor
 
 ### Item 6: Explicitly disallow the use of compiler-generated functions you do not want
 
@@ -419,3 +445,206 @@ using.
                                                 // declares copy ctor or
     ```
     * or use Boost's `noncopyable`
+* things to remember
+    * to disallow functionality automatically provided by compilers, declare
+      the corresponding member functions `private` and give no implementations;
+      Using a base class like `Uncopyable` is one way to do this
+
+### Item 7: Declare destructors virtual in polymorphic base classes
+
+* things to remember
+    * polymorphic base classes should declare virtual destructors; if a class
+      has any virtual functions, it should have a virtual destructor
+    * classes not designed to be base classes or not designed to be used
+      polymorphically should not declare virtual destructors
+
+### Item 8: Prevent exceptions from leaving destructors
+
+* things to remember
+    * destructors should never emit exceptions; if functions called in a
+      destructor may throw, the destructor should catch any exceptions, then
+      swallow them or terminate the program
+    * if class clients need to be able to react to exceptions thrown during an
+      operation, the class should provide a regular (i.e., non-destructor)
+      function that performs the operation
+
+### Item 9: Never call virtual functions during construction or destruction
+
+* things to remember
+    * don't call virtual functions during construction or destruction, because
+      such calls will never go to a more derived class than that of the
+      currently executing constructor or destructor
+
+### Item 10: Have assignment operators return a reference to `*this`
+
+* things to remember
+    * have assignment operators return a reference to *this
+
+### Item 11: Handle assignment to self in `operator=`
+
+* things to remember
+    * make sure `operator=` is well-behaved when an object is assigned to
+      itself; techniques include comparing addresses of source and target
+      objects, careful statement ordering, and copy-and-swap
+    * make sure that any function operating on more than one object behaves
+      correctly if two or more of the objects are the same
+
+### Item 12: Copy all parts of an object
+
+* things to remember
+    * copying functions should be sure to copy all of an object's data members
+      and all of its base class parts
+    * don't try to implement one of the copying functions in terms of the other;
+      instead, put common functionality in a third function that both call
+
+## Chapter 3: Resource Management
+
+### Item 13: Use objects to manage resources
+
+* things to remember
+    * to prevent resource leaks, use RAII objects that acquire resources in
+      their constructors and release them in their destructors
+    * two commonly useful RAII classes are `tr1::shared_ptr` and `auto_ptr`;
+      `tr1::shared_ptr` is usually the better choice, because its behavior when
+      copied is intuitive; copying an `auto_ptr` sets it to null
+
+### Item 14: Think carefully about copying behavior in resource-managing classes
+
+* things to remember
+    * copying an RAII object entails copying the resource it manages, so the
+      copying behavior of the resource determines the copying behavior of the
+      RAII object
+    * common RAII class copying behaviors are disallowing copying and performing
+      reference counting, but other behaviors are possible
+
+### Item 15: Provide access to raw resources in resource-managing classes
+
+* things to remember
+    * APIs often require access to raw resources, so each RAII class should
+      offer a way to get at the resource it manages
+    * access may be via explicit conversion or implicit conversion; in general,
+      explicit conversion is safer, but implicit conversion is more convenient
+      for clients
+
+### Item 16: Use the same form in corresponding uses of `new` and `delete`
+
+* things to remember
+    * if you use `[]` in a `new` expression, you must use `[]` in the
+      corresponding `delete` expression; if you don't use `[]` in a `new`
+      expression, you mustn't use `[]` in the corresponding `delete` expression
+
+### Item 17: Store `new`ed objects in smart pointers in standalone statements
+
+* things to remember
+    * store `new`ed objects in smart pointers in standalone statements; failure
+      to do this can lead to subtle resource leaks when exceptions are thrown
+
+## Chapter 4: Designs and Declarations
+
+### Item 18: Make interfaces easy to use correctly and hard to use incorrectly
+
+* things to remember
+    * good interfaces are easy to use correctly and hard to use incorrectly;
+      your should strive for these characteristics in all your interfaces
+    * ways to facilitate correct use include consistency in interfaces and
+      behavioral compatibility with built-in types
+    * ways to prevent errors include creating new types, restricting operations
+      on types, constraining object values, and eliminating client resource
+      management responsibilities
+    * `tr1::shared_ptr` supports custom deleters; this prevents the cross-DLL
+      problem, can be used to automatically unlock mutexes (see Item 14), etc.
+
+### Item 19: Treat class design as type design
+
+* questions
+    * How should objects of your new type be created and destroyed?
+    * How should object initialization differ from object assignment?
+    * What does it mean for objects of your new type to be passed by value?
+    * What are the restrictions on legal values for your new type?
+    * Does your new type fit into an inheritance graph?
+    * What kind of type conversions are allowed for your new type?
+    * What operators and functions make sense for the new type?
+    * What standard functions should be disallowed?
+    * Who should have access to the members of your new type?
+    * What is the “undeclared interface” of your new type?
+    * How general is your new type?
+    * Is a new type really what you need?
+* things to remember
+    * class design is type design; before defining a new type, be sure to
+      consider all the issues discussed in this Item
+
+### Item 20: Prefer pass-by-reference-to-`const` to pass-by-value
+
+* things to remember
+    * prefer pass-by-reference-to-`const` over pass-by-value; it's typically
+      more efficient and it avoids the slicing problem
+    * the rule doesn't apply to built-in types and STL iterator and function
+      object types; for them, pass-by-value is usually appropriate
+
+### Item 21: Don't try to return a reference when you must return an object
+
+* things to remember
+    * never return a pointer or reference to a local stack object, a reference
+    to a heap-allocated object, or a pointer or reference to a local static
+    object if there is a chance that more than one such object will be needed;
+    (Item 4 provides an example of a design where returning a reference to a
+    local static is reasonable, at least in single-threaded environments)
+
+### Item 22: Declare data members `private`
+
+* things to remember
+    * declare data members `private`; it gives clients syntactically uniform
+      access to data, affords fine-grained access control, allows invariants to
+      be enforced, and offers class authors implementation flexibility
+    * `protected` is no more encapsulated than `public`
+
+### Item 23: Prefer non-member non-friend functions to member functions
+
+* things to remember
+    * prefer non-member non-friend functions to member functions; doing so
+      increases encapsulation, packaging flexibility, and functional
+      extensibility
+
+### Item 24: Declare non-member functions when type conversions should apply to all parameters
+
+* things to remember
+    * if you need type conversions on all parameters to a function (including
+      the one pointed to by the this pointer), the function must be a non-member
+
+### Item 25: Consider support for a non-throwing `swap`
+
+* things to remember
+    * provide a `swap` member function when `std::swap` would be inefficient for
+      your type; make sure your `swap` doesn't throw exceptions
+    * if you offer a member `swap`, also offer a non-member `swap` that calls
+      the member; for classes (not templates), specialize `std::swap`, too
+    * when calling `swap`, employ a using declaration for `std::swap`, then call
+      swap without namespace qualification
+    * it's fine to totally specialize `std` templates for user-defined types,
+      but never try to add something completely new to `std`
+
+## Chapter 5: Implementations
+
+### Item 26: Postpone variable definitions as long as possible
+
+* things to remember
+    * postpone variable definitions as long as possible; it increases program
+      clarity and improves program efficiency
+
+### Item 27: Minimize casting
+
+* things to remember
+    * avoid casts whenever practical, especially `dynamic_casts` in
+      performance-sensitive code; if a design requires casting, try to develop
+      a cast-free alternative
+    * when casting is necessary, try to hide it inside a function; clients can
+      then call the function instead of putting casts in their own code
+    * prefer C++-style casts to old-style casts; they are easier to see, and
+      they are more specific about what they do
+
+### Item 28: Avoid returning “handles” to object internals
+
+* things to remember
+    * avoid returning handles (references, pointers, or iterators) to object
+      internals; it increases encapsulation, helps `const` member functions act
+      `const`, and minimizes the creation of dangling handles
