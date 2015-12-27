@@ -648,3 +648,116 @@ using.
     * avoid returning handles (references, pointers, or iterators) to object
       internals; it increases encapsulation, helps `const` member functions act
       `const`, and minimizes the creation of dangling handles
+
+### Item 29: Strive for exception-safe code
+
+* exception safety requirements
+    * leak no resources
+    * don't allow data structures to become corrupted
+* types of guarantees if exception
+    * the basic guarantee: everything in the program remains in a *valid* state
+    * the strong guarantee: the state of the program is *unchanged*
+    * the nothrow guarantee: never throw exceptions
+* things to remember
+    * exception-safe functions leak no resources and allow no data structures
+      to become corrupted, even when exceptions are thrown; such functions
+      offer the basic, strong, or nothrow guarantees
+    * the strong guarantee can often be implemented via copy-and-swap, but the
+      strong guarantee is not practical for all functions
+    * a function can usually offer a guarantee no stronger than the weakest
+      guarantee of the functions it calls
+
+### Item 30: Understand the ins and outs of inlining
+
+* implicit: member functions in class definitions
+* explicit: with `inline` keyword
+* inlining pros
+    * no function calls
+    * potentially *smaller* object code
+* inlining cons
+    * cost: code bloat if overzealous
+    * debuggers usually can't work with inlined functions
+    * forces clients of libraries to recompile or at least relink when library
+      with inlined functions changes
+    * compilers may generate a function body for seemingly empty functions
+      (e.g. derived class ctors)
+    * inline functions must typically be in header files (most compilers do
+      inlining during compilation)
+    * function templates need to be inlined! (but are typically in header files
+      as well)
+* strategy
+    * don't inline anything initially
+    * or inline truly trivial and functions meant to be inlined (Item 46)
+    * meant for hand optimization *after* done with debugging
+    * 80-20 rule: typtical programs spend 80% of their time executing only 20%
+      of their code
+* things to remember
+    * limit most inlining to small, frequently used functions
+        * facilitates debugging and binary upgradability
+        * minimizes potential code bloat
+        * maximizes chances of greater program speed
+    * don't delcare function templates `inline` just because they appear in
+      header files
+
+### Item 31: Minimize compilation dependencies between files
+
+* C++ doesn't do a good job of separating *interfaces* from *implementations*
+* a class definition specifies not only a class interface but also a fair
+  amount of implementation details (e.g. data members which are defined
+  somewhere else)
+* can't forward-declare everything because compilers need to know the size of
+  objects during compilation
+* *never* forward-declare std types/objects
+* `pimpl` (pointer to implementation, a.k.a. *Handle* class)
+    * a design where a main class contains as a data member nothing but a
+    * pointer to its implementation class
+* to minimize compilation dependencies, replace dependencies on *definitions*
+  with dependencies on *declarations*
+    * make your header files safe sufficient when practical
+    * depend on declarations in other files, not definitions
+* avoid using objects when object references and pointers will do
+    * you may define refs and ptrs to a type with only a declaration for the
+      type
+    * defining *objects* of a type necessitates the presence of the type's
+      definition
+* depend on class declarations instead of class definitions whenever you can
+    * you *never* need a class definition to declare a function using that
+        class
+    * not even if the function passes or returns the class type by value
+* provide separate header files for declarations and definitions
+* *Interface* class: a special kind of abstract base class
+    * specifies an interface for derived classes
+    * no data members and ctors
+    * has virtual dtor
+    * has a set of pure virtual functions which specify the interface
+    * clients use ptrs and refs to Interface class
+    * like in *Handle* class, no recompilation is needed unless *Interface*
+      class's interface is modified
+    * new objects are created using a factory function (a.k.a *virtual ctor*)
+        * returns (smart) ptr to dynamically-allocated objects to *Interface*
+          class
+        * `static` inside the Interface class
+* ways to implement an *Interface* class
+    * inherit interface spec from the Interface class
+    * implement the functions in the interface
+    * or use multiple inheritance
+* *Interface* and *Handle* classes summary
+    * decouple interfaces from implementations reducing compilation
+      dependencies b/w files
+    * Handle class cost
+        * member functions must go through the implementation ptr to get to the
+          object's data
+        * object size increases due to ptrs
+        * need to init implementation ptr
+    * Interface class cost
+        * every function call is virtual
+        * objects derived from Interface class must contain a virtual table
+          pointer which increases object size
+    * neither one can make use of inline functions (inline function definitions
+      must be in header files and both approaches try to hide implementation
+      as much as possible)
+* things to remember
+    * minimize compilation dependencies by depending on declaration instead of
+      definitions (use Handle and Interface classes)
+    * library header files should exist in full and declaration-only forms
+      (regardless of whether templates are involved)

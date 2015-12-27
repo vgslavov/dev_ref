@@ -84,6 +84,31 @@
     * `git clean -f <path>`: remove only files in <path>
     * `git clean -df`: remove both untracked files and dirs
     * `git clean -xf`: remove untracked files and ignored files
+* `git commit --amend`
+    * combine *staged changes* with last (previous) commit to create a *brand*
+      *new* commit
+    * *never* amend public commits!
+    * don't change last commit msg: `git commit --amend --no-edit`
+* `git rebase`
+    * move a branch to a new base commit in order to maintain a linear project
+      history
+    * *common way* to integrate upstream changes into a local repo
+    * `git rebase <base>`: where <base> can be
+        * ID
+        * branch name
+        * tag
+        * relative ref to HEAD
+    * options when master branch has progressed since branch started
+        * merge directly: 3-way merge + merge commit
+        * rebasing and then merging: fast-forward merge (resulting in linear
+          history)
+    * *never* rebase public commits!
+    * `git rebase -i <base>`: interactive rebasing (alter individual commits)
+        * gives complete control over project history
+        * use to polish a feature branch before merging in master
+* `git reflog`
+    * show reflog (history of HEAD changes, branch checkouts, merges, etc.)
+    * show reflog with relative dates: `git reflog --relative-date`
 
 ```
 # create empty repo w/o working dir (for central repos, not for development)
