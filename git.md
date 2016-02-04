@@ -29,6 +29,34 @@
     * `git log <since>..<until>`: show commit log b/w 2 commits
     * `git log --oneline master..some-feature`: show all commits which are in
       some-feature branch but not in master
+* misc
+```
+# create empty repo w/o working dir (for central repos, not for development)
+# dir usually ends in .git
+git init --bare <dir>
+
+# stage chunks of a file interactively
+git add -p
+
+# add and commit tracked files only
+git commit -am "msg"
+
+# show which files were altered
+git log --stat
+
+# show patch/diff
+git log -p
+
+# filter log
+git log --author="<pattern>"
+git log --grep="<pattern>"
+
+# specific file only
+git log myfile.py
+```
+
+### Undoing Changes
+
 * undo
     * unstage: `git reset HEAD <file>`
     * discard changes in work dir: `git checkout -- <file>`
@@ -84,6 +112,9 @@
     * `git clean -f <path>`: remove only files in <path>
     * `git clean -df`: remove both untracked files and dirs
     * `git clean -xf`: remove untracked files and ignored files
+
+### Rewriting History
+
 * `git commit --amend`
     * combine *staged changes* with last (previous) commit to create a *brand*
       *new* commit
@@ -110,30 +141,57 @@
     * show reflog (history of HEAD changes, branch checkouts, merges, etc.)
     * show reflog with relative dates: `git reflog --relative-date`
 
-```
-# create empty repo w/o working dir (for central repos, not for development)
-# dir usually ends in .git
-git init --bare <dir>
+### Syncing
 
-# stage chunks of a file interactively
-git add -p
-
-# add and commit tracked files only
-git commit -am "msg"
-
-# show which files were altered
-git log --stat
-
-# show patch/diff
-git log -p
-
-# filter log
-git log --author="<pattern>"
-git log --grep="<pattern>"
-
-# specific file only
-git log myfile.py
-```
+* `git remote`
+    * `git remote -v`: see all remotes
+    * `git remote add <name> <url>`: add remote origin
+    * `git remote rm <name>`: remove remote origin
+    * `git remote rename <old-name> <new-name>`: rename remote origin
+* `git fetch`
+    * `git fetch <remote> <branch>`: fetch a remote branch to inspect
+       (can checkout locally)
+    * to explore origin changes before merging
+        * `git fetch origin`: fetch remote's master branch w/o merging
+        * `git log --oneline master..origin/master`: see new commits
+        * `git checkout master`: go to master branch
+        * `git log origin/master`: see log
+        * `git merge origin/master`: merge
+* `git pull`
+    * `git pull <remote>`: fetch and merge
+        * `git fetch <remote>`
+        * `git merge origin/<current-branch>`
+    * `git pull --rebase <remote>`: rebase instead of merge
+        * to ensure a linear history (prevents unnecessary merge commits)
+    * `git config --global branch.autosetuprebase always`: turn on rebasing
+      during a pull
+    * move local changes onto pulled ones
+        * `git checkout master`
+        * `git pull --rebase origin`
+* `git push`
+    * `git push <remote> <branch>`: push branch
+        * creates a local branch in dest repo
+        * prevents push if merge in dest repo is non-fast-forward
+        * if remote history has diverged, pull remote and then push again
+    * `git push <remote> --force`: force push
+        * **dangerous** and **destructive**
+        * merge in dest repo even if merge is non-fast-forward
+        * it will **delete** upstream changes and make remote repo the same as
+          local one
+        * use case
+            * just committed something which nobody else has pulled
+            * then did `git commit --amend` or interactive rebase
+            * and now `git push --force` to overwrite remote
+    * `git push <remote> --all`: push all local branches to remote
+    * `git push <remote> --tags`: push tags too
+    * only push to bare repos, never push to a normal one
+    * example
+        * `git checkout master`: be in master branch
+        * `git fetch origin master`: fetch w/o merging
+        * `git rebase -i origin/master`: clean up/squash commits using
+          interactive rebase of local commits on top of pulled ones
+          (instead of merging)
+        * `git push origin master`
 
 ## Commands
 
