@@ -193,6 +193,46 @@ git log myfile.py
           (instead of merging)
         * `git push origin master`
 
+### Using Branches
+
+* `git branch`
+    * `git branch`: list all branches
+    * `git branch <branch>`: create new branch w/o checking it out
+    * `git branch -d <branch>`: delete branch as long as no unmerged changes
+    * `git branch -D <branch>`: force delete branch with unmerged changes
+    * `git branch -m <branch>`: rename branch
+    * a branch is a ref/ptr to a commit
+    * the *tip* of a series of commits, not a *container* for commits
+* `git checkout`
+    * `git checkout <existing-branch>`: check out already created branch
+    * `git checkout -b <new-branch>`: check out new branch
+    * `git checkout -b <new-branch> <existing-branch>`: base new branch on
+      existing instead of current one
+    * development should always take place on a branch, *never* on a detached
+      HEAD as you can't merge those commits back into trunk
+* `git merge`
+    * merg *into* the current branch leaving the target branch unaffected
+    * `git merge <branch>`: merge specified branch into current branch
+    * `git merge --no-ff <branch>`: *always* generatea a merge commit (even on
+      fast-forward merges)
+    * a fast-forward merge
+        * moves the current branch tip up to the target branch tip
+        * use for small features and bug fixes
+    * a 3-way merge
+        * uses 3 commits to generate merge commit (2 branch tips + common
+          ancestor)
+        * resolving merging conflicts using edit/stage/commit workflow
+        * use for longer-running features
+        * to prevent 3-way merging (and superfluous merge commits)
+            * rebase
+            * do a fast-forward merge
+    * example
+        * `git checkout -b new-feature master`: create and checkout new branch
+        * edit/stage/commit
+        * `git checkout master`: got back to master
+        * `git merge new-feature`: merge new feature branch *into* master
+        * `git branch -d new-feature`: delete feature branch
+
 ## Commands
 
 ```
