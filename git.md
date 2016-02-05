@@ -233,6 +233,46 @@ git log myfile.py
         * `git merge new-feature`: merge new feature branch *into* master
         * `git branch -d new-feature`: delete feature branch
 
+### Workflows
+
+* Gitflow Workflow
+    * create empty develop branch
+        * `git branch develop`
+        * `git push -u origin develop`
+    * clone central repo and create a tracking branch
+        * `git clone <repo>`
+        * `git checkout -b develop origin/develop`
+    * base feature branches on develop, not master!
+        * `git checkout -b some-feature develop`
+    * pull request or merge in develop branch only!
+        * `git pull origin develop`: make sure up to date before merging
+        * `git checkout develop`
+        * `git merge some-feature`: in develop, not master!
+        * `git push
+        * `git branch -d some-feature`
+    * prepare a release
+        * `git checkout -b release-0.1 develop`
+    * finish the release by merging into `master` AND `develop`
+        * `git checkout master`
+        * `git merge release-0.1`
+        * `git push`
+        * `git checkout develop`
+        * `git merge release-0.1`
+        * `git push`
+        * `git branch -d release-0.1`
+        * `git tag -a 0.1 -m "initial public release" master`: tag release
+        * `git push --tags`
+    * bug fixes get merged directly into `master` AND `develop`
+        * `git checkout -b issue-#001 master`: base off of master
+        * edit/stage/commit
+        * `git checkout master`
+        * `git merge issue-#001`
+        * `git push`
+        * `git checkout develop`: merge in develop too!
+        * `git merge issue-#001`
+        * `git push`
+        * `git branch -d issue-#001`
+
 ## Commands
 
 ```
