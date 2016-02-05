@@ -137,6 +137,8 @@ git log myfile.py
     * `git rebase -i <base>`: interactive rebasing (alter individual commits)
         * gives complete control over project history
         * use to polish a feature branch before merging in master
+   * `git rebase --continue`: continue rebase after resolving conflicts
+   * `git rebase --abort`: abort rebase; will rollback to state before rebase cmd
 * `git reflog`
     * show reflog (history of HEAD changes, branch checkouts, merges, etc.)
     * show reflog with relative dates: `git reflog --relative-date`
@@ -184,6 +186,9 @@ git log myfile.py
             * and now `git push --force` to overwrite remote
     * `git push <remote> --all`: push all local branches to remote
     * `git push <remote> --tags`: push tags too
+    * `git push -u origin my-feature`
+      * push a local branch as a remote tracking branch
+      * specify `-u origin my-feature` first time only
     * only push to bare repos, never push to a normal one
     * example
         * `git checkout master`: be in master branch
