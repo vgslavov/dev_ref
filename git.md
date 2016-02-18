@@ -170,6 +170,10 @@ git log myfile.py
     * move local changes onto pulled ones
         * `git checkout master`
         * `git pull --rebase origin`
+    * if a `git pull upstream develop` does a merge commit
+        * `git reset --hard HEAD~1`: remove last merged commit (only if you haven't pushed)
+        * `git pull --rebase updtream develop`: fetch and rebase upstream (canonical repo) instead of merge
+        * `git pull --rebase`: fetch and rebase origin (forked repo)
 * `git push`
     * `git push <remote> <branch>`: push branch
         * creates a local branch in dest repo
