@@ -151,6 +151,7 @@
       the start of the current line
     * `g` is for all instances in a file (`:%s`) or a line (`:s`) (*global*)
     * `c` is for *confirmation*
+    * `:%s/|/[Ctrl+V][Ctrl+M]/g`: *substitute* all `|` with new lines
 * Text objects (perform actions/verbs against complex targets/nouns)
     * `iw`: *inside word* (doesn't get spaces)
     * `aw`: *around word* (gets spaces around)
