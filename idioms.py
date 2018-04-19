@@ -27,6 +27,12 @@ Sources:
 - The Hitchhiker's Guide to Python
 - Generator tutorials (by David Beazley)
 - stackoverflow.com
+
+Links:
+https://jeffknupp.com/writing-idiomatic-python-ebook/
+https://docs.quantifiedcode.com/python-anti-patterns/index.html
+http://book.pythontips.com/en/latest/index.html
+http://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/
 '''
 
 
