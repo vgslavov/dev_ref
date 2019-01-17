@@ -178,6 +178,9 @@ with open('file.txt') as f:
     for line in f:
         print(line)
 
+# read file as a string
+contents = ''.join(open('file.txt').read().splitlines())
+
 # line continuation
 long_string = (
     "For a long time I used to go to bed early. Sometimes, "
