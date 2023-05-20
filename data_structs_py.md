@@ -4,57 +4,151 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Deque (double-ended queue)](#deque-double-ended-queue)
-- [Heapq (heap, priority queue)](#heapq-heap-priority-queue)
+- [Sources](#sources)
+- [`list`](#list)
+  - [List](#list)
+  - [Stack](#stack)
+  - [Comprehensions](#comprehensions)
+- [Tuples](#tuples)
+- [`deque`](#deque)
+- [`heapq` algorithm](#heapq-algorithm)
   - [Create](#create)
   - [Sort](#sort)
   - [Get N largest/smallest](#get-n-largestsmallest)
   - [Use as a priority queue](#use-as-a-priority-queue)
-- [Dict](#dict)
+- [`set`](#set)
+- [`dict`](#dict)
   - [`multidict`](#multidict)
   - [`ordereddict`](#ordereddict)
-  - [Using for calculations](#using-for-calculations)
+  - [Calculations](#calculations)
+- [Looping](#looping)
+- [Conditions & Comparisons](#conditions--comparisons)
+- [Sorting](#sorting)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Deque (double-ended queue)
+## Sources
 
+* [Python Data Structures](https://docs.python.org/3/tutorial/datastructures.html)
+* Python Cookbook (by David Beazley)
+
+## `list`
+
+* *homogeneous* sequence of elements
+* mutable
+* accessed by iterating
+
+### List
+
+* `del`
+    * `del a[0]`: delete 0th index
+    * `del a[2:4]`: delete slice of [2 to 4)
+    * `del a[:]`: delete all elements (same as `clear`)
+    * `del a`: delete variable
+* `sort`: sort *in place* (cmp to `sorted()`: creates new)
+* `reverse`: reverse *in place*
+* `copy`: shallow copy
+* deep copy
+    * `b = list(a)`
+    * `c = a[:]`
+
+### Stack
+
+* LIFO
+```
+stack = []
+# push
+stack.append(6)
+stack.append(8)
+# pop
+stack.pop()
+```
+
+### Comprehensions
+
+> A list comprehension consists of brackets containing an expression followed by
+> a for clause, then zero or more for or if clauses.
+- Python Docs
+
+* simple
+```
+squares = [x**2 for x in range(10)]
+# same as
+squares = list(map(lambda x: x**2, range(10)))
+```
+* nested
+```
+matrix = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+]
+
+[[row[i] for row in matrix] for i in range(4)]
+# same as
+list(zip(*matrix))
+```
+
+## Tuples
+
+* can be nested
+* immutable
+* can contain mutable objects (e.g. lists): `([1, 2, 3], [3, 2, 1])`
+* *heterogeneous* sequence of elements
+* accessed by unpacking or indexing
+* empty tuple: `empty = ()`
+* singleton: `singleton = 'hello',`
+* tuple packing: `t = 12345, 54321, 'hello'`
+* sequence unpacking: `x, y, z = t`
+
+## `deque`
+
+* queue (FIFO)
 ```
 import collections
 
 q = deque(maxlen=3)
+# add to end of queue
 q.append(5)                 # O(1)
 q.appendleft(3)             # O(1)
+# remove from end of queue
 q.pop()                     # O(1)
+# remove from beginning of queue
 q.popleft()                 # O(1)
 ```
 
-## Heapq (heap, priority queue)
+## `heapq` algorithm
 
-```
-import heapq
-
-# min-heap (heap[0] is smallest)
-# parent (is smaller): heap[k] > heap[math.floor((k-1)/2)]
-# left (is larger): heap[k] <= heap[2*k+1]
-# right (is larger): heap[k] <= heap[2*k+2]
-```
+* heap queue: a.k.a. priority queue
+* min-heap: `heap[0]` is smallest
+* parent (is smaller): `heap[k] > heap[math.floor((k-1)/2)]`
+* left (is larger): `heap[k] <= heap[2*k+1]`
+* right (is larger): `heap[k] <= heap[2*k+2]`
+* differences from textbook algorithms
+    * 0-based indexing
+    * pop returns smallest (i.e. min heap)
+* a regular Python list
+    * `heap[0]` is smallest item
+    * `heap.sort()` maintains heap invariant
+    * start with empty `[]`
+    * or `heapq.heapify(l)` existing list in O(N) time
 
 ### Create
 
 ```
-nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
-import heapq
-heap = list(nums)           # deep copy of list
-heapq.heapify(heap)         # O(N)
-heap                        # [-4, 2, 1, 23, 7, 2, 18, 23, 42, 37, 8]
-heapq.heappop(heap)         # O(log N)
--4
+h = list(nums)           # deep copy of list
+heapq.heapify(h)         # O(N): create heap from list
+heapq.heappop(h)         # O(log N): return smallest element & remove it
+heapq.heappush(h, 1)     # O(log N)? add element to heap
+heapq.heappushpop(h, 1)  # push then pop smallest: more efficient
+heapq.heapreplacel(h, 1) # pop smallest then push: more efficient
 ```
 
 ### Sort
 
 ```
+import heapq
+
 def heapsort(iterable):
     'Equivalent to sorted(iterable)'
     h = []
@@ -104,7 +198,42 @@ heappush(h, (-5, index, 'write code'))
 index += 1
 ```
 
-## Dict
+## `set`
+
+* an unordered collection with no duplicate elements
+* uses
+    * membership testing
+    * eliminating duplicates
+* operations
+    * union: `|`
+    * intersection: `&`
+    * difference: `-`
+    * symmetric difference (a.k.a. XOR): `^`
+* empty set: `set()` (not `{}`)
+* set comprehension
+```
+a = {x for x in 'abracadabra' if x not in 'abc'}
+```
+
+## `dict`
+
+* indexed by keys
+* keys can be strings or numbers
+* keys have to be immutable only (e.g. tuples but not lists)
+* keys are unique
+* *key: value* pairs
+* empty dictionary: `{}`
+* `dict()`
+    * build dictionary (same as `{}`)
+    * use keys: `dict(id=1234, ext=212)`
+* list of `dict` keys (in insert order): `list(d)`
+* sorted list of `dict` keys: `sorted(d)`
+* check membership: `'hello' in d`
+* `del d['hello']`: delete key
+* dict comprehension
+```
+{x: x**2 for x in (2, 4, 6)}
+```
 
 ### `multidict`
 
@@ -159,7 +288,7 @@ import json
 json.dumps(d)  # '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ```
 
-### Using for calculations
+### Calculations
 
 ```
 # (invert dict into (value, key) pairs using zip())
@@ -194,4 +323,117 @@ a.items() & b.items()
 # make a new dictionary with certain keys removed
 c = {key:a[key] for key in a.keys() - {'z', 'w'}}
 # c is {'x': 1, 'y': 2}
+```
+
+## Looping
+
+* `dict`
+```
+for k, v in d.items():
+    print(k, v)
+```
+* `list`
+```
+for i, v in enumerate(l):
+    print(i, v)
+```
+* multiple sequences
+```
+for q, a in zip(questions, answers):
+    print('{0}? {1}'.format(q, a))
+```
+* reverse loop
+```
+for i in reversed(range(1, 10, 2)):
+    print(i)
+```
+* sorted loop
+```
+for i in sorted(l):
+    print(i)
+```
+* sorted & unique loop
+```
+for f in sorted(set(l)):
+    print(f)
+```
+
+## Conditions & Comparisons
+
+* membership: `in`, `not in`
+* identity (same obj): `is`, `is not`
+* equality (same value): `==`
+* chaining: `a < b == c`
+* logical: `and`, `or`
+* `A and not B or C` == `(A and (not B)) or C`
+* *short-circuit* operators: `A and B and C` (C is not evaluated if B is false)
+* *lexicographical* ordering of comparisons: 1st two items are compared & so on
+```
+(1, 2, 3)              < (1, 2, 4)
+[1, 2, 3]              < [1, 2, 4]
+'ABC' < 'C' < 'Pascal' < 'Python'
+(1, 2, 3, 4)           < (1, 2, 4)
+(1, 2)                 < (1, 2, -1)
+(1, 2, 3)             == (1.0, 2.0, 3.0)
+(1, 2, ('aa', 'ab'))   < (1, 2, ('abc', 'a'), 4)
+```
+
+## Sorting
+
+* `sorted()`
+    * returns new sorted iterable
+    * works for any iterable
+* `list.sort()`
+    * in-place sort
+    * `list` only
+    * more efficient than `sorted()`
+* key functions
+```
+sorted("This is a test string from Andrew".split(), key=str.lower)
+
+sorted(student_tuples, key=lambda student: student[2])
+# same as
+from operator import itemgetter, attrgetter
+sorted(student_tuples, key=itemgetter(2))
+
+sorted(student_objects, key=lambda student: student.age)
+# same as
+sorted(student_objects, key=attrgetter('age'))
+
+# multi-level sorting
+sorted(student_objects, key=attrgetter('grade', 'age'))
+```
+* ascending by default, descending using `reverse`
+```
+sorted(student_tuples, key=itemgetter(2), reverse=True)
+# same as
+list(reversed(sorted(reversed(data), key=itemgetter(2))))
+```
+* guaranteed to be stable: preserve order of same key records
+* multisort
+```
+s = sorted(student_objects, key=attrgetter('age'))     # sort on secondary key
+sorted(s, key=attrgetter('grade'), reverse=True)       # now sort on primary key, descending
+
+# same as
+def multisort(xs, specs):
+    for key, reverse in reversed(specs):
+        xs.sort(key=attrgetter(key), reverse=reverse)
+    return xs
+
+multisort(list(student_objects), (('grade', True), ('age', False)))
+```
+* Decorate-Sort-Undecorate (DSU)
+```
+decorated = [(student.grade, i, student) for i, student in enumerate(student_objects)]
+decorated.sort()
+[student for grade, i, student in decorated]               # undecorate
+```
+* define `__lt__` in user-defined classes
+```
+Student.__lt__ = lambda self, other: self.age < other.age
+```
+* using keys from another dict
+```
+sorted(students, key=newgrades.__getitem__)
 ```
