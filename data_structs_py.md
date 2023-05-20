@@ -1,4 +1,25 @@
-# 1. Deque (double-ended queue)
+# Data Structures in Python
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Deque (double-ended queue)](#deque-double-ended-queue)
+- [Heapq (heap, priority queue)](#heapq-heap-priority-queue)
+  - [Create](#create)
+  - [Sort](#sort)
+  - [Get N largest/smallest](#get-n-largestsmallest)
+  - [Use as a priority queue](#use-as-a-priority-queue)
+- [Dict](#dict)
+  - [`multidict`](#multidict)
+  - [`ordereddict`](#ordereddict)
+  - [Using for calculations](#using-for-calculations)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Deque (double-ended queue)
+
+```
 import collections
 
 q = deque(maxlen=3)
@@ -6,17 +27,22 @@ q.append(5)                 # O(1)
 q.appendleft(3)             # O(1)
 q.pop()                     # O(1)
 q.popleft()                 # O(1)
+```
 
-# 2. Heapq (heap, priority queue)
+## Heapq (heap, priority queue)
+
+```
 import heapq
 
 # min-heap (heap[0] is smallest)
 # parent (is smaller): heap[k] > heap[math.floor((k-1)/2)]
 # left (is larger): heap[k] <= heap[2*k+1]
 # right (is larger): heap[k] <= heap[2*k+2]
+```
 
-# 2.1 create
+### Create
 
+```
 nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
 import heapq
 heap = list(nums)           # deep copy of list
@@ -24,9 +50,11 @@ heapq.heapify(heap)         # O(N)
 heap                        # [-4, 2, 1, 23, 7, 2, 18, 23, 42, 37, 8]
 heapq.heappop(heap)         # O(log N)
 -4
+```
 
-# 2.2 sort
+### Sort
 
+```
 def heapsort(iterable):
     'Equivalent to sorted(iterable)'
     h = []
@@ -36,9 +64,11 @@ def heapsort(iterable):
 
 heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
 # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
 
-# 2.3 get N largest/smallest
+### Get N largest/smallest
 
+```
 nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
 print(heapq.nlargest(3, nums)) # Prints [42, 37, 23]
 print(heapq.nsmallest(3, nums)) # Prints [-4, 1, 2]
@@ -51,9 +81,11 @@ elif N ~ len(nums):
     sorted(nums)[-N:]
     # N largest
     sorted(nums)[:N]
+```
 
-# 2.4 use as a priority queue
+### Use as a priority queue
 
+```
 h = []
 heappush(h, (5, 'write code'))
 heappush(h, (7, 'release product'))
@@ -70,10 +102,13 @@ heappop(h) # (1, 'write spec')
 index = 0
 heappush(h, (-5, index, 'write code'))
 index += 1
+```
 
-# 3. Dict
+## Dict
 
-# 3.1 multidict
+### `multidict`
+
+```
 from collections import defaultdict
 
 d = {
@@ -101,8 +136,11 @@ e['b'].add(4)
 d = defaultdict(list)
 for key, value in pairs:
     d[key].append(value)
+```
 
-# 3.2 ordereddict
+### `ordereddict`
+
+```
 from collections import OrderedDict
 
 # - preserves original insertion order (useful for serializing/encoding to JSON)
@@ -119,8 +157,11 @@ for key in d:
 
 import json
 json.dumps(d)  # '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
+```
 
-# 3.3 using for calculations
+### Using for calculations
+
+```
 # (invert dict into (value, key) pairs using zip())
 
 prices = {
@@ -153,3 +194,4 @@ a.items() & b.items()
 # make a new dictionary with certain keys removed
 c = {key:a[key] for key in a.keys() - {'z', 'w'}}
 # c is {'x': 1, 'y': 2}
+```
