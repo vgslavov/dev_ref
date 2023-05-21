@@ -326,13 +326,15 @@ def __str__(self):
 * prefer **generator expressions** to **list comprehensions** for a simple iteration
 * bad: list comprehension (uses [])
 ```
-for uppercase_name in [name.upper() for name in get_all_usernames()]:
+names = [name.upper() for name in get_all_usernames()]
+for uppercase_name in names:
     process_normalized_username(uppercase_name)
 ```
 * best: generator expression (uses ())
-* generates elements on-demand
+* generates elements on-demand: faster
 ```
-for uppercase_name in (name.upper() for name in get_all_usernames()):
+names = (name.upper() for name in get_all_usernames())
+for uppercase_name in names:
     process_normalized_username(uppercase_name)
 ```
 * sum up last column in a large file

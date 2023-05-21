@@ -9,7 +9,7 @@
   - [List](#list)
   - [Stack](#stack)
   - [Comprehensions](#comprehensions)
-- [Tuples](#tuples)
+- [`tuple`](#tuple)
 - [`deque`](#deque)
 - [`heapq` algorithm](#heapq-algorithm)
   - [Create](#create)
@@ -31,6 +31,7 @@
 ## Sources
 
 * [Python Data Structures](https://docs.python.org/3/tutorial/datastructures.html)
+* [Sorting HOW TO](https://docs.python.org/3/howto/sorting.html)
 * Python Cookbook (by David Beazley)
 
 ## `list`
@@ -90,7 +91,7 @@ matrix = [
 list(zip(*matrix))
 ```
 
-## Tuples
+## `tuple`
 
 * can be nested
 * immutable
@@ -344,6 +345,31 @@ c = {key:a[key] for key in a.keys() - {'z', 'w'}}
 # c is {'x': 1, 'y': 2}
 ```
 
+## `itertools`
+
+* `groupby`: group records based on field
+```
+rows = [
+        {'address': '5412 N CLARK', 'date': '07/01/2012'},
+        {'address': '5148 N CLARK', 'date': '07/04/2012'},
+        {'address': '5800 E 58TH', 'date': '07/02/2012'}
+]
+
+from operator import itemgetter
+from itertools import groupby
+
+# have to sort by field 1st! 
+# (groupby only examines consecutive items)
+rows.sort(key=itemgetter('date'))
+
+# iterate over grouped by fields
+for date, items in groupby(rows, key=itemgetter('date')):
+    print(date)
+    for i in items:
+        print(i)
+```
+* `compress`
+
 ## Looping
 
 * `dict`
@@ -429,14 +455,22 @@ sorted(student_tuples, key=lambda student: student[2])
 from operator import itemgetter, attrgetter
 sorted(student_tuples, key=itemgetter(2))
 
+# for user-defined classes, use lambda or attrgetter
 sorted(student_objects, key=lambda student: student.age)
 # same as (use student.age)
 sorted(student_objects, key=attrgetter('age'))
-# different from above: gets student['age']
+
+# for dict, use itemgetter
 sorted(student_objects, key=itemgetter('age'))
 
 # multi-level sorting
 sorted(student_objects, key=attrgetter('grade', 'age'))
+
+# can apply min/max with both item & attr getters
+# rows is a dict with uuid key
+min(rows, key=itemgetter('uuid'))
+# users is an instance of class User with age attribute
+max(users, key=attrgetter('age')))
 ```
 * ascending by default, descending using `reverse`
 ```
