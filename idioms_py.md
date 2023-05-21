@@ -20,6 +20,7 @@
   - [Modules](#modules)
   - [Formatting](#formatting)
   - [Scripts](#scripts)
+- [Binary](#binary)
 - [Recipes](#recipes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
