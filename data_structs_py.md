@@ -18,8 +18,9 @@
   - [Use as a priority queue](#use-as-a-priority-queue)
 - [`set`](#set)
 - [`dict`](#dict)
-  - [`multidict`](#multidict)
-  - [`ordereddict`](#ordereddict)
+  - [`defaultdict`](#defaultdict)
+  - [`OrderedDict`](#ordereddict)
+  - [`Counter`](#counter)
   - [Calculations](#calculations)
 - [Looping](#looping)
 - [Conditions & Comparisons](#conditions--comparisons)
@@ -217,6 +218,7 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 
 ## `dict`
 
+* like C++ `unordered_map`
 * indexed by keys
 * keys can be strings or numbers
 * keys have to be immutable only (e.g. tuples but not lists)
@@ -235,11 +237,9 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 {x: x**2 for x in (2, 4, 6)}
 ```
 
-### `multidict`
+### `defaultdict`
 
 ```
-from collections import defaultdict
-
 d = {
     'a' : [1, 2, 3],
     'b' : [4, 5]
@@ -267,13 +267,13 @@ for key, value in pairs:
     d[key].append(value)
 ```
 
-### `ordereddict`
+### `OrderedDict`
 
+* like C++ `map`
+* preserves original insertion order (useful for serializing/encoding to JSON)
+* twice the size of a regular dict (implemented as a doubly-linked list)
 ```
 from collections import OrderedDict
-
-# - preserves original insertion order (useful for serializing/encoding to JSON)
-# - twice the size of a regular dict (implemented as a doubly-linked list)
 
 d = OrderedDict()
 d['foo'] = 1
@@ -288,11 +288,30 @@ import json
 json.dumps(d)  # '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ```
 
+### `Counter`
+
+* count most frequently occurring items in a *sequence*
+```
+words = [
+       'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+       'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the'
+]
+more_words = [ 'eyes', 'nose' ]
+
+from collections import Counter
+
+word_counts = Counter(words)
+word_counts.update(more_words)
+top_three = word_counts.most_common(3)
+b = Counter(other_words)
+c = word_counts + b         # combine counts
+d = word_counts - b         # subtract counts
+```
+
 ### Calculations
 
+* invert dict into (value, key) pairs using zip()
 ```
-# (invert dict into (value, key) pairs using zip())
-
 prices = {
    'ACME': 45.23,
    'AAPL': 612.78,
@@ -357,6 +376,16 @@ for i in sorted(l):
 for f in sorted(set(l)):
     print(f)
 ```
+* don't loop & push/pop over the same sequence
+```
+# wrong
+for e in stack:
+    stack.pop()
+
+# right
+while len(stack):
+    stack.pop()
+```
 
 ## Conditions & Comparisons
 
@@ -387,8 +416,12 @@ for f in sorted(set(l)):
     * in-place sort
     * `list` only
     * more efficient than `sorted()`
-* key functions
+* `key` functions
 ```
+# by length
+sorted(['table', 'fish', 'apartment'], key=len)
+
+# split & make lower case
 sorted("This is a test string from Andrew".split(), key=str.lower)
 
 sorted(student_tuples, key=lambda student: student[2])
@@ -397,8 +430,10 @@ from operator import itemgetter, attrgetter
 sorted(student_tuples, key=itemgetter(2))
 
 sorted(student_objects, key=lambda student: student.age)
-# same as
+# same as (use student.age)
 sorted(student_objects, key=attrgetter('age'))
+# different from above: gets student['age']
+sorted(student_objects, key=itemgetter('age'))
 
 # multi-level sorting
 sorted(student_objects, key=attrgetter('grade', 'age'))
