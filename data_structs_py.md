@@ -22,9 +22,11 @@
   - [`OrderedDict`](#ordereddict)
   - [`Counter`](#counter)
   - [Calculations](#calculations)
+- [`itertools`](#itertools)
 - [Looping](#looping)
 - [Conditions & Comparisons](#conditions--comparisons)
 - [Sorting](#sorting)
+- [Searching](#searching)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -505,4 +507,14 @@ Student.__lt__ = lambda self, other: self.age < other.age
 * using keys from another dict
 ```
 sorted(students, key=newgrades.__getitem__)
+```
+
+## Searching
+
+* `bisect`
+```
+# binary search
+i = bisect.bisect_left(v, k)
+if i < len(v) and v[i] == k:
+    return True
 ```
