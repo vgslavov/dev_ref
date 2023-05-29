@@ -20,6 +20,7 @@
   - [Modules](#modules)
   - [Formatting](#formatting)
   - [Scripts](#scripts)
+  - [Exceptions](#exceptions)
 - [Binary](#binary)
 - [Recipes](#recipes)
 
@@ -122,6 +123,9 @@ if attr is None:
 
 ### `if/for/else` statements
 
+* contains: `if in items:`
+* iterable: `for x in items:`
+* implement `__contains__` in user-defined classes
 ```
 # compound if
 if name in ('Tom', 'Tim'):
@@ -165,8 +169,8 @@ def make_api_call(foo, bar, baz, *args, **kwargs):
 ```
 * unpacking args
 ```
-for index, item in enumerate(some_list):
-    print('{} {}'.format(index, item))
+for i, item in enumerate(some_list):
+    print('{} {}'.format(i, item))
 
 # swapping w/o temp vars
 a, b = b, a
@@ -434,8 +438,9 @@ SECRET_KEY = 42
 ### Scripts
 
 * run with `#!/usr/bin/env python3`
-* use sys.exit in scripts to return proper error codes
+* use `sys.exit` in scripts to return proper error codes
   (allows running script in UNIX pipes)
+* make script both importable & executable
 ```
 def main():
     import sys
@@ -462,9 +467,22 @@ if __name__ == '__main__':
 # when run directly: only code under if will be executed
 ```
 
+### Exceptions
+
+* prefer EAFP (Easier to Ask for Permission) to LYBL (Look Before You Leap)
+* exceptions are not expensive
+* don't check for specific types, rely on duck typing
+```
+d = {'x': '5'}
+try:
+    value = int(d['x'])
+except (KeyError, TypeError, ValueError):
+    value = None
+```
+
 ## Binary
 
-* Python has no *unsighed* data types!
+* Python has no *unsigned* data types!
 * right-most bit is least-significant (LSB)
 * LSB determines if number is odd or even: 2^0 = 1
   (all other bits are even: 2^1, 2^2, etc.)

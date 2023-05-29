@@ -136,6 +136,7 @@ q.popleft()                 # O(1)
     * `heap.sort()` maintains heap invariant
     * start with empty `[]`
     * or `heapq.heapify(l)` existing list in O(N) time
+* every sorted list satisfies the heap property!
 
 ### Create
 
@@ -145,7 +146,7 @@ heapq.heapify(h)         # O(N): create heap from list
 heapq.heappop(h)         # O(log N): return smallest element & remove it
 heapq.heappush(h, 1)     # O(log N)? add element to heap
 heapq.heappushpop(h, 1)  # push then pop smallest: more efficient
-heapq.heapreplacel(h, 1) # pop smallest then push: more efficient
+heapq.heapreplace(h, 1)  # pop smallest then push: more efficient
 ```
 
 ### Sort
@@ -157,8 +158,9 @@ def heapsort(iterable):
     'Equivalent to sorted(iterable)'
     h = []
     for value in iterable:
-        heappush(h, value)
-        return [heappop(h) for i in range(len(h))]
+        heapq.heappush(h, value)
+
+    return [heapq.heappop(h) for i in range(len(h))]
 
 heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
 # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -168,17 +170,27 @@ heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
 
 ```
 nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
+
 print(heapq.nlargest(3, nums)) # Prints [42, 37, 23]
+# same as
+sorted(nums, reverse=True)[:3]
+# same elements, opposite order
+sorted(nums)[-3:]
+
 print(heapq.nsmallest(3, nums)) # Prints [-4, 1, 2]
+# same as
+sorted(nums)[:3]
+# same elements, opposite order
+sorted(nums, reverse=True)[-3:]
 
 if N == 1:
     max(nums)
     min(nums)
 elif N ~ len(nums):
     # N smallest
-    sorted(nums)[-N:]
-    # N largest
     sorted(nums)[:N]
+    # N largest
+    sorted(nums, reverse=True)[:N]
 ```
 
 ### Use as a priority queue
@@ -513,7 +525,7 @@ sorted(students, key=newgrades.__getitem__)
 
 * `bisect`
 ```
-# binary search
+# binary search: works on ascending sorted order only!
 i = bisect.bisect_left(v, k)
 if i < len(v) and v[i] == k:
     return True
