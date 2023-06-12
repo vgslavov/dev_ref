@@ -5,19 +5,19 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Sources](#sources)
-- [`list`](#list)
+- [`list`: `[]`](#list-)
   - [List](#list)
   - [Stack](#stack)
   - [Comprehensions](#comprehensions)
-- [`tuple`](#tuple)
+- [`tuple`: `()`](#tuple-)
 - [`deque`](#deque)
 - [`heapq` algorithm](#heapq-algorithm)
   - [Create](#create)
   - [Sort](#sort)
   - [Get N largest/smallest](#get-n-largestsmallest)
   - [Use as a priority queue](#use-as-a-priority-queue)
-- [`set`](#set)
-- [`dict`](#dict)
+- [`set`: `{}`](#set-)
+- [`dict`: `{:}`](#dict-)
   - [`defaultdict`](#defaultdict)
   - [`OrderedDict`](#ordereddict)
   - [`Counter`](#counter)
@@ -36,10 +36,12 @@
 * [Sorting HOW TO](https://docs.python.org/3/howto/sorting.html)
 * Python Cookbook (by David Beazley)
 
-## `list`
+## `list`: `[]`
 
 * *homogeneous* sequence of elements
 * mutable
+* ordered
+* can have duplicates
 * accessed by iterating
 
 ### List
@@ -93,12 +95,14 @@ matrix = [
 list(zip(*matrix))
 ```
 
-## `tuple`
+## `tuple`: `()`
 
-* can be nested
-* immutable
-* can contain mutable objects (e.g. lists): `([1, 2, 3], [3, 2, 1])`
 * *heterogeneous* sequence of elements
+* immutable
+* ordered
+* can have duplicates
+* can contain mutable objects (e.g. lists): `([1, 2, 3], [3, 2, 1])`
+* can be nested
 * accessed by unpacking or indexing
 * empty tuple: `empty = ()`
 * singleton: `singleton = 'hello',`
@@ -137,6 +141,7 @@ q.popleft()                 # O(1)
     * start with empty `[]`
     * or `heapq.heapify(l)` existing list in O(N) time
 * every sorted list satisfies the heap property!
+* `heapq.merge`: O(N log N), iterate + `heapify`?
 
 ### Create
 
@@ -144,7 +149,7 @@ q.popleft()                 # O(1)
 h = list(nums)           # deep copy of list
 heapq.heapify(h)         # O(N): create heap from list
 heapq.heappop(h)         # O(log N): return smallest element & remove it
-heapq.heappush(h, 1)     # O(log N)? add element to heap
+heapq.heappush(h, 1)     # O(log N): add element to heap
 heapq.heappushpop(h, 1)  # push then pop smallest: more efficient
 heapq.heapreplace(h, 1)  # pop smallest then push: more efficient
 ```
@@ -157,8 +162,11 @@ import heapq
 def heapsort(iterable):
     'Equivalent to sorted(iterable)'
     h = []
+    # generic, any iterable
     for value in iterable:
         heapq.heappush(h, value)
+    # list only
+    #heapq.heapify(iterable)
 
     return [heapq.heappop(h) for i in range(len(h))]
 
@@ -169,15 +177,15 @@ heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
 ### Get N largest/smallest
 
 ```
-nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
-
-print(heapq.nlargest(3, nums)) # Prints [42, 37, 23]
+# O(N + log(m)): m is top m
+heapq.nlargest(3, nums)
 # same as
 sorted(nums, reverse=True)[:3]
 # same elements, opposite order
 sorted(nums)[-3:]
 
-print(heapq.nsmallest(3, nums)) # Prints [-4, 1, 2]
+# O(N + log(m)): m is top m
+heapq.nsmallest(3, nums)
 # same as
 sorted(nums)[:3]
 # same elements, opposite order
@@ -214,9 +222,10 @@ heappush(h, (-5, index, 'write code'))
 index += 1
 ```
 
-## `set`
+## `set`: `{}`
 
-* an unordered collection with no duplicate elements
+* an *unordered* collection of *heterogeneous* unique elements
+* mutable
 * uses
     * membership testing
     * eliminating duplicates
@@ -231,9 +240,13 @@ index += 1
 a = {x for x in 'abracadabra' if x not in 'abc'}
 ```
 
-## `dict`
+## `dict`: `{:}`
 
-* like C++ `unordered_map`
+* heterogeneous sequence of elements
+* mutable
+* ordered >= v3.7, unordered prior
+* like C++ `map` & `unordered_map`
+* can not have duplicates
 * indexed by keys
 * keys can be strings or numbers
 * keys have to be immutable only (e.g. tuples but not lists)

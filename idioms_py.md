@@ -143,6 +143,7 @@ else:
     # i.e. the if condition did not hold for any of the elements
     print('all valid')
 ```
+* ternary operator: `a if condition else b`
 
 ### Function Arguments
 
@@ -542,7 +543,8 @@ id(a) == id(b)  # True
 * `hex(10)`: int to hexadecimal `int('a', 16)`: hex to int
 * `oct(10)`: int to octal `int('12', 8)`: oct to int
 * system limits/settings
-    * `sys.maxisize`: max fixed-precision integer
+    * `sys.maxsize`max fixed-precision integer
+    * `-sys.maxsize-1`: min fixed-precision integer
     * `sys.int_info`: bits per digit, max str digits, etc.
     * `sys.byteorder`: little or big-endian
 
