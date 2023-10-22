@@ -1,6 +1,6 @@
-# Modern C++
+# Effective Modern C++
 
-Excerpts from Scott Meyer's `Modern C++`.
+Excerpts from Scott Meyer's `Effective Modern C++`.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -12,6 +12,8 @@ Excerpts from Scott Meyer's `Modern C++`.
   - [Item 2: Understand `auto` type deduction](#item-2-understand-auto-type-deduction)
   - [Item 3: Understand `decltype`](#item-3-understand-decltype)
   - [Item 4: Know how to view deduced types](#item-4-know-how-to-view-deduced-types)
+- [Chapter 2: `auto`](#chapter-2-auto)
+  - [Item 5: Prefer `auto` to explicit type declarations](#item-5-prefer-auto-to-explicit-type-declarations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -87,17 +89,17 @@ auto x4{ 27 };      // same
 * `decltype`: given a name or expression, return its type
 * type returned by a container's `operator[]` depends on the container
 * a trailing return type can use a function's parameters in the return type
-```
-// C++11
-template<typename Container, typename, Index>
-auto f(Container& c, Index i) -> decltype(c[i]) { return c[i]; }
-// C++14: better
-template<typename Container, typename, Index>
-decltype(auto) f(Container& c, Index i) { return c[i]; }
-// C++14: best
-template<typename Container, typename, Index>
-decltype(auto) f(Container&& c, Index i) { return c[i]; }
-```
+    ```
+    // C++11
+    template<typename Container, typename, Index>
+    auto f(Container& c, Index i) -> decltype(c[i]) { return c[i]; }
+    // C++14: better
+    template<typename Container, typename, Index>
+    decltype(auto) f(Container& c, Index i) { return c[i]; }
+    // C++14: best
+    template<typename Container, typename, Index>
+    decltype(auto) f(Container&& c, Index i) { return c[i]; }
+    ```
     * `auto` specifies the type to be deduced
     * `decltype` applies `decltype` rules during the deduction
 * the return value of a function is an *rvalue*
@@ -118,3 +120,7 @@ decltype(auto) m2 = cw; // decltype type deduction: m2's type is const Widget&
 ```
 std:: cout << typeid(x).name() << "\n";
 ```
+
+## Chapter 2: `auto`
+
+### Item 5: Prefer `auto` to explicit type declarations
