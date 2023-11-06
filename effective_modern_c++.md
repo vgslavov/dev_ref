@@ -14,6 +14,9 @@ Excerpts from Scott Meyer's `Effective Modern C++`.
   - [Item 4: Know how to view deduced types](#item-4-know-how-to-view-deduced-types)
 - [Chapter 2: `auto`](#chapter-2-auto)
   - [Item 5: Prefer `auto` to explicit type declarations](#item-5-prefer-auto-to-explicit-type-declarations)
+  - [Item 6: Use the explicitly typed initializer idiom when `auto` deduces undesired types](#item-6-use-the-explicitly-typed-initializer-idiom-when-auto-deduces-undesired-types)
+- [Chapter 3: Moving to Modern C++](#chapter-3-moving-to-modern-c)
+  - [Item 7: Distinguish between `()` and `{}` when creating objects](#item-7-distinguish-between--and--when-creating-objects)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -124,3 +127,84 @@ std:: cout << typeid(x).name() << "\n";
 ## Chapter 2: `auto`
 
 ### Item 5: Prefer `auto` to explicit type declarations
+
+* function pointers: can only point to functions
+* `std::function`
+    * objects can refer to any callable object
+    * bigger & slower than `auto`
+* explicitly specifying types can lead to *implicit* unexpected conversions
+* `auto` is an option, not a mandate
+* must be initialized: `auto x2;   // error`
+* example 1
+```
+std::vector<int> v;
+// wrong: unsigned int != size_type
+unsigned sz1 = v.size();
+// vs
+auto sz2 = v.size() // sz2 is std::vector<int>::size_type
+```
+* example 2
+```
+std::unordered_map<std::string, int> m;
+// wrong: key of a map is const
+for (const std::pair<std::string,int>& p : m) {}
+// vs
+for (const auto& p : m) {}
+```
+* `auto` types automatically change if the type of their initializing expression
+    changes
+* THINGS TO REMEMBER: TODO
+
+### Item 6: Use the explicitly typed initializer idiom when `auto` deduces undesired types
+
+* `std::vector<bool>::reference` & `std::bitset::reference`
+    * a *proxy* class emulating & augmenting the behavior of some other type
+    * *inivisible* proxy classes don't play well with `auto`
+* `std::shared_ptr`: a proxy class designed to be apparent to clients
+* example 1
+```
+std::vector<bool> features(const Widget& w);
+Widget w;
+bool hiPrio1 = features(w)[5];
+auto hiPrio2 = features(w)[5];    // auto is not bool, it's std::vector<bool>::reference
+auto hiPrio3 = static_cast<bool>(features(w)[5]);  // auto is bool
+```
+* example 2
+```
+double calcEpsilon();
+float ep1 = calcEpsilon();   // implicit conversion from double to float
+auto ep2 = static_cast<float>(calcEpsilon());  // announce reducing precision!
+```
+
+## Chapter 3: Moving to Modern C++
+
+### Item 7: Distinguish between `()` and `{}` when creating objects
+
+* initialization values may be specified with: parenthesis, equals sign or braces
+```
+int x(0);
+int y = 0;
+int z{ 0 };
+int t = { 0 };
+```
+* user-defined types: distinguish b/w initialization & assignment
+```
+Widget w1;      // default ctor
+Widget w2 = w1; // copy ctor
+w1 = w2;        // copy operator=
+```
+* C++11: *uniform initialization* (a.k.a. *braced initialization*)
+```
+std::vector<int> v{ 1, 3, 5 };
+```
+* *most vexing parse*: want to default ctor, but end up declaring a function
+```
+Widget w1(10);     // call Widget ctor w/ arg 10
+Widget w2();       // a function that returns a Widget
+Widget w3{};       // call Widget ctor w/o args
+```
+* benefits of braced initialization
+    * can be used in widest variety of contexts
+    * prevents implicit narrowing conversions
+    * immune to *most vexing parse*
+* disadvantage: surprising behavior due to `std::initializer_list`
