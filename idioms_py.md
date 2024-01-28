@@ -238,7 +238,7 @@ for i, item in enumerate(a, start=1):
 # n-length list of same thing (lists are mutable)
 four_nones = [None] * 4
 
-# n-length list of of lists
+# n-length list of lists
 four_lists = [[] for __ in range(4)]
 ```
 * dict comprehension
@@ -294,7 +294,7 @@ word = ''.join(letters)
 # join is not always best
 foo = 'foo'
 bar = 'bar'
-# Best: a new string from a pre-determined # of strings, use addition
+# Better: a new string from a pre-determined # of strings, use addition
 foobar = foo + bar
 # or Best: a new string from a pre-determined # of strings, use format
 foobar = '{0}{1}'.format(foo, bar)

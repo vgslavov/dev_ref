@@ -118,6 +118,7 @@ import collections
 q = deque(maxlen=3)
 # add to end of queue
 q.append(5)                 # O(1)
+# add to beginning of queue
 q.appendleft(3)             # O(1)
 # remove from end of queue
 q.pop()                     # O(1)
@@ -279,11 +280,13 @@ e = {
 }
 
 from collections import defaultdict
+# create dict with a default value of list
 d = defaultdict(list)       # makes it easier to init default values
 d['a'].append(1)            # so you can just add items
 d['a'].append(2)            # (w/o checking if list/set exists already)
 d['b'].append(4)
 ...
+# create dict with a default value of set
 e = defaultdict(set)
 e['a'].add(1)
 e['a'].add(2)
@@ -413,6 +416,10 @@ for i, v in enumerate(l):
 ```
 for q, a in zip(questions, answers):
     print('{0}? {1}'.format(q, a))
+```
+* specific range: 1 to n
+```
+for i in range(1, len(nums)):
 ```
 * reverse loop
 ```
