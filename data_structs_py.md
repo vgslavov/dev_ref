@@ -46,6 +46,8 @@
 
 ### List
 
+* slicing
+    * `a[start:stop:step] # start through not past stop, by step`
 * `del`
     * `del a[0]`: delete 0th index
     * `del a[2:4]`: delete slice of [2 to 4)
@@ -57,6 +59,10 @@
 * deep copy
     * `b = list(a)`
     * `c = a[:]`
+* concat
+    * `a += b`
+    * `a.extend(b)`
+    * `c = [*a, *b]` [Python >= 3.5]
 
 ### Stack
 
@@ -280,6 +286,10 @@ e = {
 }
 
 from collections import defaultdict
+# create dict with a default value of int (0)
+z = defaultdict(int)
+z[4] += 1
+z[3] += 1
 # create dict with a default value of list
 d = defaultdict(list)       # makes it easier to init default values
 d['a'].append(1)            # so you can just add items
@@ -399,6 +409,12 @@ for date, items in groupby(rows, key=itemgetter('date')):
         print(i)
 ```
 * `compress`
+* `chain`: concat iterables
+```
+import itertools
+
+j = list(itertools.chain(l1, l2))
+```
 
 ## Looping
 

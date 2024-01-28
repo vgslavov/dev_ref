@@ -548,6 +548,10 @@ id(a) == id(b)  # True
     * `sys.int_info`: bits per digit, max str digits, etc.
     * `sys.byteorder`: little or big-endian
 
+## Math
+
+* use `math.inf` for comparing to big/small numbers (`-math.inf`)
+
 ## Recipes
 
 ```
