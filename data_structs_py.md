@@ -138,7 +138,13 @@ list(zip(*matrix))
 ```
 import collections
 
+l = [1, 2, 3]
+# make deque out of list
+q = deque(l)
+# create deque of size n
 q = deque(maxlen=3)
+# add list to deque
+q.extend(l)
 # add to end of queue
 q.append(5)                 # O(1)
 # add to beginning of queue
@@ -147,6 +153,12 @@ q.appendleft(3)             # O(1)
 q.pop()                     # O(1)
 # remove from beginning of queue
 q.popleft()                 # O(1)
+# reverse queue
+q.reverse()
+# rotate n steps to right
+q.rotate(3)
+# rotate n steps to left
+q.rotate(-3)
 ```
 
 ## `heapq` algorithm
