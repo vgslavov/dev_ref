@@ -17,6 +17,7 @@ Excerpts from Scott Meyer's `Effective Modern C++`.
   - [Item 6: Use the explicitly typed initializer idiom when `auto` deduces undesired types](#item-6-use-the-explicitly-typed-initializer-idiom-when-auto-deduces-undesired-types)
 - [Chapter 3: Moving to Modern C++](#chapter-3-moving-to-modern-c)
   - [Item 7: Distinguish between `()` and `{}` when creating objects](#item-7-distinguish-between--and--when-creating-objects)
+  - [Item 8: Prefer `nullptr` to `0` and `NULL`](#item-8-prefer-nullptr-to-0-and-null)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
