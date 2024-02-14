@@ -197,7 +197,7 @@ w1 = w2;        // copy operator=
 ```
 std::vector<int> v{ 1, 3, 5 };
 ```
-* *most vexing parse*: want to default ctor, but end up declaring a function
+* *most vexing parse*: want to call default ctor, but end up declaring a function
 ```
 Widget w1(10);     // call Widget ctor w/ arg 10
 Widget w2();       // a function that returns a Widget
@@ -208,3 +208,28 @@ Widget w3{};       // call Widget ctor w/o args
     * prevents implicit narrowing conversions
     * immune to *most vexing parse*
 * disadvantage: surprising behavior due to `std::initializer_list`
+
+### Item 8: Prefer `nullptr` to `0` and `NULL`
+
+* `0` is an `int`, not a pointer
+* `NULL` is a preprocessor *macro* defined as an integral type: `int` or `long`
+* neither `0` nor `NULL` has a pointer type
+* `nullptr` doesn't suffer from overload resolution surprises
+```
+void f(int);
+void f(bool);
+void f(void*);
+
+f(0);          // calls f(int), not f(void*)
+f(NULL);       // might not compile, if it does, calls f(int)
+f(nullptr);    // calls f(void*)!
+```
+* `nullptr` is a pointer of all types
+* removes ambiguity: `result` is a pointer type
+```
+auto result = findRecord();
+
+if (result == nullptr) { }
+```
+* `nullptr` has type `std::nullptr_t`
+* use `nullptr` with templates/`decltype`/`auto` for correct template deduction

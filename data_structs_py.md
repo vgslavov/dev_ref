@@ -335,6 +335,9 @@ e['b'].add(4)
 d = defaultdict(list)
 for key, value in pairs:
     d[key].append(value)
+
+# list from defaultdict
+l = [k for k,v in d.items() if v > 2]
 ```
 
 ### `OrderedDict`
