@@ -43,6 +43,8 @@ Excerpts from Scott Meyer's `Effective C++`.
   - [Item 29: Strive for exception-safe code](#item-29-strive-for-exception-safe-code)
   - [Item 30: Understand the ins and outs of inlining](#item-30-understand-the-ins-and-outs-of-inlining)
   - [Item 31: Minimize compilation dependencies between files](#item-31-minimize-compilation-dependencies-between-files)
+- [Chapter 6: Inheritance and Object-Oriented Design](#chapter-6-inheritance-and-object-oriented-design)
+  - [Item 32: Make sure public inheritance models "is-a"](#item-32-make-sure-public-inheritance-models-is-a)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -677,6 +679,40 @@ using.
 
 ### Item 27: Minimize casting
 
+* casts subverts the type system!
+* old-style casts
+    * C-style: `(T) expression` cast *expression* to be of type T
+    * function-style: `T(expression)` cast *expression* to be of type T
+* new-style (C++) casts
+    * `const_cast<T>(expression)`
+    * `dynamic_cast<T>(expression)`
+    * `reinterpret_cast<T>(expression)`
+    * `static_cast<T>(expression)`
+* `const_cast`
+    * cast away constness of objects (`const` to non-`const`)
+    * only cast that can do this
+* `dynamic_cast`
+    * "safe downcasting": determine object type in inheritance hierarchy
+    * significant runtime cost
+    * can't do using old syntax
+* `reinterpret_cast`
+    * implementation dependent (i.e. unportable)
+    * use rarely outside low-level code
+* `static_cast`
+    * force implicit conversions (i.e. non-`const` to `const` object, `int` to
+      `double`, pointer-to-base to pointer-to-derived)
+* easier to identify/find in code
+* type conversions of any kind often lead to code executed at runtime
+* a single object may have more than one addess
+* avoid making assumptions about how things are laid out in C++
+* alternatives to `dynamic_cast`: when you only have a ptr/ref-to-base
+    * use containers that store smart pointers to derived class objects
+    * provide a `virtual` function in the base class to do what you need
+* avoid cascading `dynamic_cast`: if type1, else if type2, etc.
+    * big, slow & brittle
+    * new derived class, new else if
+* good C++ uses very few casts
+* isolate by hiding inside functions
 * things to remember
     * avoid casts whenever practical, especially `dynamic_casts` in
       performance-sensitive code; if a design requires casting, try to develop
@@ -805,3 +841,7 @@ using.
       definitions (use Handle and Interface classes)
     * library header files should exist in full and declaration-only forms
       (regardless of whether templates are involved)
+
+## Chapter 6: Inheritance and Object-Oriented Design
+
+### Item 32: Make sure public inheritance models "is-a"
