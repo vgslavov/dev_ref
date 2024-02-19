@@ -44,7 +44,9 @@ Excerpts from Scott Meyer's `Effective C++`.
   - [Item 30: Understand the ins and outs of inlining](#item-30-understand-the-ins-and-outs-of-inlining)
   - [Item 31: Minimize compilation dependencies between files](#item-31-minimize-compilation-dependencies-between-files)
 - [Chapter 6: Inheritance and Object-Oriented Design](#chapter-6-inheritance-and-object-oriented-design)
-  - [Item 32: Make sure public inheritance models "is-a"](#item-32-make-sure-public-inheritance-models-is-a)
+  - [Item 32: Make sure `public` inheritance models "is-a"](#item-32-make-sure-public-inheritance-models-is-a)
+  - [Item 33: Avoid hiding inherited names](#item-33-avoid-hiding-inherited-names)
+  - [Item 34: Differentiate between inheritance of interface and interitance of implementation](#item-34-differentiate-between-inheritance-of-interface-and-interitance-of-implementation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -844,4 +846,59 @@ using.
 
 ## Chapter 6: Inheritance and Object-Oriented Design
 
-### Item 32: Make sure public inheritance models "is-a"
+### Item 32: Make sure `public` inheritance models "is-a"
+
+* `public` inheritance means "is-a"
+* `class D: public B`: every D is-a B, but not vice versa
+* *everything* that applies to base class obj also applies to derived class obj
+* just because the code compiles doesn't men it will work
+* other inter-class relationships
+    * "has-a"
+    * "is-implemented-in-terms-of"
+* things to remember
+    * `public` inheritance means "is-a"
+    * everything that applies to base classes must also apply to derived
+        classes, because every derived class object *is* a base class object
+
+### Item 33: Avoid hiding inherited names
+
+* names in inner scopes hide ("shadow") names in outer scopes
+* C++'s name-hiding rules hide *names*, the *type* of the duplicate names is immaterial
+* the scope of a derived class is nested inside its base class's scope
+* name hiding applies even for same function name
+    * with different parameter types
+    * `virtual` or non-`virtual`
+* reason for name hiding: prevents you from accidentally inheriting overloads
+    from distant base classes in a new derived class
+* ways to override default hiding
+```
+class B {
+public:
+    virtual void mf1() = 0;
+    virtual void mf1(int);
+};
+class D1: public B {
+public:
+    using Base::mf1;                    // using declaration
+};
+class D2: private B {
+public:
+    virtual void mf1() { Base::mf1(); } // forwarding function
+};
+```
+* `using` *declarations*
+    * makes *all* base class functions w/ a given name visible & public in derived class scope
+    * not a problem for `public` inheritance
+        * every D is a B
+        * names that are `public` in a base class should also be `public` in a publicly derived class
+    * a problem for `private` inheritance
+        * if a function is *overloaded* in base class, but you want to inherit
+            only 1 version
+        * use forwarding function instead of `using` declaration
+* things to remember
+    * names in *derived* classes hide names in *base* classes. Under `public`
+        inheritance, this is never desirable
+    * to make hidden names visible again, employ `using` declarations or
+        forwarding functions
+
+### Item 34: Differentiate between inheritance of interface and interitance of implementation
