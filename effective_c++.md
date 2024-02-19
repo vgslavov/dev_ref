@@ -47,6 +47,12 @@ Excerpts from Scott Meyer's `Effective C++`.
   - [Item 32: Make sure `public` inheritance models "is-a"](#item-32-make-sure-public-inheritance-models-is-a)
   - [Item 33: Avoid hiding inherited names](#item-33-avoid-hiding-inherited-names)
   - [Item 34: Differentiate between inheritance of interface and interitance of implementation](#item-34-differentiate-between-inheritance-of-interface-and-interitance-of-implementation)
+  - [Item 35: Consider alternatives to `virtual` functions](#item-35-consider-alternatives-to-virtual-functions)
+  - [Item 36: Never redefine an inherited non-`virtual` function](#item-36-never-redefine-an-inherited-non-virtual-function)
+  - [Item 37: Never redefine a function's inherited default parameter value](#item-37-never-redefine-a-functions-inherited-default-parameter-value)
+  - [Item 38: Model "has-a" or "is-implemented-in-terms-of" through composition](#item-38-model-has-a-or-is-implemented-in-terms-of-through-composition)
+  - [Item 39: Use `private` inheritance judiciously](#item-39-use-private-inheritance-judiciously)
+  - [Item 40: Use *multiple* inheritance judiciously](#item-40-use-multiple-inheritance-judiciously)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -681,7 +687,7 @@ using.
 
 ### Item 27: Minimize casting
 
-* casts subverts the type system!
+* casts subvert the type system!
 * old-style casts
     * C-style: `(T) expression` cast *expression* to be of type T
     * function-style: `T(expression)` cast *expression* to be of type T
@@ -879,11 +885,11 @@ public:
 };
 class D1: public B {
 public:
-    using Base::mf1;                    // using declaration
+    using Base::mf1;                    // (1) using declaration
 };
 class D2: private B {
 public:
-    virtual void mf1() { Base::mf1(); } // forwarding function
+    virtual void mf1() { Base::mf1(); } // (2) forwarding function
 };
 ```
 * `using` *declarations*
@@ -902,3 +908,150 @@ public:
         forwarding functions
 
 ### Item 34: Differentiate between inheritance of interface and interitance of implementation
+
+* `public` inheritance consists of
+    * inheritance of function interfaces: function *declarations*
+    * inheritance of function implementations: function *definitions*
+* how to inherit only interface (declaration) of a member function?
+* member function *interfaces* are always inherited
+    * because `public` inheritance means is-a
+    * anything that's true of a base class must also be true of its derived
+        classes
+* an abstract class
+    * a base class with a pure `virtual` function (`virtual void f() = 0;`)
+    * clients cannot create instances of abstract classes, only of classes
+        derived from it
+* `virtual` functions
+    * *must* be redeclared by any concerte class that inherits them
+    * have no *definition* in abstract classes
+    * *pure* `virtual` functions allow derived classes to inherit a function
+        *interface* only
+    * *simple* `virtual` functions allow derived classes to inherit a function
+        *interface* as well as a default implementation
+* classic object-oriented design: 2 classes share a common feature, so the
+    common feature is moved into a base class, the features is inherited by the
+    2 classes
+```
+class Airplane {
+public:
+    virtual void fly() {...}   // default code for flying
+};
+
+class ModelA: public Airplane {};
+class ModelB: public Airplane {};
+```
+* how to protect yourself from inheriting a default implementation of a base
+  class function when creating new derived classes?
+* (1) severe connection b/w *interface* of the `virtual` function and its
+  default *implementation*
+```
+class Airplane {
+public:
+    virtual void fly() = 0;
+protected:                      // don't let derived classes inherit
+    void defaultFly() {...}     // default code for flying, non-virtual:
+                                // no derived class should redefine
+};
+
+class ModelA: public Airplane {
+public:
+    virtual void fly() { defaultFly(); }
+};
+```
+* (2) use a pure `virtual` functions with a definition
+    * must be redeclared in concrete derived classes
+    * may have implementation of their own in *base* class
+```
+class Airplane {
+public:                         // lost protection levels, public only
+    virtual void fly() = 0;     // interface: derived classes *must* use
+};
+void Airplane::fly() {...}      // implementation: derived classes *may* use
+
+class ModelA: public Airplane {
+public:
+    virtual void fly() { Airplane::fly(); } // call base class pure virtual def.
+};
+```
+* a non-`virtual` function specifies an invariant over specialization: it
+    identifies behavior that's not supposed to change
+* control over inheritance
+    * pure `virtual`: interface only
+    * simple `virtual`: interface and *default* implementation
+    * non-`virtual`: interface and a *mandatory* implementation
+* mistakes
+    * declaring all functions non-`virtual`: no room for specialization in
+        derived classes
+    * declaring *all* member functions `virtual`: too much flexibility, some
+        functions should *not* be redefinable in derived classes
+* things to remember
+    * inheritance of interfaces is different from inheritance of implementation;
+        under `public` inheritance, derived classes always inherit base class
+        interfaces
+    * pure `virtual` functions specify inheritance of interface only
+    * simple (impure) `virtual` functions specify inheritance of interface plus
+        inheritance of a default implementation
+    * non-`virtual` functions specify inheritance of interface plus inheritance
+        of mandatory implementation
+
+### Item 35: Consider alternatives to `virtual` functions
+
+* things to remember
+    * alternatives to `virtual` functions include NVI (non-`virtual` interface)
+        idiom and various forms of the Strategy design pattern; the NVI idiom is
+        itself an example of the Template Method design pattern
+    * a disadvantage of moving functionality from a member function to a
+        function outside the class is that the non-member function lacks access
+        to the class's non-public members
+    * `tr1::function` objects act like generalized function pointers; such
+        objects support all callable entities compatible with a given target
+        signature
+
+### Item 36: Never redefine an inherited non-`virtual` function
+
+
+* things to remember
+    * never redefine an inherited non-`virtual` function
+
+### Item 37: Never redefine a function's inherited default parameter value
+
+* things to remember
+    * never redefine an inherited fault parameter value, because default
+        parameter values are *statically* bound, while `virtual` functions--the
+        only functions you should be redefining--are *dynamically* bound
+
+### Item 38: Model "has-a" or "is-implemented-in-terms-of" through composition
+
+* *composition* is the relationship b/w types that arises when objects of one
+    type contain objects of another type
+* *has-a* example: a `Person` has a `PhoneNumber`
+* *is-implemented-in-terms-of* example: a `set` is implemented in terms of a
+    `list`
+* things to remember
+    * composition has meanings completely different from that of `public`
+        inheritance (*is-a*)
+    * in the application domain, composition means *has-a*
+    * in the implementation domain, it means *is-implemented-in-terms-of*
+
+### Item 39: Use `private` inheritance judiciously
+
+* things to remember
+    * `private` inheritance means *is-implemented-in-terms-of*; it's usually
+        inferior to composition, but it makes sense when a derived class needs
+        access to `protected` base class members or needs to redefine inherited
+        `virtual` functions
+    * unlike composition, `private` inheritance can enable the empty base
+        optimization; this can be important for library developers who strive to
+        minimize object sizes
+
+### Item 40: Use *multiple* inheritance judiciously
+
+* things to remember
+    * multiple inheritance is more complex than single inheritance; it can lead
+        to new ambiguity issues and to the need for `virtual` inhertiance
+    * `virtual` inheritance imposes costs in size, speed, and complexity of
+        initialization and assignment; it's most practical when `virtual` base
+        classes have no data
+    * multiple inheritance does have legitimate uses; one scenario involves
+        combining `public` inheritance from an Interface class with `private`
+        inheritance from a class that helps with implementation
