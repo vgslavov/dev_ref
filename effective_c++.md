@@ -706,8 +706,8 @@ for (int i = 0; i < n; ++i) {
 ```
 * `(A) < (B)` unless ctor/dtor is much more expensive than assignment
 * things to remember
-    * postpone variable definitions as long as possible; it increases program
-      clarity and improves program efficiency
+    * postpone variable definitions as long as possible
+    * it increases program clarity and improves program efficiency
 
 ### Item 27: Minimize casting
 
@@ -756,10 +756,22 @@ for (int i = 0; i < n; ++i) {
 
 ### Item 28: Avoid returning “handles” to object internals
 
+* a data member is only as encapsulated as the most accessible function
+  returning a reference to it
+* if a `const` member function returns a ref to data associated with an obj
+  stored outside the obj itself, the caller of the function can modify the data
+* references, pointers, and iterators are all *handles*
+* member functions not accessible to the general public (i.e. `protected` or
+    `private`) are part of an obj's internals
+* never have a member function return a ptr to a less accessible member function
+* solution: return `const` refs
+* *dangling handles*: handles that refer to parts of the obj that don't exist
+  any longer
 * things to remember
     * avoid returning handles (references, pointers, or iterators) to object
-      internals; it increases encapsulation, helps `const` member functions act
-      `const`, and minimizes the creation of dangling handles
+      internals
+    * it increases encapsulation, helps `const` member functions act `const`,
+      and minimizes the creation of dangling handles
 
 ### Item 29: Strive for exception-safe code
 
