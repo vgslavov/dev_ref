@@ -681,6 +681,30 @@ using.
 
 ### Item 26: Postpone variable definitions as long as possible
 
+* default-constructing an obj & then assigning to it is less efficient than
+    initializing it
+```
+string encrypted1;              // default ctor
+encrypted2 = password;          // assignment operator
+
+string encrypted2(password);    // define & initialize via copy ctor
+```
+* postpone the definition until you have the init. args for it
+* help doc purpose of vars by init-ing them in contexts to make meaning clear
+* (A) define outside loop: 1 ctor + 1 dtor + n assignments
+```
+Widget w;
+for (int i = 0; i < n; ++i) {
+    w = i * 10;
+}
+```
+* (B) define inside loop: n ctors + n dtors
+```
+for (int i = 0; i < n; ++i) {
+    Widget w(i * 10);
+}
+```
+* `(A) < (B)` unless ctor/dtor is much more expensive than assignment
 * things to remember
     * postpone variable definitions as long as possible; it increases program
       clarity and improves program efficiency
