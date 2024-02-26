@@ -893,7 +893,7 @@ for (int i = 0; i < n; ++i) {
 * `public` inheritance means "is-a"
 * `class D: public B`: every D is-a B, but not vice versa
 * *everything* that applies to base class obj also applies to derived class obj
-* just because the code compiles doesn't men it will work
+* just because the code compiles doesn't mean it will work
 * other inter-class relationships
     * "has-a"
     * "is-implemented-in-terms-of"
@@ -978,7 +978,7 @@ class ModelB: public Airplane {};
 ```
 * how to protect yourself from inheriting a default implementation of a base
   class function when creating new derived classes?
-* (1) severe connection b/w *interface* of the `virtual` function and its
+* (1) sever connection b/w *interface* of the `virtual` function and its
   default *implementation*
 ```
 class Airplane {
@@ -994,7 +994,7 @@ public:
     virtual void fly() { defaultFly(); }
 };
 ```
-* (2) use a pure `virtual` functions with a definition
+* (2) use pure `virtual` functions with a definition
     * must be redeclared in concrete derived classes
     * may have implementation of their own in *base* class
 ```
@@ -1021,9 +1021,9 @@ public:
     * declaring *all* member functions `virtual`: too much flexibility, some
         functions should *not* be redefinable in derived classes
 * things to remember
-    * inheritance of interfaces is different from inheritance of implementation;
-        under `public` inheritance, derived classes always inherit base class
-        interfaces
+    * inheritance of interfaces is different from inheritance of implementation
+    * under `public` inheritance, derived classes always inherit base class
+      interfaces
     * pure `virtual` functions specify inheritance of interface only
     * simple (impure) `virtual` functions specify inheritance of interface plus
         inheritance of a default implementation
@@ -1072,13 +1072,14 @@ public:
 ### Item 39: Use `private` inheritance judiciously
 
 * things to remember
-    * `private` inheritance means *is-implemented-in-terms-of*; it's usually
-        inferior to composition, but it makes sense when a derived class needs
-        access to `protected` base class members or needs to redefine inherited
-        `virtual` functions
+    * `private` inheritance means *is-implemented-in-terms-of*
+    * it's usually inferior to composition, but it makes sense when a derived
+      class needs access to `protected` base class members or needs to redefine
+      inherited `virtual` functions
     * unlike composition, `private` inheritance can enable the empty base
-        optimization; this can be important for library developers who strive to
-        minimize object sizes
+      optimization
+    * this can be important for library developers who strive to minimize object
+      sizes
 
 ### Item 40: Use *multiple* inheritance judiciously
 
@@ -1086,8 +1087,9 @@ public:
     * multiple inheritance is more complex than single inheritance; it can lead
         to new ambiguity issues and to the need for `virtual` inhertiance
     * `virtual` inheritance imposes costs in size, speed, and complexity of
-        initialization and assignment; it's most practical when `virtual` base
-        classes have no data
-    * multiple inheritance does have legitimate uses; one scenario involves
-        combining `public` inheritance from an Interface class with `private`
-        inheritance from a class that helps with implementation
+      initialization and assignment
+    * it's most practical when `virtual` base classes have no data
+    * multiple inheritance does have legitimate uses
+    * one scenario involves combining `public` inheritance from an Interface
+      class with `private` inheritance from a class that helps with
+      implementation
