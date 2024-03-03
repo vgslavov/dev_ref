@@ -597,6 +597,11 @@ using.
 
 ### Item 18: Make interfaces easy to use correctly and hard to use incorrectly
 
+* the type system is your primary ally in preventing undesirable code from
+  compiling
+* reliable initialization of non-local *static* objects can be problematic
+* have your types behave consistently with the built-in types
+* when in doubt, do as the `int`s do!
 * things to remember
     * good interfaces are easy to use correctly and hard to use incorrectly;
       your should strive for these characteristics in all your interfaces
@@ -610,25 +615,54 @@ using.
 
 ### Item 19: Treat class design as type design
 
+* defining a new *class* defines a new *type*: you are a *type* designer!
 * questions
     * How should objects of your new type be created and destroyed?
+        * ctor design
+        * dtor design
+        * mem allocation: `new`, `delete`
     * How should object initialization differ from object assignment?
+        * ctor vs assignment operator differences
     * What does it mean for objects of your new type to be passed by value?
+        * copy ctor design
     * What are the restrictions on legal values for your new type?
+        * decide combinations of values for a class's data members
+        * to determine the invariants class has to maintain
     * Does your new type fit into an inheritance graph?
+        * any `virtual` functions? 
+        * is dtor `virtual`?
     * What kind of type conversions are allowed for your new type?
+        * a type conversion function
+        * a non-`explicit` ctor
     * What operators and functions make sense for the new type?
     * What standard functions should be disallowed?
     * Who should have access to the members of your new type?
     * What is the “undeclared interface” of your new type?
     * How general is your new type?
+        * a whole *family* of types: define a new class `template`
     * Is a new type really what you need?
 * things to remember
-    * class design is type design; before defining a new type, be sure to
-      consider all the issues discussed in this Item
+    * class design is type design
+    * before defining a new type, be sure to consider all the issues discussed
+      in this Item
 
 ### Item 20: Prefer pass-by-reference-to-`const` to pass-by-value
 
+* prevent the creation of new objects by passing by ref to `const`: not ctors &
+  dtors will be called
+* slicing problem
+    * when a derived class obj is passed (by value) as a base class obj
+    * the base class copy ctor is called
+    * and the specialized features that make the obj behave like a dervied class
+      obj are "sliced" off
+* references are typically implemented as pointers
+* passing something by reference means really passing a ptr
+* for built-in types, choose pass-by-value (small)
+* for iterators & function obj, choose pass-by-value (designed to be)
+* `smallType != pass-by-value`
+* for user-defined types, their size is subject to change by definition
+* *only* types pass-by-value is guaranteed to be inexpensive are built-in types
+  and STL iterator and function obj
 * things to remember
     * prefer pass-by-reference-to-`const` over pass-by-value; it's typically
       more efficient and it avoids the slicing problem
