@@ -603,15 +603,16 @@ using.
 * have your types behave consistently with the built-in types
 * when in doubt, do as the `int`s do!
 * things to remember
-    * good interfaces are easy to use correctly and hard to use incorrectly;
-      your should strive for these characteristics in all your interfaces
+    * good interfaces are easy to use correctly and hard to use incorrectly
+    * your should strive for these characteristics in all your interfaces
     * ways to facilitate correct use include consistency in interfaces and
       behavioral compatibility with built-in types
     * ways to prevent errors include creating new types, restricting operations
       on types, constraining object values, and eliminating client resource
       management responsibilities
-    * `tr1::shared_ptr` supports custom deleters; this prevents the cross-DLL
-      problem, can be used to automatically unlock mutexes (see Item 14), etc.
+    * `tr1::shared_ptr` supports custom deleters
+    * this prevents the cross-DLL problem, can be used to automatically unlock
+      mutexes (see Item 14), etc.
 
 ### Item 19: Treat class design as type design
 
@@ -660,14 +661,15 @@ using.
 * for built-in types, choose pass-by-value (small)
 * for iterators & function obj, choose pass-by-value (designed to be)
 * `smallType != pass-by-value`
-* for user-defined types, their size is subject to change by definition
+* for user-defined types, their size is subject to change *by definition*
 * *only* types pass-by-value is guaranteed to be inexpensive are built-in types
   and STL iterator and function obj
 * things to remember
-    * prefer pass-by-reference-to-`const` over pass-by-value; it's typically
-      more efficient and it avoids the slicing problem
+    * prefer pass-by-reference-to-`const` over pass-by-value
+    * it's typically more efficient and it avoids the slicing problem
     * the rule doesn't apply to built-in types and STL iterator and function
-      object types; for them, pass-by-value is usually appropriate
+      object types
+    * for them, pass-by-value is usually appropriate
 
 ### Item 21: Don't try to return a reference when you must return an object
 
@@ -781,12 +783,13 @@ for (int i = 0; i < n; ++i) {
 * isolate by hiding inside functions
 * things to remember
     * avoid casts whenever practical, especially `dynamic_casts` in
-      performance-sensitive code; if a design requires casting, try to develop
-      a cast-free alternative
-    * when casting is necessary, try to hide it inside a function; clients can
-      then call the function instead of putting casts in their own code
-    * prefer C++-style casts to old-style casts; they are easier to see, and
-      they are more specific about what they do
+      performance-sensitive code
+    * if a design requires casting, try to develop a cast-free alternative
+    * when casting is necessary, try to hide it inside a function
+    * clients can then call the function instead of putting casts in their own
+      code
+    * prefer C++-style casts to old-style casts
+    * they are easier to see, and they are more specific about what they do
 
 ### Item 28: Avoid returning “handles” to object internals
 
