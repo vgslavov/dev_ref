@@ -183,8 +183,10 @@ q.rotate(-3)
 
 ```
 h = list(nums)           # deep copy of list
-heapq.heapify(h)         # O(N): create heap from list
+heapq.heapify(h)         # O(N): create min heap from list
+heapq._heapify_max(h)    # O(N): create max heap from list
 heapq.heappop(h)         # O(log N): return smallest element & remove it
+heapq._heappop_max(h)    # O(log N): return largest element & remove it
 heapq.heappush(h, 1)     # O(log N): add element to heap
 heapq.heappushpop(h, 1)  # push then pop smallest: more efficient
 heapq.heapreplace(h, 1)  # pop smallest then push: more efficient
