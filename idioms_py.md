@@ -15,6 +15,7 @@
   - [Files](#files)
   - [Strings](#strings)
   - [Classes](#classes)
+  - [Iterators](#iterators)
   - [Generators](#generators)
   - [Context Managers](#context-managers)
   - [Modules](#modules)
@@ -22,6 +23,7 @@
   - [Scripts](#scripts)
   - [Exceptions](#exceptions)
 - [Binary](#binary)
+- [Math](#math)
 - [Recipes](#recipes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -322,13 +324,37 @@ def __str__(self):
     return '{0}, {1}'.format(self.x, self.y)
 ```
 
+### Iterators
+
+* `iter`: iterate over any object
+```
+it = iter(l)
+next(it)        # only supported method
+```
+* looping
+```
+for i in iter(obj):
+    print(i)
+# same as
+for i in obj:
+    print(i)
+```
+* can go only forward, can't go back!
+* data types: lists, tuples, any sequence, dict
+
 ### Generators
 
 * use a generator to lazily load (iterate over) infinite sequences
 `yield do(whatever)`
 * instead of
 `return do(whatever)`
+* regular functions compute a value and return it
+* generators return an iterator that returns a stream of values
 * prefer **generator expressions** to **list comprehensions** for a simple iteration
+    * generator expressions return iterators, surrounded by `()`
+      `strip_iter = (line.strip() for line in line_list)`
+    * list comprehensions return lists, surrounded by `[]`
+      `strip_list = [line.strip() for line in line_list)`
 * bad: list comprehension (uses [])
 ```
 names = [name.upper() for name in get_all_usernames()]

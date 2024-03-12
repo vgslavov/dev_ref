@@ -23,6 +23,7 @@
   - [`Counter`](#counter)
   - [Calculations](#calculations)
 - [`itertools`](#itertools)
+- [`functools`](#functools)
 - [Looping](#looping)
 - [Conditions & Comparisons](#conditions--comparisons)
 - [Sorting](#sorting)
@@ -102,8 +103,18 @@ stack.pop()
 * simple
 ```
 squares = [x**2 for x in range(10)]
-# same as
+```
+* same using `map`
+```
 squares = list(map(lambda x: x**2, range(10)))
+```
+* a predicate
+```
+list(x for x in range(10) if is_even(x))
+```
+* same using `filter`
+```
+list(filter(is_even, range(10)))
 ```
 * nested
 ```
@@ -450,38 +461,40 @@ import itertools
 j = list(itertools.chain(l1, l2))
 ```
 
+## `functools`
+
 ## Looping
 
-* `dict`
+* over `dict` using `items`
 ```
 for k, v in d.items():
     print(k, v)
 ```
-* `list`
+* over `list` using `enumerate`
 ```
 for i, v in enumerate(l):
     print(i, v)
 ```
-* multiple sequences
+* over multiple sequences using `zip`: lazy evaluation
 ```
 for q, a in zip(questions, answers):
     print('{0}? {1}'.format(q, a))
 ```
-* specific range: 1 to n
+* specific `range`: 1 to n
 ```
 for i in range(1, len(nums)):
 ```
-* reverse loop
+* `reversed` loop
 ```
 for i in reversed(range(1, 10, 2)):
     print(i)
 ```
-* sorted loop
+* `sorted` loop
 ```
 for i in sorted(l):
     print(i)
 ```
-* sorted & unique loop
+* `sorted` & unique loop using `set`
 ```
 for f in sorted(set(l)):
     print(f)
