@@ -270,6 +270,8 @@ with open('file.txt') as f:
 
 ### Strings
 
+* immutable!
+* `string.ascii_lowercase`: English alphabet
 ```
 # read file as a string
 contents = ''.join(open('file.txt').read().splitlines())
