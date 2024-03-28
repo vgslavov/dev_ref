@@ -357,6 +357,10 @@ for i in obj:
       `strip_iter = (line.strip() for line in line_list)`
     * list comprehensions return lists, surrounded by `[]`
       `strip_list = [line.strip() for line in line_list)`
+* `filter` vs generator expressions
+    * `filter(function, iterable)`
+    * `(item for item in iterable if function(item))`
+    * `(item for item in iterable if item)`: if function is `None`
 * bad: list comprehension (uses [])
 ```
 names = [name.upper() for name in get_all_usernames()]
