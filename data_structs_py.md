@@ -294,7 +294,10 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 * heterogeneous sequence of elements
 * mutable
 * ordered >= v3.7, unordered prior
-* like C++ `map` & `unordered_map`
+    * order is *insertion* order, not sorted key order
+    * to provide order like C++ `map`: `for k in sorted(d.keys())`
+    * designed for *mapping* operations
+* ~~like C++ `map` & `unordered_map`~~
 * can not have duplicates
 * indexed by keys
 * keys can be strings or numbers
@@ -355,9 +358,10 @@ l = [k for k,v in d.items() if v > 2]
 
 ### `OrderedDict`
 
-* like C++ `map`
-* preserves original insertion order (useful for serializing/encoding to JSON)
+* ~~like C++ `map`~~
+* preserves original *insertion* order (useful for serializing/encoding to JSON)
 * twice the size of a regular dict (implemented as a doubly-linked list)
+* designed for *reordering* operations
 ```
 from collections import OrderedDict
 
@@ -539,6 +543,7 @@ while len(stack):
     * in-place sort
     * `list` only
     * more efficient than `sorted()`
+* sorting a string: `text = ''.join(sorted(text))`
 * `key` functions
 ```
 # by length
