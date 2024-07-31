@@ -28,6 +28,7 @@
 - [Conditions & Comparisons](#conditions--comparisons)
 - [Sorting](#sorting)
 - [Searching](#searching)
+- [Algorithms](#algorithms)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -618,3 +619,7 @@ i = bisect.bisect_left(v, k)
 if i < len(v) and v[i] == k:
     return True
 ```
+
+## Algorithms
+
+* add number of non-zero keys in a `dict`: `sum(1 for k in d.keys() if d[k])`
