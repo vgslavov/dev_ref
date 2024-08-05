@@ -73,11 +73,12 @@ a[-3::-1]          # everything except the last two items, reversed
     * `del a`: delete variable
 * `sort`: sort *in place* (cmp to `sorted()`: creates new)
 * `reverse`: reverse *in place*
-* `copy`: shallow copy
-* deep copy
+* shallow copy
     * `b = list(a)`
+    * `c = a[:]`
+    * `d = a.copy()`
+* deep copy
     * `b = copy.deepcopy(a)`
-    * `c = a[:]`?
 * concat
     * `a += b`
     * `a.extend(b)`
@@ -622,4 +623,6 @@ if i < len(v) and v[i] == k:
 
 ## Algorithms
 
-* add number of non-zero keys in a `dict`: `sum(1 for k in d.keys() if d[k])`
+* `sum`: add number of non-zero keys in a `dict`
+    * `sum(d[k] != 0 for k in d.keys())`
+    * `sum(1 for k in d.keys() if d[k])`

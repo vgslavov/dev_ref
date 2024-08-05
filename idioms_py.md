@@ -587,18 +587,6 @@ id(a) == id(b)  # True
 ## Recipes
 
 ```
-# deep copy of lists
-a = [1, 2, 3]
-# deep copy
-b = a[:]
-c = list(a)
-# shallow copy
-b = a.copy()
-# deep copy
-# exception: collections of mutable objs (those objs remain as refs)
-d = [[1, 2], 3]
-e = deepcopy(d)
-
 # sorted, unique list
 # TODO: does it only work for hashables types (strings, numbers, tuples)?
 my_list = sorted(set(my_list))
