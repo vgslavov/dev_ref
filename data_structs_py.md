@@ -83,6 +83,9 @@ a[-3::-1]          # everything except the last two items, reversed
     * `a += b`
     * `a.extend(b)`
     * `c = [*a, *b]` [Python >= 3.5]
+* to string
+    * of chars: `''.join(chars)`
+    * of nums: `''.join([str(d) for d in digits])`
 
 ### Stack
 
@@ -492,7 +495,7 @@ for i in range(1, len(nums)):
 ```
 * `reversed` loop
 ```
-for i in reversed(range(1, 10, 2)):
+for i in reversed(range(len(nums)):
     print(i)
 ```
 * `sorted` loop
