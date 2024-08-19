@@ -23,6 +23,10 @@
   - [Scripts](#scripts)
   - [Exceptions](#exceptions)
 - [Binary](#binary)
+  - [Operators](#operators)
+  - [Manipulating Bits](#manipulating-bits)
+  - [Conversions](#conversions)
+  - [System Limits](#system-limits)
 - [Math](#math)
 - [Recipes](#recipes)
 
@@ -520,50 +524,63 @@ except (KeyError, TypeError, ValueError):
 * LSB determines if number is odd or even: 2^0 = 1
   (all other bits are even: 2^1, 2^2, etc.)
 * `(8).bit_length()`: show # of binary digits
+
+### Operators
+
 * bitwise operators take precedence over comparison operators: use `()`
 * logical operators are evaluated *lazily*, bitwise operators are evaluated *eagerly*
 * modulo operator (`%`): perform division and return remainder (`125 % 10 = 5`)
-* operators
-    * bitwise AND: `&`
-        * logical conjunction
-        * intersection
-        * `(a & b) = a * b`
-    * bitwise OR: `|`
-        * logical disjunction
-        * union
-        * `(a | b) = a + b - (a * b)`
-    * bitwise XOR: no operator
-        * exclusive disjunction
-        * symmetric difference
-        * `(a and not b) or (not a and b)`
-        * `(a ^ b) = (a + b) mod 2`
-    * bitwise NOT: `~`
-        * complement
-        * unary
-        * subtraction
-        * `~a = 1 - a`
-        * `~156 & 255`: use bitmask to preserve size of bit pattern
-    * left shift: `<<`
-        * multiply by powers of two
-        * shifts bits to left
-            * drops left-most bits
-            * 0-pads bits on the right
-        * `a << n = a * 2^n`
-        * `(39 << 3) & 255`: use bitmask to preserve size of bit pattern
-    * right shift: `>>`
-        * floor division by powers of two
-        * shifts bits to right
-            * drops right-most bits
-            * 0-pads bits on the left
-        * `a >> n = floor(a / 2^n)`
-        ```
-        5 >> 1     # 2: bitwise right shift
-        5 // 2     # 2: floor (integer) division (let's you choose divisor)
-        5 /  2     # 2.5: floating-point division
-        ```
-        * no need to bitmask to preserve size of bit pattern
-            * `8 >> 2`
-            * `1000` -> `0010`
+* bitwise AND: `&`
+    * logical conjunction
+    * intersection
+    * `(a & b) = a * b`
+* bitwise OR: `|`
+    * logical disjunction
+    * union
+    * `(a | b) = a + b - (a * b)`
+* bitwise XOR: no operator
+    * exclusive disjunction
+    * symmetric difference
+    * `(a and not b) or (not a and b)`
+    * `(a ^ b) = (a + b) mod 2`
+* bitwise NOT: `~`
+    * complement
+    * unary
+    * subtraction
+    * `~a = 1 - a`
+    * `~156 & 255`: use bitmask to preserve size of bit pattern
+* left shift: `<<`
+    * multiply by powers of two
+    * shifts bits to left
+        * drops left-most bits
+        * 0-pads bits on the right
+    * `a << n = a * 2^n`
+    * `(39 << 3) & 255`: use bitmask to preserve size of bit pattern
+* right shift: `>>`
+    * floor division by powers of two
+    * shifts bits to right
+        * drops right-most bits
+        * 0-pads bits on the left
+    * `a >> n = floor(a / 2^n)`
+    ```
+    5 >> 1     # 2: bitwise right shift
+    5 // 2     # 2: floor (integer) division (let's you choose divisor)
+    5 /  2     # 2.5: floating-point division
+    ```
+    * no need to bitmask to preserve size of bit pattern
+        * `8 >> 2`
+        * `1000` -> `0010`
+
+### Manipulating Bits
+
+* get bit: `value & (1 << bit_index)`
+* get normalized bit: `(value >> bit_index) & 1`
+* set bit: `value | (1 << bit_index)`
+* unset/clear bit: `value & ~(1 << bit_index)`
+* toggle bit: `value ^ (1 << bit_index)`
+
+### Conversions
+
 * `id`: check an object's identity in memory
 ```
 a = 5
@@ -574,11 +591,13 @@ id(a) == id(b)  # True
 * `bin(5)`: int to binary `int('101', 2)`: binary to int
 * `hex(10)`: int to hexadecimal `int('a', 16)`: hex to int
 * `oct(10)`: int to octal `int('12', 8)`: oct to int
-* system limits/settings
-    * `sys.maxsize`max fixed-precision integer
-    * `-sys.maxsize-1`: min fixed-precision integer
-    * `sys.int_info`: bits per digit, max str digits, etc.
-    * `sys.byteorder`: little or big-endian
+
+### System Limits
+
+* `sys.maxsize`max fixed-precision integer
+* `-sys.maxsize-1`: min fixed-precision integer
+* `sys.int_info`: bits per digit, max str digits, etc.
+* `sys.byteorder`: little or big-endian
 
 ## Math
 
