@@ -573,11 +573,11 @@ except (KeyError, TypeError, ValueError):
 
 ### Manipulating Bits
 
-* get bit: `value & (1 << bit_index)`
-* get normalized bit: `(value >> bit_index) & 1`
-* set bit: `value | (1 << bit_index)`
-* unset/clear bit: `value & ~(1 << bit_index)`
-* toggle bit: `value ^ (1 << bit_index)`
+* test bit: `value & (1 << offset)`
+* test normalized bit: `(value >> offset) & 1`
+* set bit: `value | (1 << offset)`
+* clear bit: `value & ~(1 << offset)`
+* toggle bit: `value ^ (1 << offset)`
 
 ### Conversions
 
