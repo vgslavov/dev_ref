@@ -543,6 +543,10 @@ except (KeyError, TypeError, ValueError):
     * symmetric difference
     * `(a and not b) or (not a and b)`
     * `(a ^ b) = (a + b) mod 2`
+    * if # of 1s is odd, result is 1; otherwise, 0
+    * `x ^ x = 0`
+    * `0 ^ y = y`
+    * `x ^ x ^ y = y`
 * bitwise NOT: `~`
     * complement
     * unary
@@ -557,7 +561,7 @@ except (KeyError, TypeError, ValueError):
     * `a << n = a * 2^n`
     * `(39 << 3) & 255`: use bitmask to preserve size of bit pattern
 * right shift: `>>`
-    * floor division by powers of two
+    * *floor* division by powers of two
     * shifts bits to right
         * drops right-most bits
         * 0-pads bits on the left
