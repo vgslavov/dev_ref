@@ -510,13 +510,23 @@ for f in sorted(set(l)):
 ```
 * don't loop & push/pop over the same sequence
 ```
-# wrong
+# wrong: list
 for e in stack:
     stack.pop()
 
-# right
+# right: list
 while len(stack):
     stack.pop()
+
+# wrong: dict
+for k,v in d.items():
+    if k == 2:
+        del d[k]
+
+# right: dict
+for k in list(d.keys()):
+    if k == 2:
+        del d[k]
 ```
 
 ## Conditions & Comparisons
