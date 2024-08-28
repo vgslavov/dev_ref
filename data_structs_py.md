@@ -518,6 +518,16 @@ for e in stack:
 while len(stack):
     stack.pop()
 
+# wrong: list
+for i in range(1, len(nums)):
+    del nums[i-1]
+
+# right: list
+i += 1
+while i < len(nums):
+    del nums[i-1]
+    i += 1
+
 # wrong: dict
 for k,v in d.items():
     if k == 2:
