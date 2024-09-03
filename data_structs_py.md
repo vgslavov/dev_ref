@@ -508,6 +508,10 @@ for i in sorted(l):
 for f in sorted(set(l)):
     print(f)
 ```
+* over list of intervals: `[[1,3],[6,0]]`
+```
+for start, end in intervals:
+```
 * don't loop & push/pop over the same sequence
 ```
 # wrong: list
