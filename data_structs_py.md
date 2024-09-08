@@ -602,6 +602,9 @@ sorted(student_objects, key=attrgetter('grade', 'age'))
 min(rows, key=itemgetter('uuid'))
 # users is an instance of class User with age attribute
 max(users, key=attrgetter('age')))
+
+# index of min element
+min(range(len(values)), key=values.__getitem__)
 ```
 * ascending by default, descending using `reverse`
 ```

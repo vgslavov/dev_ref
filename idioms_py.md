@@ -606,6 +606,7 @@ id(a) == id(b)  # True
 ## Math
 
 * use `math.inf` for comparing to big/small numbers (`-math.inf`)
+* `is_integer()`: is a float an integer?
 
 ## Recipes
 
