@@ -527,7 +527,7 @@ for i in range(1, len(nums)):
     del nums[i-1]
 
 # right: list
-i += 1
+i = 0
 while i < len(nums):
     del nums[i-1]
     i += 1
@@ -596,15 +596,6 @@ sorted(student_objects, key=itemgetter('age'))
 
 # multi-level sorting
 sorted(student_objects, key=attrgetter('grade', 'age'))
-
-# can apply min/max with both item & attr getters
-# rows is a dict with uuid key
-min(rows, key=itemgetter('uuid'))
-# users is an instance of class User with age attribute
-max(users, key=attrgetter('age')))
-
-# index of min element
-min(range(len(values)), key=values.__getitem__)
 ```
 * ascending by default, descending using `reverse`
 ```
@@ -649,6 +640,18 @@ sorted(students, key=newgrades.__getitem__)
 i = bisect.bisect_left(v, k)
 if i < len(v) and v[i] == k:
     return True
+```
+* `max`/`min`
+```
+# can apply min/max with both item & attr getters
+# rows is a dict with uuid key
+min(rows, key=itemgetter('uuid'))
+# users is an instance of class User with age attribute
+max(users, key=attrgetter('age')))
+
+# index of min element
+values = [1,2,4,0,99,32]
+min(range(len(values)), key=values.__getitem__)   // returns 3
 ```
 
 ## Algorithms
