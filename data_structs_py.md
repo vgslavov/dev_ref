@@ -102,9 +102,10 @@ stack.pop()
 ### Comprehensions
 
 > A list comprehension consists of brackets containing an expression followed by
-> a for clause, then zero or more for or if clauses.
+> a `for` clause, then zero or more for or if clauses.
 - Python Docs
 
+* can only use `for` (`while` not allowed)
 * simple
 ```
 squares = [x**2 for x in range(10)]
@@ -193,7 +194,10 @@ q.rotate(-3)
     * start with empty `[]`
     * or `heapq.heapify(l)` existing list in O(N) time
 * every sorted list satisfies the heap property!
-* `heapq.merge`: O(N log N), iterate + `heapify`?
+* `heapq.merge`
+    * complexity: O(n log n)
+    * iterate + `heapify`?
+    * returns a generator
 
 ### Create
 
@@ -283,6 +287,8 @@ index += 1
 * uses
     * membership testing
     * eliminating duplicates
+* can't add non-hashable (e.g. lists): `s.add([1,2]) # error`
+* can add tuples: `s.add((1,2))`
 * operations
     * union: `|`
     * intersection: `&`
@@ -573,6 +579,7 @@ for k in list(d.keys()):
     * `list` only
     * more efficient than `sorted()`
 * sorting a string: `text = ''.join(sorted(text))`
+* ala `cat list | sort | uniq`: `sorted(set(list))`
 * `key` functions
 ```
 # by length
