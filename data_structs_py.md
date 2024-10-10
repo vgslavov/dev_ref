@@ -72,7 +72,7 @@ a[-3::-1]          # everything except the last two items, reversed
     * `del a[:]`: delete all elements (same as `clear`)
     * `del a`: delete variable
 * `sort`: sort *in place* (cmp to `sorted()`: creates new)
-* `reverse`: reverse *in place*
+* `reverse`: reverse *in place* (cmp to `reversed()`: generator)
 * shallow copy
     * `b = list(a)`
     * `c = a[:]`
@@ -320,6 +320,7 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
     * build dictionary (same as `{}`)
     * use keys: `dict(id=1234, ext=212)`
 * list of `dict` keys (in insert order): `list(d)`
+* next/first key: `next(iter(d))`
 * sorted list of `dict` keys: `sorted(d)`
 * check membership: `'hello' in d`
 * `del d['hello']`: delete key
@@ -478,6 +479,8 @@ j = list(itertools.chain(l1, l2))
 
 ## `functools`
 
+* `@cache`: use for memoization in DP
+
 ## Looping
 
 * over `dict` using `items`
@@ -499,6 +502,7 @@ for q, a in zip(questions, answers):
 ```
 for i in range(1, len(nums)):
 ```
+* `range(start, stop)`: [start, stop), stop is excluded
 * `reversed` loop
 ```
 for i in reversed(range(len(nums)):
@@ -666,3 +670,8 @@ min(range(len(values)), key=values.__getitem__)   // returns 3
 * `sum`: add number of non-zero keys in a `dict`
     * `sum(d[k] != 0 for k in d.keys())`
     * `sum(1 for k in d.keys() if d[k])`
+* `math.comb`: calc combinations
+* `math.perm`: calc permutations
+* `math.factorial`: calc factorial
+* `list(set(sorted(list(itertools.permutations("AAB", 2)))))`: permutations of
+    string taken 2 at-a-time
