@@ -517,6 +517,10 @@ except (KeyError, TypeError, ValueError):
     value = None
 ```
 
+### Regular Expressions
+
+* `re.split(\W+)`: split by non-word chars
+
 ## Binary
 
 * Python has no *unsigned* data types!

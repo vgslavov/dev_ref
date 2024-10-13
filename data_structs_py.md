@@ -480,6 +480,7 @@ j = list(itertools.chain(l1, l2))
 ## `functools`
 
 * `@cache`: use for memoization in DP
+* `@lru_cache(maxsize=None)`: same as `@cache`
 
 ## Looping
 
@@ -673,5 +674,5 @@ min(range(len(values)), key=values.__getitem__)   // returns 3
 * `math.comb`: calc combinations
 * `math.perm`: calc permutations
 * `math.factorial`: calc factorial
-* `list(set(sorted(list(itertools.permutations("AAB", 2)))))`: permutations of
-    string taken 2 at-a-time
+* `list(set(sorted(list(itertools.permutations("AAB", 2)))))`:
+  permutations of "AAB" taken 2 chars at-a-time
