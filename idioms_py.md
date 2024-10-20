@@ -314,6 +314,10 @@ foo = ''.join([foo, 'ooo'])
 formatted_book_info = book_info.strip().upper().replace(':', ' by')
 ```
 
+### Numbers
+
+* `ord('5')-ord('0')`: string to int w/o `int()` (ASCII of chars)
+
 ### Classes
 
 ```

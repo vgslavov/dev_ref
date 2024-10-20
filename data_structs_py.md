@@ -507,7 +507,12 @@ for i in range(1, len(nums)):
 * `reversed` loop
 ```
 for i in reversed(range(len(nums)):
-    print(i)
+    print(nums[i])
+```
+* `reversed` loop for reversing string
+```
+for c in reversed(s):
+    print(s)
 ```
 * `sorted` loop
 ```
@@ -643,6 +648,8 @@ Student.__lt__ = lambda self, other: self.age < other.age
 ```
 sorted(students, key=newgrades.__getitem__)
 ```
+* custom comparator: TODO
+* reverse string: `''.join(reversed(s))`
 
 ## Searching
 
