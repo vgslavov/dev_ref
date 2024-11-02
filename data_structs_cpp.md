@@ -1,28 +1,45 @@
-// VECTOR/ARRAY
-// vector
-// random access, locality of reference
+# Data Structures in C++
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Vector](#vector)
+- [Bit Vector](#bit-vector)
+- [Linked List](#linked-list)
+- [Stack](#stack)
+- [Queue](#queue)
+- [Tree](#tree)
+  - [Binary](#binary)
+  - [BST](#bst)
+  - [Trie](#trie)
+- [Heap](#heap)
+- [Hash Map](#hash-map)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Vector
+
+* random access, locality of reference
+```cpp
 int len = 5;
 int def = 0;
 vector<int> V(len, def);
 vector<int> W(len, 200);
-
-/*
-reserve() vs resize():
-
-resize:
-- same as giving size to ctor
-- can specify default values (like with ctor): V.resize(50, 33);
-- affects only size()
-- can use operator[]
-- push_back inserts elements after size()
-
-reserve:
-- only allocates mem
-- leaves uninit.
-- affects only capacity()
-- use only if reasonably precise estimate on total elements
-*/
-
+```
+* reserve() vs resize()
+    * resize
+        - same as giving size to ctor
+        - can specify default values (like with ctor): V.resize(50, 33);
+        - affects only size()
+        - can use operator[]
+        - push_back inserts elements after size()
+    * reserve
+        - only allocates mem
+        - leaves uninit.
+        - affects only capacity()
+        - use only if reasonably precise estimate on total elements
+```cpp
 // allocate memory
 // have to deallocate memory
 // speed: 1
@@ -61,8 +78,11 @@ V.size();
 V.begin();
 V.end();
 V.resize(len+10);
+```
 
-// bit vector
+## Bit Vector
+
+```cpp
 // uses less space, each element truly is 1-bit sized (compared to char (8-bit) bool vectors)
 bitset<len> bit_vec;
 
@@ -80,8 +100,11 @@ int A[len];
 A.size();
 A.front();
 A.back();
+```
 
-// LINKED LIST
+## Linked List
+
+```cpp
 // STL: implemented as doubly-linked list
 list<int> L;
 
@@ -104,8 +127,11 @@ L.insert();
 
 L.size();
 L.empty():
+```
 
-// STACK
+## Stack
+
+```cpp
 // STL: implemented as array (deque)
 stack<int> S;
 
@@ -119,8 +145,11 @@ S.top();    // O(1)
 S.push(5);  // O(1): amortized if implemented as array
 S.emplace(5);   // O(1): no new copy
 S.pop();    // O(1): amortized if implemented as array
+```
 
-// QUEUE
+## Queue
+
+```cpp
 queue<int> Q;
 
 Q.emplace();    // enqueue
@@ -133,8 +162,13 @@ Q.size();
 
 // double-ended queue
 deque<int> DQ;
+```
 
-// TREE: binary
+## Tree
+
+### Binary
+
+```cpp
 // user-defined
 typedef struct BinaryTree {
     int data;
@@ -143,19 +177,26 @@ typedef struct BinaryTree {
     // not always available
     struct BinaryTree *parent;
 } BinaryTree;
+```
+* nodes: 2^(h+1) -1
+* leaves: 2^h
+* height: floor(lg n)
 
-// nodes: 2^(h+1) -1
-// leaves: 2^h
-// height: floor(lg n)
+### BST
 
-// TREE: BST
+```cpp
 map<int, int> M;
 set<int> MS;
+```
 
-// TREE: trie (prefix tree)
-// implemented using a hash table
+### Trie
 
-// HEAP
+* a.k.a. prefix tree
+* implemented using a hash table
+
+## Heap
+
+```cpp
 // priority queue
 // min-heap: smallest is last in array?
 struct Compare {
@@ -186,8 +227,11 @@ max_heap.push();        // O(log n)
 max_heap.pop();     // O(log n)
 
 max_heap.top();     // O(1)
+```
 
-// HASH TABLE
+## Hash Map
+
+```cpp
 unordered_map<string, int> HM;
 unordered_set<int> HS;
 
@@ -198,3 +242,4 @@ HM[‘abc’];
 
 HS.find(5);
 HS.count(5);
+```
