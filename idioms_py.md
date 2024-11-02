@@ -92,7 +92,7 @@
 
 ### Truthiness
 
-```
+```py
 False
 # all of the below
 None
@@ -132,7 +132,7 @@ if attr is None:
 * contains: `if in items:`
 * iterable: `for x in items:`
 * implement `__contains__` in user-defined classes
-```
+```py
 # compound if
 if name in ('Tom', 'Tim'):
     is_generic = True
@@ -154,7 +154,7 @@ else:
 ### Function Arguments
 
 * default args
-```
+```py
 # always use None for default parameters instead of []!
 # * default function values are evaluated only once
 # * default values will be shared b/w subsequent calls
@@ -166,7 +166,7 @@ def f(a, L=None):
     return L
 ```
 * passing multiple args
-```
+```py
 # use *args and **kwargs to maintain compatibility
 def make_api_call(foo, bar, baz):
     pass
@@ -175,7 +175,7 @@ def make_api_call(foo, bar, baz, *args, **kwargs):
     baz_coeff = kwargs['the_baz']
 ```
 * unpacking args
-```
+```py
 for i, item in enumerate(some_list):
     print('{} {}'.format(i, item))
 
@@ -211,7 +211,7 @@ basename, __, ext = filename.rpartition('.')
 # __ = '.'
 ```
 * default `dict` args
-```
+```py
 # use default parameter of dict.get to provide default value
 d = {'spo_order': 'min'}
 print(d.get('spo_order', 'def_value'))  # prints 'spo_order'
@@ -227,7 +227,7 @@ if 'spo_order' in d:
 ### Comprehensions
 
 * list comprehension
-```
+```py
 a = [3, 4, 5]
 # build [] on the fly
 b = [i for i in a if i > 4]
@@ -248,12 +248,12 @@ four_nones = [None] * 4
 four_lists = [[] for __ in range(4)]
 ```
 * dict comprehension
-```
+```py
 user_email = {user.name: user.email
             for user in users_list if user.email}
 ```
 * set comprehension
-```
+```py
 users_first_names = {user.first_name for user in users}
 ```
 * set operations
@@ -265,7 +265,8 @@ users_first_names = {user.first_name for user in users}
         * symmetric difference: A ^ B (the set of el. in either A or B but not both)
 
 ### Files
-```
+
+```py
 # read from a file (closes cleanly even if exception)
 with open('file.txt') as f:
     for line in f:
@@ -276,7 +277,7 @@ with open('file.txt') as f:
 
 * immutable!
 * `string.ascii_lowercase`: English alphabet
-```
+```py
 # read file as a string
 contents = ''.join(open('file.txt').read().splitlines())
 # line continuation
@@ -320,7 +321,7 @@ formatted_book_info = book_info.strip().upper().replace(':', ' by')
 
 ### Classes
 
-```
+```py
 # mark private data with underscores as prefix
 # protected (not used by clients): one _
 # effect: won't be imported if 'all' is used
@@ -337,12 +338,12 @@ def __str__(self):
 ### Iterators
 
 * `iter`: iterate over any object
-```
+```py
 it = iter(l)
 next(it)        # only supported method
 ```
 * looping
-```
+```py
 for i in iter(obj):
     print(i)
 # same as
@@ -370,20 +371,20 @@ for i in obj:
     * `(item for item in iterable if function(item))`
     * `(item for item in iterable if item)`: if function is `None`
 * bad: list comprehension (uses [])
-```
+```py
 names = [name.upper() for name in get_all_usernames()]
 for uppercase_name in names:
     process_normalized_username(uppercase_name)
 ```
 * best: generator expression (uses ())
 * generates elements on-demand: faster
-```
+```py
 names = (name.upper() for name in get_all_usernames())
 for uppercase_name in names:
     process_normalized_username(uppercase_name)
 ```
 * sum up last column in a large file
-```
+```py
 # awk solution
 cmd = "awk '{ total += $NF } END { print total }' big-access-log"
 os.system(cmd)
@@ -406,7 +407,7 @@ print("Total {0}".format(sum(bytes)))
 
 ### Context Managers
 
-```
+```py
 # use a context manager ('with') to enforce RAII
 # (especially when raising exceptions)
 # user-defined classes should define __enter__ and __exit__ to do the same
@@ -454,7 +455,7 @@ with open(path_to_file, 'r') as file_handle:
 
 ### Formatting
 
-```
+```py
 # global constants are in ALL CAPS
 SECONDS_IN_A_DAY = 60 * 60 * 24
 
@@ -482,7 +483,7 @@ SECRET_KEY = 42
 * use `sys.exit` in scripts to return proper error codes
   (allows running script in UNIX pipes)
 * make script both importable & executable
-```
+```py
 def main():
     import sys
     if len(sys.argv) < 2:
@@ -513,7 +514,7 @@ if __name__ == '__main__':
 * prefer EAFP (Easier to Ask for Permission) to LYBL (Look Before You Leap)
 * exceptions are not expensive
 * don't check for specific types, rely on duck typing
-```
+```py
 d = {'x': '5'}
 try:
     value = int(d['x'])
@@ -574,7 +575,7 @@ except (KeyError, TypeError, ValueError):
         * drops right-most bits
         * 0-pads bits on the left
     * `a >> n = floor(a / 2^n)`
-    ```
+    ```py
     5 >> 1     # 2: bitwise right shift
     5 // 2     # 2: floor (integer) division (let's you choose divisor)
     5 /  2     # 2.5: floating-point division
@@ -594,7 +595,7 @@ except (KeyError, TypeError, ValueError):
 ### Conversions
 
 * `id`: check an object's identity in memory
-```
+```py
 a = 5
 b = a
 a is b          # True
@@ -618,7 +619,7 @@ id(a) == id(b)  # True
 
 ## Recipes
 
-```
+```py
 # sorted, unique list
 # TODO: does it only work for hashables types (strings, numbers, tuples)?
 my_list = sorted(set(my_list))
