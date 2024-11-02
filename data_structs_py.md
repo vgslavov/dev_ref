@@ -49,7 +49,7 @@
 ### List
 
 * slicing
-```
+```py
 a[start:stop:step] # start through not past stop, by step
 a[slice(start, stop, step)] # using slice obj
 a[start:stop]      # items start through stop-1
@@ -90,7 +90,7 @@ a[-3::-1]          # everything except the last two items, reversed
 ### Stack
 
 * LIFO
-```
+```py
 stack = []
 # push
 stack.append(6)
@@ -107,23 +107,23 @@ stack.pop()
 
 * can only use `for` (`while` not allowed)
 * simple
-```
+```py
 squares = [x**2 for x in range(10)]
 ```
 * same using `map`
-```
+```py
 squares = list(map(lambda x: x**2, range(10)))
 ```
 * a predicate
-```
+```py
 list(x for x in range(10) if is_even(x))
 ```
 * same using `filter`
-```
+```py
 list(filter(is_even, range(10)))
 ```
 * nested
-```
+```py
 matrix = [
     [1, 2, 3, 4],
     [5, 6, 7, 8],
@@ -152,7 +152,7 @@ list(zip(*matrix))
 ## `deque`
 
 * queue (FIFO)
-```
+```py
 import collections
 
 l = [1, 2, 3]
@@ -201,7 +201,7 @@ q.rotate(-3)
 
 ### Create
 
-```
+```py
 h = list(nums)           # deep copy of list
 heapq.heapify(h)         # O(N): create min heap from list
 heapq._heapify_max(h)    # O(N): create max heap from list
@@ -214,7 +214,7 @@ heapq.heapreplace(h, 1)  # pop smallest then push: more efficient
 
 ### Sort
 
-```
+```py
 import heapq
 
 def heapsort(iterable):
@@ -234,7 +234,7 @@ heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
 
 ### Get N largest/smallest
 
-```
+```py
 # O(N + log(m)): m is top m
 heapq.nlargest(3, nums)
 # same as
@@ -261,7 +261,7 @@ elif N ~ len(nums):
 
 ### Use as a priority queue
 
-```
+```py
 h = []
 heappush(h, (5, 'write code'))
 heappush(h, (7, 'release product'))
@@ -296,7 +296,7 @@ index += 1
     * symmetric difference (a.k.a. XOR): `^`
 * empty set: `set()` (not `{}`)
 * set comprehension
-```
+```py
 a = {x for x in 'abracadabra' if x not in 'abc'}
 ```
 
@@ -325,13 +325,13 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 * check membership: `'hello' in d`
 * `del d['hello']`: delete key
 * dict comprehension
-```
+```py
 {x: x**2 for x in (2, 4, 6)}
 ```
 
 ### `defaultdict`
 
-```
+```py
 d = {
     'a' : [1, 2, 3],
     'b' : [4, 5]
@@ -374,7 +374,14 @@ l = [k for k,v in d.items() if v > 2]
 * preserves original *insertion* order (useful for serializing/encoding to JSON)
 * twice the size of a regular dict (implemented as a doubly-linked list)
 * designed for *reordering* operations
-```
+* `move_to_end`
+    * move existing key to end of dict
+    * `move_to_end(key, last=False)`: move existing to beginning
+* `popitem`
+    * return & remove key,value pair in *LIFO* order
+    * `popitem(last=False)`:  in *FIFO* order
+* example
+```py
 from collections import OrderedDict
 
 d = OrderedDict()
@@ -393,7 +400,7 @@ json.dumps(d)  # '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ### `Counter`
 
 * count most frequently occurring items in a *sequence*
-```
+```py
 words = [
        'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
        'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the'
@@ -413,7 +420,7 @@ d = word_counts - b         # subtract counts
 ### Calculations
 
 * invert dict into (value, key) pairs using zip()
-```
+```py
 prices = {
    'ACME': 45.23,
    'AAPL': 612.78,
@@ -449,7 +456,7 @@ c = {key:a[key] for key in a.keys() - {'z', 'w'}}
 ## `itertools`
 
 * `groupby`: group records based on field
-```
+```py
 rows = [
         {'address': '5412 N CLARK', 'date': '07/01/2012'},
         {'address': '5148 N CLARK', 'date': '07/04/2012'},
@@ -471,7 +478,7 @@ for date, items in groupby(rows, key=itemgetter('date')):
 ```
 * `compress`
 * `chain`: concat iterables
-```
+```py
 import itertools
 
 j = list(itertools.chain(l1, l2))
@@ -485,51 +492,52 @@ j = list(itertools.chain(l1, l2))
 ## Looping
 
 * over `dict` using `items`
-```
+```py
 for k, v in d.items():
     print(k, v)
 ```
 * over `list` using `enumerate`
-```
+```py
 for i, v in enumerate(l):
     print(i, v)
 ```
 * over multiple sequences using `zip`: lazy evaluation
-```
+```py
 for q, a in zip(questions, answers):
     print('{0}? {1}'.format(q, a))
 ```
 * specific `range`: 1 to n
-```
+```py
 for i in range(1, len(nums)):
 ```
 * `range(start, stop)`: [start, stop), stop is excluded
+* `range(len(n)-1, -1, -1)`: go backwards with index
 * `reversed` loop
-```
+```py
 for i in reversed(range(len(nums)):
     print(nums[i])
 ```
 * `reversed` loop for reversing string
-```
+```py
 for c in reversed(s):
     print(s)
 ```
 * `sorted` loop
-```
+```py
 for i in sorted(l):
     print(i)
 ```
 * `sorted` & unique loop using `set`
-```
+```py
 for f in sorted(set(l)):
     print(f)
 ```
 * over list of intervals: `[[1,3],[6,0]]`
-```
+```py
 for start, end in intervals:
 ```
 * don't loop & push/pop over the same sequence
-```
+```py
 # wrong: list
 for e in stack:
     stack.pop()
@@ -569,7 +577,7 @@ for k in list(d.keys()):
 * `A and not B or C` == `(A and (not B)) or C`
 * *short-circuit* operators: `A and B and C` (C is not evaluated if B is false)
 * *lexicographical* ordering of comparisons: 1st two items are compared & so on
-```
+```py
 (1, 2, 3)              < (1, 2, 4)
 [1, 2, 3]              < [1, 2, 4]
 'ABC' < 'C' < 'Pascal' < 'Python'
@@ -591,7 +599,7 @@ for k in list(d.keys()):
 * sorting a string: `text = ''.join(sorted(text))`
 * ala `cat list | sort | uniq`: `sorted(set(list))`
 * `key` functions
-```
+```py
 # by length
 sorted(['table', 'fish', 'apartment'], key=len)
 
@@ -615,14 +623,14 @@ sorted(student_objects, key=itemgetter('age'))
 sorted(student_objects, key=attrgetter('grade', 'age'))
 ```
 * ascending by default, descending using `reverse`
-```
+```py
 sorted(student_tuples, key=itemgetter(2), reverse=True)
 # same as
 list(reversed(sorted(reversed(data), key=itemgetter(2))))
 ```
 * guaranteed to be stable: preserve order of same key records
 * multisort
-```
+```py
 s = sorted(student_objects, key=attrgetter('age'))     # sort on secondary key
 sorted(s, key=attrgetter('grade'), reverse=True)       # now sort on primary key, descending
 
@@ -635,17 +643,17 @@ def multisort(xs, specs):
 multisort(list(student_objects), (('grade', True), ('age', False)))
 ```
 * Decorate-Sort-Undecorate (DSU)
-```
+```py
 decorated = [(student.grade, i, student) for i, student in enumerate(student_objects)]
 decorated.sort()
 [student for grade, i, student in decorated]               # undecorate
 ```
 * define `__lt__` in user-defined classes
-```
+```py
 Student.__lt__ = lambda self, other: self.age < other.age
 ```
 * using keys from another dict
-```
+```py
 sorted(students, key=newgrades.__getitem__)
 ```
 * custom comparator: TODO
@@ -654,14 +662,14 @@ sorted(students, key=newgrades.__getitem__)
 ## Searching
 
 * `bisect`
-```
+```py
 # binary search: works on ascending sorted order only!
 i = bisect.bisect_left(v, k)
 if i < len(v) and v[i] == k:
     return True
 ```
 * `max`/`min`
-```
+```py
 # can apply min/max with both item & attr getters
 # rows is a dict with uuid key
 min(rows, key=itemgetter('uuid'))
