@@ -4,6 +4,12 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Use Cases](#use-cases)
+  - [Containers](#containers)
+  - [Iterators](#iterators)
+  - [Algorithms](#algorithms)
+  - [Lambda Functions](#lambda-functions)
+  - [Strings](#strings)
 - [Vector](#vector)
 - [Bit Vector](#bit-vector)
 - [Linked List](#linked-list)
@@ -17,6 +23,168 @@
 - [Hash Map](#hash-map)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Use Cases
+
+### [Containers](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#1c29)
+
+* `stack`
+    * storing elements in LIFO fashion
+    * DFS
+* `queue`
+    * storing elements in FIFO fashion
+    * BFS
+* `deque`
+    * storing/deleting elements from both ends of vector in `O(1)` time
+    * sliding window scenarios
+* `priority_queue`
+    * max/min heap heap functionality
+    * topological sort
+* `unordered_map`
+    * faster storing/retrieval of data based on some *key* in `O(1)` time
+    * only primitive dataypes & string work as key
+* `map`
+    * faster storing/retrieval of data based on some *object/pair key*
+      in `O(log n)` time
+    * order of elements matter
+* `list`
+    * doubly-linked list for LRU-like caches
+    * use with `unordered_map` of key to List iterators
+    * efficient front/back access
+    * efficient erase if you have saved iterator
+
+### [Iterators](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#5cb0)
+
+* `begin()`/`end()`: first element & one *past* last element
+* `rbegin()`/`rend()`: reverse iterator to last element & one *before* first
+    element
+* `*it`: iterator value
+* `++`/`--`: increment/decrement iterator to move fwd/back
+* `+`/`-`: move by `n` positions
+* `==`/`!=`/etc: compare
+
+### [Algorithms](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#799a)
+
+* `accumulate`: sum up range
+```cpp
+int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
+```
+* `sort`: sort ascending in-place?
+```cpp
+// Sort the array in descending order cause of rbegin(), rend()
+std::sort(numbers.rbegin(), numbers.rend());
+
+// providing a custom comparator function
+sort(temp.begin(), temp.end(),[](const pi &a, const pi &b){
+    if (a.second == b.second) return a.first > b.first;
+    return a.second < b.second;
+});
+```
+* `reverse`: reverse container
+```cpp
+std::reverse(numbers.begin(), numbers.end());
+```
+* `binary_search`: check if value exists in *sorted* container
+```cpp
+bool found = std::binary_search(numbers.begin(), numbers.end(), target);
+```
+* `lower_bound`: returns an iterator to the first element not less than the
+  specified value.
+```cpp
+int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
+```
+* `upper_bound`: returns an iterator to the first element that is greater than
+  the specified value.
+
+### [Lambda Functions](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#8054)
+
+* syntax
+```cpp
+[capture_clause](parameter_list) -> return_type {
+    // Lambda body - lambda with optional return statement
+}
+```
+* simple example
+```cpp
+auto square = [&factor](int x) -> int {
+    return x * x;
+};
+```
+* `capture_clause`
+    * what external variables from scope the lambda can access
+    * `[]`: empty capture clause, the lambda captures nothing
+    * `[var1, var2]`: capture `var1` and `var2` by value, making copies
+    * `[&var1, &var2]`: capture `var1` and `var2` by reference
+    * `[=]`: capture all external variables by value
+    * `[&]`: capture all external variables by reference
+    * `[=, &var1]`: capture all variables by value, except `var1` is captured by
+      reference
+* `parameter_list`
+    * parameters of the lambda function
+    * similar to regular function parameters
+    * data types and names of the parameters are specified
+    * or left empty in case of no parameters
+* `-> return_type` [optional]
+    * the return type of the lambda function
+    * if the return type can be deduced by the compiler, can be omitted
+* comparator `functor` example
+```cpp
+// Functor with 'operator' overload
+struct CustomComparator {
+    bool operator()(const pair<int, int>& a, const pair<int, int>& b) {
+        return a.first > b.first;
+    }
+};
+
+priority_queue<pair<int, int>, vector<pair<int, int>>, CustomComparator> pq;
+```
+
+### [Strings](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#c396)
+
+* `substr`: extracts substring
+* `find`: find position of substring in a string
+* `repalce`: replaces substring
+* `stoi`: string to number conversion
+* `to_string`: number to string conversion
+* splitting: use `istringstream`
+```cpp
+std::string date("2020-03-20");
+std::string delimiter("-");
+std::istringstream ss(date); // Creating an input stream
+std::string token;
+std::vector<std::string> tokens;
+
+while (std::getline(ss, token, delimiter)) {
+    tokens.push_back(token);
+}
+```
+* splitting: use `substr` + `find`, like Python's `split()`
+```cpp
+std::string date = "1970-10-1";
+std::string delimiter("-");
+int token = std::stoi(date.substr(0, date.find(delimiter)));
+date.erase(0, date.find(delimiter) + delimiter.length());
+```
+
+### Data Types
+
+* chars: 1 byte
+    * `signed char`
+    * `unsigned char`
+* shorts: 2 bytes
+    * `short int`
+    * `unsigned short int`
+* ints: 4 bytes
+    * `unsigned int`
+    * `int`
+    * `long int`
+    * `unsigned long int`
+* longs: 8 bytes
+    * `long long int`
+    * `unsigned long long int`
+* `float`: 4 bytes
+* `double`: 8 bytes
+* `long double`: 12 bytes
 
 ## Vector
 
