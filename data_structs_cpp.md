@@ -10,6 +10,7 @@
   - [Algorithms](#algorithms)
   - [Lambda Functions](#lambda-functions)
   - [Strings](#strings)
+  - [Data Types](#data-types)
 - [Vector](#vector)
 - [Bit Vector](#bit-vector)
 - [Linked List](#linked-list)
@@ -26,7 +27,9 @@
 
 ## Use Cases
 
-### [Containers](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#1c29)
+Source: [C++ STL Essentials for Leetcode](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb)
+
+### Containers
 
 * `stack`
     * storing elements in LIFO fashion
@@ -53,7 +56,7 @@
     * efficient front/back access
     * efficient erase if you have saved iterator
 
-### [Iterators](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#5cb0)
+### Iterators
 
 * `begin()`/`end()`: first element & one *past* last element
 * `rbegin()`/`rend()`: reverse iterator to last element & one *before* first
@@ -63,7 +66,7 @@
 * `+`/`-`: move by `n` positions
 * `==`/`!=`/etc: compare
 
-### [Algorithms](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#799a)
+### Algorithms
 
 * `accumulate`: sum up range
 ```cpp
@@ -96,7 +99,7 @@ int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
 * `upper_bound`: returns an iterator to the first element that is greater than
   the specified value.
 
-### [Lambda Functions](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#8054)
+### Lambda Functions
 
 * syntax
 ```cpp
@@ -139,7 +142,7 @@ struct CustomComparator {
 priority_queue<pair<int, int>, vector<pair<int, int>>, CustomComparator> pq;
 ```
 
-### [Strings](https://medium.com/@himanshusingh2719/c-stl-essentials-for-leetcode-2b9d97307feb#c396)
+### Strings
 
 * `substr`: extracts substring
 * `find`: find position of substring in a string
