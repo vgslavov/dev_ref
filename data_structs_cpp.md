@@ -144,9 +144,9 @@ priority_queue<pair<int, int>, vector<pair<int, int>>, CustomComparator> pq;
 
 ### Strings
 
-* `substr`: extracts substring
+* `substr`: extract substring
 * `find`: find position of substring in a string
-* `repalce`: replaces substring
+* `replace`: replace substring
 * `stoi`: string to number conversion
 * `to_string`: number to string conversion
 * splitting: use `istringstream`

@@ -598,6 +598,17 @@ for k in list(d.keys()):
     * more efficient than `sorted()`
 * sorting a string: `text = ''.join(sorted(text))`
 * ala `cat list | sort | uniq`: `sorted(set(list))`
+* sorting a `dict`
+```py
+# by key
+dict(sorted(d.items()))
+
+# by value
+dict(sorted(d.items(), key=lambda item: item[1]))
+
+# dict values to string
+''.join([d[key] for key in sorted(d.keys())])
+```
 * `key` functions
 ```py
 # by length
@@ -679,6 +690,9 @@ max(users, key=attrgetter('age')))
 # index of min element
 values = [1,2,4,0,99,32]
 min(range(len(values)), key=values.__getitem__)   // returns 3
+
+# max length string
+max(['abcd','ab','daaded'], key=len)
 ```
 
 ## Algorithms
