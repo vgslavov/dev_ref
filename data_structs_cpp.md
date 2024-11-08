@@ -38,20 +38,34 @@ Source: [C++ STL Essentials for Leetcode](https://medium.com/@himanshusingh2719/
     * storing elements in FIFO fashion
     * BFS
 * `deque`
+    * double-ended queue
     * storing/deleting elements from both ends of vector in `O(1)` time
     * sliding window scenarios
+    * supports `operator[]`!
+    * use instead of `vector` if you need to `push_front`/`pop_front`
 * `priority_queue`
     * max/min heap heap functionality
     * topological sort
 * `unordered_map`
+    * hash table
     * faster storing/retrieval of data based on some *key* in `O(1)` time
+    * performance can degrade to `O(n)`
     * only primitive dataypes & string work as key
+    * use when
+        * hashing of key is not expensive (primitives)
+        * `n` is not large
+        * order is not important
 * `map`
+    * binary search tree
     * faster storing/retrieval of data based on some *object/pair key*
       in `O(log n)` time
     * order of elements matter
+    * use when
+        * need to iterate over keys
+        * `n` is large
 * `list`
     * doubly-linked list for LRU-like caches
+    * doesn't support `operator[]`
     * use with `unordered_map` of key to List iterators
     * efficient front/back access
     * efficient erase if you have saved iterator
