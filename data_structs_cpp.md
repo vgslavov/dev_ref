@@ -112,6 +112,10 @@ int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
 ```
 * `upper_bound`: returns an iterator to the first element that is greater than
   the specified value.
+* `rotate`: shift left
+```cpp
+std::rotate(v.begin(), v.begin() + head, v.end());
+```
 
 ### Lambda Functions
 
