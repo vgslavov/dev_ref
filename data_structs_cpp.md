@@ -194,6 +194,11 @@ date.erase(0, date.find(delimiter) + delimiter.length());
 ```cpp
 ans.erase(0, std::find_first_not_of("0"));
 ```
+* trim space from left in place
+```
+s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+    [](unsigned char) { return !std::isspace(); }));
+```
 
 ### Data Types
 
