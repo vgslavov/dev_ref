@@ -116,6 +116,10 @@ int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
 ```cpp
 std::rotate(v.begin(), v.begin() + head, v.end());
 ```
+* `max_element`: max element in iterable
+```cpp
+*std::max_element(v.begin(), v.end());
+```
 
 ### Lambda Functions
 
@@ -185,6 +189,10 @@ std::string date = "1970-10-1";
 std::string delimiter("-");
 int token = std::stoi(date.substr(0, date.find(delimiter)));
 date.erase(0, date.find(delimiter) + delimiter.length());
+```
+* `find_first_not_of`: remove prefix
+```cpp
+ans.erase(0, std::find_first_not_of("0"));
 ```
 
 ### Data Types

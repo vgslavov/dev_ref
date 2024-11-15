@@ -11,6 +11,12 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Numbers
+
+* `std::numeric_limits<int>::min()`: min infinity
+* `std::stoi("1100", nullptr, 2)`: binary string to int
+* `std::bitset<8>(x).to_string()`: int to binary string
+
 ## Loops
 
 ```cpp
