@@ -79,6 +79,12 @@ Source: [C++ STL Essentials for Leetcode](https://medium.com/@himanshusingh2719/
 * `++`/`--`: increment/decrement iterator to move fwd/back
 * `+`/`-`: move by `n` positions
 * `==`/`!=`/etc: compare
+* convert iterator to index
+```cpp
+std::distance(v.begin(), it)
+// or
+it - v.begin()
+```
 
 ### Algorithms
 
@@ -101,7 +107,7 @@ sort(temp.begin(), temp.end(),[](const pi &a, const pi &b){
 ```cpp
 std::reverse(numbers.begin(), numbers.end());
 ```
-* `binary_search`: check if value exists in *sorted* container
+* `binary_search`: check *if* value exists in *sorted* container
 ```cpp
 bool found = std::binary_search(numbers.begin(), numbers.end(), target);
 ```
@@ -222,6 +228,17 @@ s.erase(s.begin(), std::find_if(s.begin(), s.end(),
 
 ## Vector
 
+* `()` vs `{}`
+```cpp
+// vector of size 5 full of 0s
+std::vector<int> v1(5);
+
+// vector of size 5 full of 20s
+std::vector<int> v2(5, 20);
+
+// vector of size 2
+std::vector<int> v3{5, 20};
+```
 * random access, locality of reference
 ```cpp
 int len = 5;
