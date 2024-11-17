@@ -246,18 +246,23 @@ int def = 0;
 vector<int> V(len, def);
 vector<int> W(len, 200);
 ```
-* reserve() vs resize()
-    * resize
+* `reserve` vs `resize`
+    * `resize`
         - same as giving size to ctor
-        - can specify default values (like with ctor): V.resize(50, 33);
-        - affects only size()
-        - can use operator[]
-        - push_back inserts elements after size()
-    * reserve
+        - can specify default values (like with ctor): `v.resize(50, 33)`
+        - affects only `size`
+        - can use `operator[]`
+        - push_back inserts elements after `size`
+    * `reserve`
         - only allocates mem
         - leaves uninit.
-        - affects only capacity()
+        - affects only `capacity`
         - use only if reasonably precise estimate on total elements
+* copy from another iterable container (e.g. `map`, `set`) to `vector`
+```cpp
+std::copy(seen.begin(), seen.end(), std::back_inserter(v));
+```
+* examples
 ```cpp
 // allocate memory
 // have to deallocate memory
