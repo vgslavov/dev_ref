@@ -150,6 +150,7 @@ else:
     print('all valid')
 ```
 * ternary operator: `a if condition else b`
+* chaining comparisons: `if a == b == c:`
 
 ### Function Arguments
 

@@ -326,7 +326,11 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 * `del d['hello']`: delete key
 * dict comprehension
 ```py
+# key: number, value: number's square
 {x: x**2 for x in (2, 4, 6)}
+
+# key: number, value: index in array
+{num: i for i, num in enumerate(nums)}
 ```
 
 ### `defaultdict`
