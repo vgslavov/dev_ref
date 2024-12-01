@@ -170,62 +170,6 @@ struct CustomComparator {
 priority_queue<pair<int, int>, vector<pair<int, int>>, CustomComparator> pq;
 ```
 
-### Strings
-
-* `substr`: extract substring
-* `find`: find position of substring in a string
-* `replace`: replace substring
-* `stoi`: string to number conversion
-* `to_string`: number to string conversion
-* splitting: use `istringstream`
-```cpp
-std::string date("2020-03-20");
-std::string delimiter("-");
-std::istringstream ss(date); // Creating an input stream
-std::string token;
-std::vector<std::string> tokens;
-
-while (std::getline(ss, token, delimiter)) {
-    tokens.push_back(token);
-}
-```
-* splitting: use `substr` + `find`, like Python's `split()`
-```cpp
-std::string date = "1970-10-1";
-std::string delimiter("-");
-int token = std::stoi(date.substr(0, date.find(delimiter)));
-date.erase(0, date.find(delimiter) + delimiter.length());
-```
-* `find_first_not_of`: remove prefix
-```cpp
-ans.erase(0, std::find_first_not_of("0"));
-```
-* trim space from left in place
-```
-s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-    [](unsigned char) { return !std::isspace(); }));
-```
-
-### Data Types
-
-* chars: 1 byte
-    * `signed char`
-    * `unsigned char`
-* shorts: 2 bytes
-    * `short int`
-    * `unsigned short int`
-* ints: 4 bytes
-    * `unsigned int`
-    * `int`
-    * `long int`
-    * `unsigned long int`
-* longs: 8 bytes
-    * `long long int`
-    * `unsigned long long int`
-* `float`: 4 bytes
-* `double`: 8 bytes
-* `long double`: 12 bytes
-
 ## Vector
 
 * `()` vs `{}`
@@ -419,6 +363,9 @@ set<int> MS;
 * implemented using a hash table
 
 ## Heap
+
+* `std::priority_queue<int>`: min heap
+* `std::priority_queue<int, std::vector<int>, std::greater<int>>`: max heap
 
 ```cpp
 // priority queue

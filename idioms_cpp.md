@@ -14,8 +14,67 @@
 ## Numbers
 
 * `std::numeric_limits<int>::min()`: min infinity
-* `std::stoi("1100", nullptr, 2)`: binary string to int
+* `std::stoi("55", nullptr, 10)`: string to int (`try`/`catch`)
+* `std::stoi("1100", nullptr, 2)`: binary string to int (`try`/`catch`)
+
+## Strings
+
+* `std::string(5, "c")`: repeat "c" 5 times
+* `std::to_string(5)`: int to string
 * `std::bitset<8>(x).to_string()`: int to binary string
+* `substr`: extract substring
+    * `s.substr(i, s.size())`: from `i` to end (ala Python slicing)
+* `find`: find position of substring in a string
+* `replace`: replace substring
+* splitting: use `istringstream`
+```cpp
+std::string date("2020-03-20");
+std::string delimiter("-");
+std::istringstream ss(date); // Creating an input stream
+std::string token;
+std::vector<std::string> tokens;
+
+while (std::getline(ss, token, delimiter)) {
+    tokens.push_back(token);
+}
+```
+* splitting: use `substr` + `find`, like Python's `split()`
+```cpp
+std::string date = "1970-10-1";
+std::string delimiter("-");
+int token = std::stoi(date.substr(0, date.find(delimiter)));
+date.erase(0, date.find(delimiter) + delimiter.length());
+```
+* `find_first_not_of`: remove prefix
+```cpp
+ans.erase(0, std::find_first_not_of("0"));
+```
+* trim space from left in place
+```
+s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+    [](unsigned char) { return !std::isspace(); }));
+```
+
+## Data Types
+
+* chars: 1 byte
+    * `signed char`
+    * `unsigned char`
+* shorts: 2 bytes
+    * `short int`
+    * `unsigned short int`
+* ints: 4 bytes
+    * `unsigned int`
+    * `int`
+    * `long int`
+    * `unsigned long int`
+* longs: 8 bytes
+    * `long long int`
+    * `unsigned long long int`
+* `float`: 4 bytes
+* `double`: 8 bytes
+* `long double`: 12 bytes
+
 
 ## Loops
 
