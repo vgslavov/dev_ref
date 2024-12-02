@@ -190,6 +190,10 @@ int def = 0;
 vector<int> V(len, def);
 vector<int> W(len, 200);
 ```
+* vector of vectors
+```cpp
+std::vector<std::vector<int>> v(rows, std::vector<int>(cols));
+```
 * `reserve` vs `resize`
     * `resize`
         - same as giving size to ctor
