@@ -126,6 +126,10 @@ std::rotate(v.begin(), v.begin() + head, v.end());
 ```cpp
 *std::max_element(v.begin(), v.end());
 ```
+* `max`: max b/w 2 numbers
+```cpp
+std::max(5, 2);
+```
 
 ### Lambda Functions
 
