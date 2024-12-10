@@ -14,8 +14,35 @@
 ## Numbers
 
 * `std::numeric_limits<int>::min()`: min infinity
-* `std::stoi("55", nullptr, 10)`: string to int (`try`/`catch`)
+* `std::stoi("55")`: string to int, base is auto-detected (`try`/`catch`)
 * `std::stoi("1100", nullptr, 2)`: binary string to int (`try`/`catch`)
+* `std::stoi("0ff", nullptr, 16)`: hex string to int (`try`/`catch`)
+* check if whole string got converted
+```cpp
+int str2int(const std::string& s) {
+    try {
+        size_t pos;
+        int num = std::stoi(s, &pos, 10);
+        if (pos < s.size()) {
+            std::cout << "invalid input" << std::endl;
+            return false;
+        }
+    } catch (std::invalid_argument const& ex) {
+        std::cout << "invalid_argument: " << ex.what()
+                << std::endl;
+        return false;
+    } catch (std::out_of_range const& ex) {
+        std::cout << "out_of range: " << ex.what()
+                << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+std::string s("1e");
+str2int(s);         // false
+```
 
 ## Strings
 
@@ -53,6 +80,12 @@ ans.erase(0, std::find_first_not_of("0"));
 ```
 s.erase(s.begin(), std::find_if(s.begin(), s.end(),
     [](unsigned char) { return !std::isspace(); }));
+```
+* string comparisons
+```cpp
+str1.substr(0, 1) == str2
+
+str1.compare(str2);
 ```
 
 ## Data Types

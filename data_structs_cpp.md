@@ -372,8 +372,9 @@ set<int> MS;
 
 ## Heap
 
-* `std::priority_queue<int>`: min heap
-* `std::priority_queue<int, std::vector<int>, std::greater<int>>`: max heap
+* `std::priority_queue<int>`: max heap
+* `std::priority_queue<int, std::vector<int>, std::less<int>>`: max heap
+* `std::priority_queue<int, std::vector<int>, std::greater<int>>`: min heap
 
 ```cpp
 // priority queue
