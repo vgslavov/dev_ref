@@ -9,8 +9,6 @@
   - [Iterators](#iterators)
   - [Algorithms](#algorithms)
   - [Lambda Functions](#lambda-functions)
-  - [Strings](#strings)
-  - [Data Types](#data-types)
 - [Vector](#vector)
 - [Bit Vector](#bit-vector)
 - [Linked List](#linked-list)
