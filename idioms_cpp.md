@@ -29,23 +29,25 @@ int str2int(const std::string& s) {
         int num = std::stoi(s, &pos, 10);
         if (pos < s.size()) {
             std::cout << "invalid input" << std::endl;
-            return false;
+            return -1;
         }
+
+        return num;
     } catch (std::invalid_argument const& ex) {
         std::cout << "invalid_argument: " << ex.what()
                 << std::endl;
-        return false;
+        return -1;
     } catch (std::out_of_range const& ex) {
         std::cout << "out_of range: " << ex.what()
                 << std::endl;
-        return false;
+        return -1;
     }
 
-    return true;
+    return -1;
 }
 
 std::string s("1e");
-str2int(s);         // false
+int i = str2int(s);   // -1
 ```
 * `std::iota(std::begin(v), std::end(v), 0)`: fill vector with increasing numbers
 
@@ -89,9 +91,15 @@ s.erase(s.begin(), std::find_if(s.begin(), s.end(),
 * string comparisons
 ```cpp
 str1.substr(0, 1) == str2
-
 str1.compare(str2);
 ```
+* iterable to string
+```cpp
+std::vector<std::string> v;
+std::string s(v.begin(), v.end());
+```
+* `isspace(s)`
+* `isalnum(s)`
 
 ## Data Types
 

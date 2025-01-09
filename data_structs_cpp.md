@@ -128,6 +128,18 @@ std::rotate(v.begin(), v.begin() + head, v.end());
 ```cpp
 std::max(5, 2);
 ```
+* find longest string
+```cpp
+auto longest = [](const string_view s1, const string_view s2) {
+    return s1.size() < s2.size();
+};
+
+std::string ans(std::max({"int", "double", "short"}, longest));
+```
+* find index of max element
+```cpp
+std::distance(nums.begin(), std::max_element(nums.begin(), nums.end()));
+```
 
 ### Lambda Functions
 
