@@ -140,6 +140,7 @@ std::string ans(std::max({"int", "double", "short"}, longest));
 ```cpp
 std::distance(nums.begin(), std::max_element(nums.begin(), nums.end()));
 ```
+* `std::swap(var1, var2)`: swap 2 vars
 
 ### Lambda Functions
 
