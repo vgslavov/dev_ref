@@ -100,6 +100,12 @@ std::string s(v.begin(), v.end());
 ```
 * `isspace(s)`
 * `isalnum(s)`
+* character constant: `'.'`vs string literal: `"."`
+```
+char c = '.';
+if (c == '.') {}    // right
+if (c == ".") {}    // wrong
+```
 
 ## Data Types
 
