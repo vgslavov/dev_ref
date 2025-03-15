@@ -83,6 +83,11 @@ std::distance(v.begin(), it)
 // or
 it - v.begin()
 ```
+* advance iterator
+```cpp
+auto it = v.cbegin();
+std::advance(it, rand() % v.size());
+```
 
 ### Algorithms
 
