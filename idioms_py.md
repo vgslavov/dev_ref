@@ -319,6 +319,17 @@ formatted_book_info = book_info.strip().upper().replace(':', ' by')
 ### Numbers
 
 * `ord('5')-ord('0')`: string to int w/o `int()` (ASCII of chars)
+* use `math.inf` for comparing to big/small numbers (`-math.inf`)
+* `is_integer()`: is a float an integer?
+```py
+1.5.is_integer()    # False
+1.0.is_integer()    # True
+```
+* `isinstance`: is it a number?
+```py
+isinstance(1, numbers.Number)    # True
+isinstance(1.5, int)             # False
+```
 
 ### Classes
 
@@ -612,11 +623,6 @@ id(a) == id(b)  # True
 * `-sys.maxsize-1`: min fixed-precision integer
 * `sys.int_info`: bits per digit, max str digits, etc.
 * `sys.byteorder`: little or big-endian
-
-## Math
-
-* use `math.inf` for comparing to big/small numbers (`-math.inf`)
-* `is_integer()`: is a float an integer?
 
 ## Recipes
 

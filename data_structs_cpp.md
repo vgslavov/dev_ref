@@ -89,6 +89,15 @@ auto it = v.cbegin();
 std::advance(it, rand() % v.size());
 ```
 
+### Tuples
+
+* declare
+```cpp
+std::tuple<std::string, int> mine;
+auto t = std::make_tuple("abc", 5);
+```
+* get: `std::get<0>(mine);`
+
 ### Algorithms
 
 * `accumulate`: sum up range
