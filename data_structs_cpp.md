@@ -109,6 +109,9 @@ int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
 // Sort the array in descending order cause of rbegin(), rend()
 std::sort(numbers.rbegin(), numbers.rend());
 
+// descending using greater
+std::sort(numbers.begin(), numbers.end(), std::greater<int>());
+
 // providing a custom comparator function
 sort(temp.begin(), temp.end(),[](const pi &a, const pi &b){
     if (a.second == b.second) return a.first > b.first;
