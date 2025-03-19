@@ -596,10 +596,12 @@ for k in list(d.keys()):
 * `sorted()`
     * returns new sorted iterable
     * works for any iterable
+    * reverse: `sorted(list, reverse=True)`
 * `list.sort()`
     * in-place sort
     * `list` only
     * more efficient than `sorted()`
+    * reverse: `list.sort(reverse=True)`
 * sorting a string: `text = ''.join(sorted(text))`
 * ala `cat list | sort | uniq`: `sorted(set(list))`
 * sorting a `dict`
