@@ -101,10 +101,15 @@ std::string s(v.begin(), v.end());
 * `isspace(s)`
 * `isalnum(s)`
 * character constant: `'.'`vs string literal: `"."`
-```
+```cpp
 char c = '.';
 if (c == '.') {}    // right
 if (c == ".") {}    // wrong
+```
+* character in a string is a `char`, not a `string`
+```cpp
+std::string s("abc");
+// s[2] is a char
 ```
 
 ## Data Types
@@ -126,6 +131,7 @@ if (c == ".") {}    // wrong
 * `float`: 4 bytes
 * `double`: 8 bytes
 * `long double`: 12 bytes
+* `typeid(a).name()`: print type of `a`
 
 ## Classes
 
