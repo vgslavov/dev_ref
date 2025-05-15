@@ -67,6 +67,9 @@ Source: [C++ STL Essentials for Leetcode](https://medium.com/@himanshusingh2719/
     * use with `unordered_map` of key to List iterators
     * efficient front/back access
     * efficient erase if you have saved iterator
+* `set` vs `unordered_set`
+    * `O(log n)` vs `O(1)`
+    * but can use mutable elements as keys (e.g. `vector`)
 
 ### Iterators
 
