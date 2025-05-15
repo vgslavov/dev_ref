@@ -245,6 +245,11 @@ std::vector<std::vector<int>> v(rows, std::vector<int>(cols));
 ```cpp
 std::copy(seen.begin(), seen.end(), std::back_inserter(v));
 ```
+* create `set` from `vector`
+```cpp
+std::vector<int> v{1,2,2,4,5,5};
+std::set<int> s(v.begin(), v.end());
+```
 * examples
 ```cpp
 // allocate memory
