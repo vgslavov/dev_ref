@@ -1,4 +1,4 @@
-# Data Structures in Python
+# Data Structures and Algorithms in Python
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -510,11 +510,11 @@ for i, v in enumerate(l):
 for q, a in zip(questions, answers):
     print('{0}? {1}'.format(q, a))
 ```
-* specific `range`: 1 to n
+* `range(start, stop)`: [start, stop), stop is excluded
+* specific `range`: 1 to n-1
 ```py
 for i in range(1, len(nums)):
 ```
-* `range(start, stop)`: [start, stop), stop is excluded
 * `range(len(n)-1, -1, -1)`: go backwards with index
 * `reversed` loop
 ```py

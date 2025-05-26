@@ -1,4 +1,4 @@
-# Data Structures in C++
+# Data Structures and Algorithms in C++
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -343,6 +343,15 @@ L.empty():
 
 ## Stack
 
+* container adapter
+* default container: `deque`
+```cpp
+template<
+    class T,
+    class Container = std::deque<T>
+> class stack;
+```
+* examples
 ```cpp
 // STL: implemented as array (deque)
 stack<int> S;
@@ -361,6 +370,15 @@ S.pop();    // O(1): amortized if implemented as array
 
 ## Queue
 
+* container adapter
+* default container: `deque`
+```cpp
+template<
+    class T,
+    class Container = std::deque<T>
+> class queue;
+```
+* examples
 ```cpp
 queue<int> Q;
 
@@ -408,6 +426,15 @@ set<int> MS;
 
 ## Heap
 
+* container adapter
+* default container: `vector`
+```cpp
+template<
+    class T,
+    class Container = std::vector<T>,
+    class Compare = std::less<typename Container::value_type>
+> class priority_queue;
+```
 * `std::priority_queue<int>`: max heap
 * `std::priority_queue<int, std::vector<int>, std::less<int>>`: max heap
 * `std::priority_queue<int, std::vector<int>, std::greater<int>>`: min heap
@@ -447,6 +474,13 @@ max_heap.top();     // O(1)
 
 ## Hash Map
 
+* init
+```cpp
+map<char, char> dict = {{'}','{'},
+                        {')','('},
+                        {']','['}};
+```
+* examples
 ```cpp
 unordered_map<string, int> HM;
 unordered_set<int> HS;

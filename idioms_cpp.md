@@ -54,8 +54,8 @@ int i = str2int(s);   // -1
 ## Strings
 
 * `std::string(5, "c")`: repeat "c" 5 times
-* `std::to_string(5)`: int to string
-* `std::bitset<8>(x).to_string()`: int to binary string
+* `std::to_string(5)`: `int` to `string`
+* `std::bitset<8>(x).to_string()`: `int` to binary string
 * `substr`: extract substring
     * `s.substr(i, s.size())`: from `i` to end (ala Python slicing)
 * `find`: find position of substring in a string
@@ -74,7 +74,7 @@ while (std::getline(ss, token, delimiter)) {
 ```
 * splitting: use `substr` + `find`, like Python's `split()`
 ```cpp
-std::string date = "1970-10-1";
+std::string date("1970-10-1");
 std::string delimiter("-");
 int token = std::stoi(date.substr(0, date.find(delimiter)));
 date.erase(0, date.find(delimiter) + delimiter.length());
@@ -98,8 +98,9 @@ str1.compare(str2);
 std::vector<std::string> v;
 std::string s(v.begin(), v.end());
 ```
-* `isspace(s)`
-* `isalnum(s)`
+* `isspace(s)`: check if space
+* `isalnum(s)`: check if alpha-numeric
+* `isalpha(s)`: check if alphabetic
 * character constant: `'.'`vs string literal: `"."`
 ```cpp
 char c = '.';
