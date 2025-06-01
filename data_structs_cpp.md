@@ -140,10 +140,23 @@ int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
 ```cpp
 std::rotate(v.begin(), v.begin() + head, v.end());
 ```
-* `max_element`: max element in iterable
-```cpp
-*std::max_element(v.begin(), v.end());
-```
+* `max_element`
+    * max element in iterable
+    ```cpp
+    *std::max_element(v.begin(), v.end());
+    ```
+    * map
+    ```cpp
+        std::map<std::string, size_t> counts;
+        using pair_type = decltype(counts)::value_type;
+
+        auto ans = *std::max_element(
+            counts.begin(), counts.end(),
+            [ ](const pair_type& p1, const pair_type& p2) {
+                return p1.second < p2.second;
+            }
+        );
+    ```
 * `max`: max b/w 2 numbers
 ```cpp
 std::max(5, 2);
