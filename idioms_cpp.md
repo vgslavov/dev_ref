@@ -63,7 +63,16 @@ int i = str2int(s);   // -1
     * `s.substr(i, s.size())`: from `i` to end (ala Python slicing)
 * `find`: find position of substring in a string
 * `replace`: replace substring
-* splitting: use `istringstream`
+* read from `stdin`
+```cpp
+std::vector<std::string> lines;
+std::string line;
+
+while (std::getline(std::cin, line)) {
+    lines.push_back(line);
+}
+```
+* splitting: `getline` + `istringstream`
 ```cpp
 std::string date("2020-03-20");
 std::string delimiter("-");
@@ -81,6 +90,20 @@ std::string date("1970-10-1");
 std::string delimiter("-");
 int token = std::stoi(date.substr(0, date.find(delimiter)));
 date.erase(0, date.find(delimiter) + delimiter.length());
+```
+* splitting: tokenize using `istringstream`
+```cpp
+std::string line("id 0 timestamp 100 file1.cpp 123456 file2.cpp 678903");
+std::istringstream iss(line);
+std::string id_label, timestamp_label;
+int id, timestamp;
+std::vector<std::pair<std::string, std::string>> files;
+
+iss >> id_label >> id >> timestamp_label >> timestamp;
+
+while (iss >> filename >> hash) {
+    files.emplace_back(filename, hash);
+}
 ```
 * `find_first_not_of`: remove prefix
 ```cpp
