@@ -86,6 +86,7 @@ a[-3::-1]          # everything except the last two items, reversed
 * to string
     * of chars: `''.join(chars)`
     * of nums: `''.join([str(d) for d in digits])`
+* unpacking: `[*p, '3']`
 
 ### Stack
 
@@ -306,7 +307,7 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 * mutable
 * ordered >= v3.7, unordered prior
     * order is *insertion* order, not sorted key order
-    * to provide order like C++ `map`: `for k in sorted(d.keys())`
+    * to provide *key* order like C++ `map`: `for k in sorted(d.keys())`
     * designed for *mapping* operations
 * ~~like C++ `map` & `unordered_map`~~
 * can not have duplicates

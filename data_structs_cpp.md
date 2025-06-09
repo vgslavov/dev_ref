@@ -136,6 +136,12 @@ int lower = *std::lower_bound(numbers.begin(), numbers.end(), 10);
 ```
 * `upper_bound`: returns an iterator to the first element that is greater than
   the specified value.
+* `map` has `lower_bound` & `uppder_bound` member functions
+```cpp
+std::map<int, int> timestamps;
+// first key >= value
+auto it = timestamps.lower_bound(300);
+```
 * `rotate`: shift left
 ```cpp
 std::rotate(v.begin(), v.begin() + head, v.end());
