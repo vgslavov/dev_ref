@@ -264,6 +264,16 @@ std::vector<std::vector<int>> v(rows, std::vector<int>(cols));
 ```cpp
 std::copy(seen.begin(), seen.end(), std::back_inserter(v));
 ```
+* copy from heap to `vector`
+```cpp
+std::vector<int> ans;
+std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;
+
+while (!minHeap.empty()) {
+    ans.push_back(minHeap.top());
+    minHeap.pop();
+}
+```
 * create `set` from `vector`
 ```cpp
 std::vector<int> v{1,2,2,4,5,5};
@@ -457,7 +467,12 @@ template<
 * `std::priority_queue<int>`: max heap
 * `std::priority_queue<int, std::vector<int>, std::less<int>>`: max heap
 * `std::priority_queue<int, std::vector<int>, std::greater<int>>`: min heap
-
+* min heap of pairs
+```cpp
+using pi = std::pair<int, int>;
+std::priority_queue<pi, std::vector<pi>, std::greater<pi>> minHeap;
+```
+* examples
 ```cpp
 // priority queue
 // min-heap: smallest is last in array?
