@@ -228,8 +228,11 @@ priority_queue<pair<int, int>, vector<pair<int, int>>, CustomComparator> pq;
 
 * `()` vs `{}`
 ```cpp
-// vector of size 5 full of 0s
-std::vector<int> v1(5);
+// vector of size 500 full of 0s
+std::vector<int> v1(500);
+// slower
+std::vector<int> v2;
+v2.reserve(500);
 
 // vector of size 5 full of 20s
 std::vector<int> v2(5, 20);
