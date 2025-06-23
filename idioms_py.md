@@ -555,11 +555,12 @@ except (KeyError, TypeError, ValueError):
     * logical conjunction
     * intersection
     * `(a & b) = a * b`
+    * use to calc carry: `(a & b) << 1`
 * bitwise OR: `|`
     * logical disjunction
     * union
     * `(a | b) = a + b - (a * b)`
-* bitwise XOR: no operator
+* bitwise XOR: `^`
     * exclusive disjunction
     * symmetric difference
     * `(a and not b) or (not a and b)`
@@ -568,6 +569,8 @@ except (KeyError, TypeError, ValueError):
     * `x ^ x = 0`
     * `0 ^ y = y`
     * `x ^ x ^ y = y`
+    * add 2 numbers w/o carry: `x ^ y`
+    * add and carry: `x, y = x ^ y, (x & y) << 1`
 * bitwise NOT: `~`
     * complement
     * unary

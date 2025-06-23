@@ -103,8 +103,8 @@ stack.pop()
 ### Comprehensions
 
 > A list comprehension consists of brackets containing an expression followed by
-> a `for` clause, then zero or more for or if clauses.
-- Python Docs
+> a `for` clause, then zero or more `for` or `if` clauses.
+> Python Docs
 
 * can only use `for` (`while` not allowed)
 * simple
@@ -420,6 +420,8 @@ top_three = word_counts.most_common(3)
 b = Counter(other_words)
 c = word_counts + b         # combine counts
 d = word_counts - b         # subtract counts
+
+b['missing']                # count of missing element is 0
 ```
 
 ### Calculations
