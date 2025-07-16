@@ -336,6 +336,9 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 
 ### `defaultdict`
 
+* set default value `defaultdict(int)` or `defaultdict(list)`
+* looking up a non-existing key returns a default value: `0` or `[]`
+
 ```py
 d = {
     'a' : [1, 2, 3],
