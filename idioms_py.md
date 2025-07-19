@@ -319,6 +319,8 @@ formatted_book_info = book_info.strip().upper().replace(':', ' by')
 ### Numbers
 
 * `ord('5')-ord('0')`: string to int w/o `int()` (ASCII of chars)
+* `chr(115)`: ASCII int to ASCII char
+* `string.ascii_lowercase`: all ASCII lower case chars
 * use `math.inf` for comparing to big/small numbers (`-math.inf`)
 * `is_integer()`: is a float an integer?
 ```py

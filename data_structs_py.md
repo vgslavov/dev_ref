@@ -706,8 +706,14 @@ min(range(len(values)), key=values.__getitem__)   // returns 3
 # max length string
 max(['abcd','ab','daaded'], key=len)
 
-# max dict value
+# key with max dict value
 max(counts, key=counts.get)
+# max dict value
+max(counts.values(), default=0)
+
+# max of 3rd value of an array of arrays
+intervals = [[1947, 2000, 5], [2001, 2009, 78]]
+max(intervals, key=lambda x: x[2])[2]
 ```
 
 ## Algorithms
