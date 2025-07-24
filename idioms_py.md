@@ -315,9 +315,15 @@ foo = ''.join([foo, 'ooo'])
 # chain string functions (no more than 3)
 formatted_book_info = book_info.strip().upper().replace(':', ' by')
 ```
+* `s.isalpha()`: if char/str is alphabetic
+* `s.isalnum()`: if char/str is alphanumeric
 
 ### Numbers
 
+* is it a number?
+    * `s.isnumeric()`
+    * `s.isdigit()`
+    * `s.isdecimal()`
 * `ord('5')-ord('0')`: string to int w/o `int()` (ASCII of chars)
 * `chr(115)`: ASCII int to ASCII char
 * `string.ascii_lowercase`: all ASCII lower case chars

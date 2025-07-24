@@ -721,6 +721,10 @@ max(intervals, key=lambda x: x[2])[2]
 * `sum`: add number of non-zero keys in a `dict`
     * `sum(d[k] != 0 for k in d.keys())`
     * `sum(1 for k in d.keys() if d[k])`
+* `sum`: add even values in a `dict`
+```py
+sum(v for v in d.values() if v % 2 == 0)
+```
 * `math.comb`: calc combinations
 * `math.perm`: calc permutations
 * `math.factorial`: calc factorial
