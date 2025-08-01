@@ -706,7 +706,7 @@ min(range(len(values)), key=values.__getitem__)   // returns 3
 # max length string
 max(['abcd','ab','daaded'], key=len)
 
-# key with max dict value
+# *key* with max dict value
 max(counts, key=counts.get)
 # max dict value
 max(counts.values(), default=0)
