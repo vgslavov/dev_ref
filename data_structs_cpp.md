@@ -107,13 +107,19 @@ auto t = std::make_tuple("abc", 5);
 ```cpp
 int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
 ```
-* `sort`: sort ascending in-place?
+* `sort`: sort ascending in-place
+* `stable_sort`
 ```cpp
 // Sort the array in descending order cause of rbegin(), rend()
-std::sort(numbers.rbegin(), numbers.rend());
+std::sort(nums.rbegin(), nums.rend());
 
 // descending using greater
-std::sort(numbers.begin(), numbers.end(), std::greater<int>());
+std::sort(nums.begin(), nums.end(), std::greater<int>());
+
+// usin lambda
+std::sort(nums.begin(), nums.end(), [](int a, int b) {
+      return a > b;
+});
 
 // providing a custom comparator function
 sort(temp.begin(), temp.end(),[](const pi &a, const pi &b){

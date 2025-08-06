@@ -65,6 +65,8 @@ a[::-1]            # all items in the array, reversed
 a[1::-1]           # the first two items, reversed
 a[:-3:-1]          # the last two items, reversed
 a[-3::-1]          # everything except the last two items, reversed
+a[i:i]             # empty array
+a[:i], a[i:j], a[j:] # splitting array in 3 parts w/o gaps/overlap
 ```
 * `del`
     * `del a[0]`: delete 0th index
@@ -86,6 +88,7 @@ a[-3::-1]          # everything except the last two items, reversed
 * to string
     * of chars: `''.join(chars)`
     * of nums: `''.join([str(d) for d in digits])`
+    * of anything: `' '.join(map(str, res))`
 * unpacking: `[*p, '3']`
 
 ### Stack
@@ -290,6 +293,7 @@ index += 1
     * eliminating duplicates
 * can't add non-hashable (e.g. lists): `s.add([1,2]) # error`
 * can add tuples: `s.add((1,2))`
+* removing: `s.discard((1,2))`, no-op if it doesn't exist
 * operations
     * union: `|`
     * intersection: `&`
@@ -607,7 +611,7 @@ for k in list(d.keys()):
     * in-place sort
     * `list` only
     * more efficient than `sorted()`
-    * reverse: `list.sort(reverse=True)`
+    * `list.sort(reverse = True|False, key = comp_function)`
 * sorting a string: `text = ''.join(sorted(text))`
 * ala `cat list | sort | uniq`: `sorted(set(list))`
 * sorting a `dict`
