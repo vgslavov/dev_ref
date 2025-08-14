@@ -520,12 +520,15 @@ for i, v in enumerate(l):
 for q, a in zip(questions, answers):
     print('{0}? {1}'.format(q, a))
 ```
-* `range(start, stop)`: [start, stop), stop is excluded
+* `range(start, stop, step=1)`: [start, stop), stop is excluded
 * specific `range`: 1 to n-1
 ```py
 for i in range(1, len(nums)):
 ```
 * `range(len(n)-1, -1, -1)`: go backwards with index
+    * start: `len(n)-1`, start at last element
+    * stop: `-1`, stop at `0`
+    * step: `-1`, subtract one
 * `reversed` loop
 ```py
 for i in reversed(range(len(nums)):
@@ -722,6 +725,10 @@ max(intervals, key=lambda x: x[2])[2]
 
 ## Algorithms
 
+* `sum`: add up range in a list
+```py
+sum(nums[:k])
+```
 * `sum`: add number of non-zero keys in a `dict`
     * `sum(d[k] != 0 for k in d.keys())`
     * `sum(1 for k in d.keys() if d[k])`

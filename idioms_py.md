@@ -274,6 +274,10 @@ with open('file.txt') as f:
         print(line)
 ```
 
+### Input
+
+* `input()`: get input and assign to a var
+
 ### Strings
 
 * immutable!
@@ -525,7 +529,7 @@ if __name__ == '__main__':
 # to be able to both import and run directly a script, use:
 if __name__ == '__main__':
     pass
-# when imported: 'libs' which are imported will not exececute code under if
+# when imported: 'libs' which are imported will not execute code under if
 # when run directly: only code under if will be executed
 ```
 
