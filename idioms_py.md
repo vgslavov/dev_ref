@@ -10,10 +10,13 @@
 - [Code](#code)
   - [Truthiness](#truthiness)
   - [`if/for/else` statements](#ifforelse-statements)
+  - [Scope](#scope)
   - [Function Arguments](#function-arguments)
   - [Comprehensions](#comprehensions)
   - [Files](#files)
+  - [Input](#input)
   - [Strings](#strings)
+  - [Numbers](#numbers)
   - [Classes](#classes)
   - [Iterators](#iterators)
   - [Generators](#generators)
@@ -22,12 +25,12 @@
   - [Formatting](#formatting)
   - [Scripts](#scripts)
   - [Exceptions](#exceptions)
+  - [Regular Expressions](#regular-expressions)
 - [Binary](#binary)
   - [Operators](#operators)
   - [Manipulating Bits](#manipulating-bits)
   - [Conversions](#conversions)
   - [System Limits](#system-limits)
-- [Math](#math)
 - [Recipes](#recipes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -151,6 +154,16 @@ else:
 ```
 * ternary operator: `a if condition else b`
 * chaining comparisons: `if a == b == c:`
+
+### Scope
+
+* `global`
+    * can't modify local variable
+    * can modify global variable
+* `nonlocal`
+    * can modify local variable
+    * can't modify global variable
+    * only works within nested functions
 
 ### Function Arguments
 
