@@ -107,6 +107,10 @@ auto t = std::make_tuple("abc", 5);
 ```cpp
 int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
 ```
+* `partial_sum`: calculate prefix sums
+```cpp
+std::partial_sum(numbers.begin(), numbers.end(), prefix.begin());
+```
 * `sort`: sort ascending in-place
 * `stable_sort`
 ```cpp

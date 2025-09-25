@@ -358,6 +358,7 @@ isinstance(1.5, int)             # False
 
 ### Classes
 
+* `hasattr`: check if class/instance has attribute
 ```py
 # mark private data with underscores as prefix
 # protected (not used by clients): one _

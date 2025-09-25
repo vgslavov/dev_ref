@@ -741,3 +741,4 @@ sum(v for v in d.values() if v % 2 == 0)
 * `math.factorial`: calc factorial
 * `list(set(sorted(list(itertools.permutations("AAB", 2)))))`:
   permutations of "AAB" taken 2 chars at-a-time
+* `list(accumulate(l, max))`: running max of list
