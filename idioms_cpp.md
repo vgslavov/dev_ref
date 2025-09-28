@@ -75,8 +75,10 @@ while (std::getline(std::cin, line)) {
 * splitting: `getline` + `istringstream`
 ```cpp
 std::string date("2020-03-20");
-std::string delimiter("-");
+// getline takes char!
+char delimiter = '-';
 std::istringstream ss(date); // Creating an input stream
+
 std::string token;
 std::vector<std::string> tokens;
 
@@ -86,10 +88,26 @@ while (std::getline(ss, token, delimiter)) {
 ```
 * splitting: use `substr` + `find`, like Python's `split()`
 ```cpp
+// example
 std::string date("1970-10-1");
 std::string delimiter("-");
+
 int token = std::stoi(date.substr(0, date.find(delimiter)));
 date.erase(0, date.find(delimiter) + delimiter.length());
+
+// loop version
+std::vector<std::string> tokens;
+size_t start = 0;
+size_t end = date.find(delimiter);
+
+while (end != std::string::npos) {
+    tokens.push_back(date.substr(start, end - start));
+    start = end + delimiter.length();
+    end = date.find(delimiter, start);
+}
+
+tokens.push_back(date.substr(start));
+
 ```
 * splitting: tokenize using `istringstream`
 ```cpp
