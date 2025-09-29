@@ -57,7 +57,7 @@ int i = str2int(s);   // -1
 * `std::to_string(5)`: `int` to `string`
 * to lower case
     * `std::transform(s.begin(), s.end(), s.begin(), ::tolower)`: whole string
-    * `std::tolower(c)`: char-by-char
+    * `std::tolower(c)`: char-by-char, works with `s[i]` since it's `char`
 * `std::bitset<8>(x).to_string()`: `int` to binary string
 * `substr`: extract substring
     * `s.substr(i, s.size())`: from `i` to end (ala Python slicing)
@@ -155,6 +155,7 @@ if (c == ".") {}    // wrong
 ```cpp
 std::string s("abc");
 // s[2] is a char
+std::tolower(s[2]);  // right
 ```
 
 ## Data Types
