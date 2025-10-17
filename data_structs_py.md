@@ -497,6 +497,10 @@ import itertools
 
 j = list(itertools.chain(l1, l2))
 ```
+* `zip_longest`: like `zip` but fill in missing values with `fillvalue`
+```py
+j = list(itertools.zip_longest(l1, l2, fillvalue=None))
+```
 
 ## `functools`
 
@@ -742,3 +746,11 @@ sum(v for v in d.values() if v % 2 == 0)
 * `list(set(sorted(list(itertools.permutations("AAB", 2)))))`:
   permutations of "AAB" taken 2 chars at-a-time
 * `list(accumulate(l, max))`: running max of list
+* `all`: check if all elements are true
+```py
+all(x > 0 for x in nums)
+
+# with a generator (lazy, short-circuits)
+all(x > 0 for x in [1, 2, 3])    # True
+all(x > 0 for x in [1, 0, 3])    # False
+```
