@@ -55,7 +55,7 @@ a[slice(start, stop, step)] # using slice obj
 a[start:stop]      # items start through stop-1
 a[start:]          # items start through the rest of the array
 a[:stop]           # items from the beginning through stop-1
-a[:]               # a copy of the whole array
+a[:]               # a *shallow* copy of the whole array
 
 a[-1]              # last item in the array
 a[-2:]             # last two items in the array
@@ -206,12 +206,13 @@ q.rotate(-3)
 ### Create
 
 ```py
-h = list(nums)           # deep copy of list
-heapq.heapify(h)         # O(N): create min heap from list
-heapq._heapify_max(h)    # O(N): create max heap from list
-heapq.heappop(h)         # O(log N): return smallest element & remove it
-heapq._heappop_max(h)    # O(log N): return largest element & remove it
-heapq.heappush(h, 1)     # O(log N): add element to heap
+h = list(nums)           # *shallow* copy of list
+h2 = nums[:]             # *shallow* copy of list
+heapq.heapify(h)         # O(n): create min heap from list
+heapq._heapify_max(h)    # O(n): create max heap from list
+heapq.heappop(h)         # O(log n): return smallest element & remove it
+heapq._heappop_max(h)    # O(log n): return largest element & remove it
+heapq.heappush(h, 1)     # O(log n): add element to heap
 heapq.heappushpop(h, 1)  # push then pop smallest: more efficient
 heapq.heapreplace(h, 1)  # pop smallest then push: more efficient
 ```
@@ -509,6 +510,16 @@ j = list(itertools.zip_longest(l1, l2, fillvalue=None))
 
 ## Looping
 
+* over `dict`
+```py
+for k in d:
+    print(k, d[k])
+```
+* over `dict` using `keys`: slower, uses dynamic "view"
+```py
+for k in d.keys():
+    print(k, d[k])
+```
 * over `dict` using `items`
 ```py
 for k, v in d.items():
