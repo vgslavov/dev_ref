@@ -7,6 +7,7 @@
 - [Use Cases](#use-cases)
   - [Containers](#containers)
   - [Iterators](#iterators)
+  - [Tuples](#tuples)
   - [Algorithms](#algorithms)
   - [Lambda Functions](#lambda-functions)
 - [Vector](#vector)
@@ -20,6 +21,7 @@
   - [Trie](#trie)
 - [Heap](#heap)
 - [Hash Map](#hash-map)
+- [Hash Set](#hash-set)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -111,8 +113,7 @@ int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
 ```cpp
 std::partial_sum(numbers.begin(), numbers.end(), prefix.begin());
 ```
-* `sort`: sort ascending in-place
-* `stable_sort`
+* `sort` & `stable_sort`: sort ascending in-place
 ```cpp
 // Sort the array in descending order cause of rbegin(), rend()
 std::sort(nums.rbegin(), nums.rend());
@@ -540,3 +541,11 @@ HM[‘abc’];
 HS.find(5);
 HS.count(5);
 ```
+
+## Hash Set
+
+* init
+```cpp
+unordered_set<int> hs = {1,2,3,4,5};
+```
+* check existence: `hs.count(3)`, returns 0/1

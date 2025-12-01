@@ -593,7 +593,7 @@ except (KeyError, TypeError, ValueError):
     * `(a ^ b) = (a + b) mod 2`
     * if # of 1s is odd, result is 1; otherwise, 0
     * `x ^ x = 0`
-    * `0 ^ y = y`
+    * `0 ^ y = y`: anything XOR 0 is itself
     * `x ^ x ^ y = y`
     * add 2 numbers w/o carry: `x ^ y`
     * add and carry: `x, y = x ^ y, (x & y) << 1`

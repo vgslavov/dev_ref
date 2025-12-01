@@ -326,6 +326,7 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
     * build dictionary (same as `{}`)
     * use keys: `dict(id=1234, ext=212)`
 * list of `dict` keys (in insert order): `list(d)`
+* `d.get(key, 0)`: get value for `key` or `0` if not found
 * next/first key: `next(iter(d))`
 * sorted list of `dict` keys: `sorted(d)`
 * check membership: `'hello' in d`
@@ -342,8 +343,8 @@ a = {x for x in 'abracadabra' if x not in 'abc'}
 ### `defaultdict`
 
 * set default value `defaultdict(int)` or `defaultdict(list)`
+* like using `d.get()` with default value
 * looking up a non-existing key returns a default value: `0` or `[]`
-
 ```py
 d = {
     'a' : [1, 2, 3],
@@ -510,12 +511,12 @@ j = list(itertools.zip_longest(l1, l2, fillvalue=None))
 
 ## Looping
 
-* over `dict`
+* over `dict`: defaults to keys
 ```py
 for k in d:
     print(k, d[k])
 ```
-* over `dict` using `keys`: slower, uses dynamic "view"
+* over `dict` using `keys()`: slower, uses dynamic "view"
 ```py
 for k in d.keys():
     print(k, d[k])
