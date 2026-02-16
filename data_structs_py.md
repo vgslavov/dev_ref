@@ -380,6 +380,9 @@ for key, value in pairs:
 
 # list from defaultdict
 l = [k for k,v in d.items() if v > 2]
+
+# list from dict
+list(d.values())
 ```
 
 ### `OrderedDict`
@@ -667,6 +670,9 @@ sorted(student_objects, key=itemgetter('age'))
 
 # multi-level sorting
 sorted(student_objects, key=attrgetter('grade', 'age'))
+
+# sort by start time
+intervals.sort(key=lambda x: x.start)
 ```
 * ascending by default, descending using `reverse`
 ```py
@@ -702,7 +708,6 @@ Student.__lt__ = lambda self, other: self.age < other.age
 ```py
 sorted(students, key=newgrades.__getitem__)
 ```
-* custom comparator: TODO
 * reverse string: `''.join(reversed(s))`
 
 ## Searching
